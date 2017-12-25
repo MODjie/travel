@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.travel.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.java.travel.entity.User">
+    <id column="USERID" jdbcType="DECIMAL" property="USERID" />
+    <result column="GROWTHLEVELID" jdbcType="DECIMAL" property="GROWTHLEVELID" />
+    <result column="HOMEADDRESSID" jdbcType="DECIMAL" property="HOMEADDRESSID" />
+    <result column="ROLEID" jdbcType="DECIMAL" property="ROLEID" />
+    <result column="REGISTERID" jdbcType="DECIMAL" property="REGISTERID" />
+    <result column="AGE" jdbcType="DECIMAL" property="AGE" />
+    <result column="HEADADDRESS" jdbcType="VARCHAR" property="HEADADDRESS" />
+    <result column="NICKNAME" jdbcType="VARCHAR" property="NICKNAME" />
+    <result column="MOOD" jdbcType="VARCHAR" property="MOOD" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    USERID, GROWTHLEVELID, HOMEADDRESSID, ROLEID, REGISTERID, AGE, HEADADDRESS, NICKNAME, 
+    MOOD
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from USER
+    where USERID = #{USERID,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from USER
+    where USERID = #{USERID,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.java.travel.entity.User">
+    insert into USER (USERID, GROWTHLEVELID, HOMEADDRESSID, 
+      ROLEID, REGISTERID, AGE, 
+      HEADADDRESS, NICKNAME, MOOD
+      )
+    values (#{USERID,jdbcType=DECIMAL}, #{GROWTHLEVELID,jdbcType=DECIMAL}, #{HOMEADDRESSID,jdbcType=DECIMAL}, 
+      #{ROLEID,jdbcType=DECIMAL}, #{REGISTERID,jdbcType=DECIMAL}, #{AGE,jdbcType=DECIMAL}, 
+      #{HEADADDRESS,jdbcType=VARCHAR}, #{NICKNAME,jdbcType=VARCHAR}, #{MOOD,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.java.travel.entity.User">
+    insert into USER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="USERID != null">
+        USERID,
+      </if>
+      <if test="GROWTHLEVELID != null">
+        GROWTHLEVELID,
+      </if>
+      <if test="HOMEADDRESSID != null">
+        HOMEADDRESSID,
+      </if>
+      <if test="ROLEID != null">
+        ROLEID,
+      </if>
+      <if test="REGISTERID != null">
+        REGISTERID,
+      </if>
+      <if test="AGE != null">
+        AGE,
+      </if>
+      <if test="HEADADDRESS != null">
+        HEADADDRESS,
+      </if>
+      <if test="NICKNAME != null">
+        NICKNAME,
+      </if>
+      <if test="MOOD != null">
+        MOOD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="USERID != null">
+        #{USERID,jdbcType=DECIMAL},
+      </if>
+      <if test="GROWTHLEVELID != null">
+        #{GROWTHLEVELID,jdbcType=DECIMAL},
+      </if>
+      <if test="HOMEADDRESSID != null">
+        #{HOMEADDRESSID,jdbcType=DECIMAL},
+      </if>
+      <if test="ROLEID != null">
+        #{ROLEID,jdbcType=DECIMAL},
+      </if>
+      <if test="REGISTERID != null">
+        #{REGISTERID,jdbcType=DECIMAL},
+      </if>
+      <if test="AGE != null">
+        #{AGE,jdbcType=DECIMAL},
+      </if>
+      <if test="HEADADDRESS != null">
+        #{HEADADDRESS,jdbcType=VARCHAR},
+      </if>
+      <if test="NICKNAME != null">
+        #{NICKNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="MOOD != null">
+        #{MOOD,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.java.travel.entity.User">
+    update USER
+    <set>
+      <if test="GROWTHLEVELID != null">
+        GROWTHLEVELID = #{GROWTHLEVELID,jdbcType=DECIMAL},
+      </if>
+      <if test="HOMEADDRESSID != null">
+        HOMEADDRESSID = #{HOMEADDRESSID,jdbcType=DECIMAL},
+      </if>
+      <if test="ROLEID != null">
+        ROLEID = #{ROLEID,jdbcType=DECIMAL},
+      </if>
+      <if test="REGISTERID != null">
+        REGISTERID = #{REGISTERID,jdbcType=DECIMAL},
+      </if>
+      <if test="AGE != null">
+        AGE = #{AGE,jdbcType=DECIMAL},
+      </if>
+      <if test="HEADADDRESS != null">
+        HEADADDRESS = #{HEADADDRESS,jdbcType=VARCHAR},
+      </if>
+      <if test="NICKNAME != null">
+        NICKNAME = #{NICKNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="MOOD != null">
+        MOOD = #{MOOD,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USERID = #{USERID,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.java.travel.entity.User">
+    update USER
+    set GROWTHLEVELID = #{GROWTHLEVELID,jdbcType=DECIMAL},
+      HOMEADDRESSID = #{HOMEADDRESSID,jdbcType=DECIMAL},
+      ROLEID = #{ROLEID,jdbcType=DECIMAL},
+      REGISTERID = #{REGISTERID,jdbcType=DECIMAL},
+      AGE = #{AGE,jdbcType=DECIMAL},
+      HEADADDRESS = #{HEADADDRESS,jdbcType=VARCHAR},
+      NICKNAME = #{NICKNAME,jdbcType=VARCHAR},
+      MOOD = #{MOOD,jdbcType=VARCHAR}
+    where USERID = #{USERID,jdbcType=DECIMAL}
+  </update>
+</mapper>
