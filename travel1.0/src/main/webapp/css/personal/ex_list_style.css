@@ -1,0 +1,267 @@
+/* ---------------------------------------------------------------------------- */
+
+
+/* ------------------------------------Html-Body------------------------------- */
+
+
+/* ---------------------------------------------------------------------------- */
+
+.sub-page {
+	font-family: 'Merriweather', serif;
+	color: #666;
+	/*background: #1A1C1E;*/
+	background: lightgray;
+	font-size: 14px;
+	line-height: 1.6em;
+	font-weight: 400;
+	position: relative;
+	/*margin-top: 150px;*/
+}
+
+.sub-page img {
+	max-width: 100%;
+	height: auto;
+	width: auto\9;
+	/* ie8 */
+}
+
+.exlist-title {
+	/*margin-bottom: auto;*/
+	padding-top: 50px;
+}
+
+.exlist-title h1 {
+	font-family: "poppins-semibold", serif;
+	font-size: 3.6rem;
+	color: #313131;
+	line-height: 1.25;
+	margin-bottom: 1.2rem;
+	text-align: center;
+}
+
+.box-content {
+	padding-top: 50px
+}
+
+.box-content h1 {
+	font-size: 38px;
+}
+
+.box-content h2 {
+	font-size: 36px;
+}
+
+.box-content h3 {
+	font-size: 32px;
+}
+
+.box-content h4 {
+	font-size: 28px;
+}
+
+.box-content h5 {
+	font-size: 24px;
+}
+
+.box-content h6 {
+	font-size: 20px;
+}
+
+.box-content h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 600;
+	color: #111;
+}
+
+.box-content p {
+	color: #816943;
+}
+
+.box-content a {
+	color: #333;
+	-webkit-transition: all .2s ease-in-out;
+	-moz-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+
+.box-content a:hover,
+.box-content a:focus {
+	text-decoration: none;
+	color: #333;
+}
+
+.box-content.box-1 .box-item {
+	background-color: #fff;
+	margin: 0 auto 30px;
+	max-width: 500px;
+}
+
+.box-content.box-1 .box-item:hover img {
+	opacity: 0.9;
+}
+
+.box-content.box-1 .box-item .content {
+	padding: 10px 30px 30px;
+}
+
+.box-content.box-1 .box-item img {
+	width: 100%;
+}
+
+.box-content.box-1 .box-item a {
+	color: #0aac8e;
+	font-weight: bold;
+}
+
+.box-content.box-1 .box-item .content h3 {
+	font-weight: 500;
+	color: #333;
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+.box-content.box-1 .box-item .content span {
+	color: #bbb;
+	font-size: 15px;
+}
+
+
+/* ---------------------------------------------------------------------------- */
+
+
+/* ----------------------------------Background gradients---------------------------------- */
+
+
+/* ---------------------------------------------------------------------------- */
+
+.site-gradients figure:before {
+	background-color: #000;
+}
+
+.site-gradients-media:before {
+	background: transparent;
+	background: -webkit-linear-gradient( top, rgba(26, 28, 30, 0) 0%, #1a1c1e 100%);
+	background: linear-gradient( to bottom, rgba(26, 28, 30, 0) 0%, #1a1c1e 100%);
+}
+
+.site-gradients-media {
+	position: absolute;
+	width: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	/* the banner will be the height of the screen size due to fixed positioning */
+	left: 0;
+	top: 0;
+	overflow: hidden;
+	z-index: -1;
+}
+
+.site-gradients-media:before {
+	content: '';
+	position: absolute;
+	display: block;
+	width: 100%;
+	height: 62%;
+	left: 0;
+	bottom: 0;
+	z-index: 1;
+}
+
+.site-gradients figure {
+	position: relative;
+	z-index: 0;
+}
+
+.site-gradients figure:before {
+	content: '';
+	position: absolute;
+	display: block;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	opacity: .4;
+	z-index: 1;
+}
+
+.site-gradients img {
+	position: relative;
+	width: 100%;
+	height: auto;
+	z-index: 0;
+}
+
+.site-gradients img {
+	top: -20px;
+	-webkit-transform: scaleX(-1);
+	-moz-transform: scaleX(-1);
+	-ms-transform: scaleX(-1);
+	transform: scaleX(-1);
+	-webkit-filter: blur(10px) grayscale(100%) contrast(66%);
+	-moz-filter: blur(10px) grayscale(100%) contrast(66%);
+	-ms-filter: blur(10px) grayscale(100%) contrast(66%);
+	filter: blur(10px) grayscale(100%) contrast(66%);
+	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='10');
+	filter: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="blur-grayscale-contrast"><feGaussianBlur stdDeviation="10" /><feColorMatrix type="matrix" values="0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0" /><feComponentTransfer><feFuncR type="linear" slope=".66" intercept="-(0.5 * .66) + 0.5" /><feFuncG type="linear" slope=".66" intercept="-(0.5 * .66) + 0.5" /><feFuncB type="linear" slope=".66" intercept="-(0.5 * .66) + 0.5" /></feComponentTransfer></filter></svg>#blur-grayscale-contrast');
+	/* Firefox */
+}
+
+
+/*左侧导航*/
+
+.myex-nav {
+	bottom: 30%;
+	display: block;
+	border: 1px;
+	background: rgb(34, 34, 34);
+	height: 200px;
+	width: 150px;
+	/*text-align: center;*/
+}
+
+.myex-nav ul {
+	list-style: none;
+	margin-top: 25px;
+}
+
+.myex-nav li {
+	/*background: lightblue;*/
+	margin-left: -20px;
+	/*margin-right: 15px;*/
+	text-align: center;
+	width: 118px;
+}
+
+.myex-nav li a {
+	color: white;
+	/*background: white;*/
+}
+
+.box-item {
+	height: 580px;
+}
+
+/*标题超过一行用省略号表示*/
+.box-item .content h3 {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.box-item .content p {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 6;
+	-webkit-box-orient: vertical;
+	
+}
+
+.box-item img {
+	width: 420px;
+	height: 280px;
+}
