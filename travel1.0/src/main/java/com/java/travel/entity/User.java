@@ -90,4 +90,24 @@ public class User {
     public void setMOOD(String MOOD) {
         this.MOOD = MOOD == null ? null : MOOD.trim();
     }
+    
+    public User() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public User(Short uSERID, Short gROWTHLEVELID, Short hOMEADDRESSID, Short rOLEID, Short rEGISTERID, Short aGE,
+			String hEADADDRESS, String nICKNAME, String mOOD) {
+		super();
+		USERID = uSERID;
+		GROWTHLEVELID = gROWTHLEVELID;
+		HOMEADDRESSID = hOMEADDRESSID;
+		ROLEID = rOLEID;
+		REGISTERID = rEGISTERID;
+		AGE = aGE;
+		HEADADDRESS = hEADADDRESS;
+		NICKNAME = nICKNAME;
+		MOOD = mOOD;
+	}
+    
+    
 }

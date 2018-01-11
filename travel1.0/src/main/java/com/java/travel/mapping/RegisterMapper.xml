@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.travel.mapper.RegisterMapper">
+	<resultMap id="BaseResultMap" type="com.java.travel.entity.Register">
+		<id column="REGISTERID" jdbcType="DECIMAL" property="REGISTERID" />
+		<result column="NICKNAME" jdbcType="VARCHAR" property="NICKNAME" />
+		<result column="PASSWORD" jdbcType="VARCHAR" property="PASSWORD" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		REGISTERID, NICKNAME, PASSWORD
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Short"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from REGISTER
+		where REGISTERID = #{REGISTERID,jdbcType=DECIMAL}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+		delete from REGISTER
+		where REGISTERID = #{REGISTERID,jdbcType=DECIMAL}
+	</delete>
+	
+	<insert id="insert" parameterType="com.java.travel.entity.Register">
+		insert into REGISTER (REGISTERID, NICKNAME, PASSWORD
+		)
+		values (#{REGISTERID,jdbcType=DECIMAL}, #{NICKNAME,jdbcType=VARCHAR},
+		#{PASSWORD,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="insertSelective" parameterType="com.java.travel.entity.Register">
+		insert into REGISTER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="REGISTERID != null">
+				REGISTERID,
+			</if>
+			<if test="NICKNAME != null">
+				NICKNAME,
+			</if>
+			<if test="PASSWORD != null">
+				PASSWORD,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="REGISTERID != null">
+				#{REGISTERID,jdbcType=DECIMAL},
+			</if>
+			<if test="NICKNAME != null">
+				#{NICKNAME,jdbcType=VARCHAR},
+			</if>
+			<if test="PASSWORD != null">
+				#{PASSWORD,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.java.travel.entity.Register">
+		update REGISTER
+		<set>
+			<if test="NICKNAME != null">
+				NICKNAME = #{NICKNAME,jdbcType=VARCHAR},
+			</if>
+			<if test="PASSWORD != null">
+				PASSWORD = #{PASSWORD,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where REGISTERID = #{REGISTERID,jdbcType=DECIMAL}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.java.travel.entity.Register">
+		update REGISTER
+		set NICKNAME = #{NICKNAME,jdbcType=VARCHAR},
+		PASSWORD = #{PASSWORD,jdbcType=VARCHAR}
+		where REGISTERID = #{REGISTERID,jdbcType=DECIMAL}
+	</update>
+</mapper>
