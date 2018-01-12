@@ -133,11 +133,11 @@
     window.UMEDITOR_CONFIG = {
 
         //为编辑器实例添加一个路径，这个不能被注释
-        UMEDITOR_HOME_URL : URL
+        UMEDITOR_HOME_URL : URL = "D://Program Files/Java/apache-tomcat-8.5.24-windows-x64/apache-tomcat-8.5.24/wtpwebapps/travel1.0/"
 
         //图片上传配置区
-        ,imageUrl:URL+"jsp/imageUp.jsp"             //图片上传提交地址
-        ,imagePath:URL + "jsp/"                     //图片修正地址，引用了fixedImagePath,如有特殊需求，可自行配置
+        ,imageUrl:URL+"WEB-INF/jsp/write_ex.jsp"             //图片上传提交地址
+        ,imagePath:URL + "upload/"                     //图片修正地址，引用了fixedImagePath,如有特殊需求，可自行配置
         ,imageFieldName:"upfile"                   //图片数据的key,若此处修改，需要在后台对应文件修改对应参数
 
 

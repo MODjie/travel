@@ -114,13 +114,13 @@
 			<div class="edit-wrap">
 				<div class="ex-title">
 					<h4>标题</h4>
-					<input type="text" placeholder="五十字以内" />
+					<input type="text" id="ex-title-content" placeholder="10字以内" />
 				</div>
 				<div class="ex-type">
 					<h4>类型</h4>
 					<div class="btn-group type-btn">
 						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							<span class="pull-left">请选择<span class="caret" style="margin-left: 10px;"></span></span> 							
+							<span class="pull-left type-content">请选择<span class="caret" style="margin-left: 10px;"></span></span> 							
 						</button>
 						<ul class="dropdown-menu " role="menu">
 							<li>
@@ -147,9 +147,7 @@
 				<div class="ex-content">
 					<h4>内容</h4>
 					<!--style给定宽度可以影响编辑器的最终宽度-->
-					<script type="text/plain" id="myEditor" style="width:100%;height:240px;">
-						<!--<p>这里我可以写一些输入提示</p>-->
-					</script>
+					<script type="text/plain" id="myEditor" style="width:100%;height:240px;"></script>
 
 				</div>
 				<div class="upload-cover">
@@ -159,7 +157,7 @@
 
 				<div class="edit-footer">
 					<button type="button" class="btn btn-primary btn-lg" data-toggle="button"> 预览</button>
-					<button type="button" class="btn btn-primary btn-lg" data-toggle="button" style="margin-left: 20px;"> 保存草稿</button>
+					<button type="button" class="btn btn-primary btn-lg saveDraft" data-toggle="button" style="margin-left: 20px;"> 保存草稿</button>
 					<button type="button" class="btn btn-primary btn-lg" data-toggle="button" style="margin-left: 20px;"> 发布</button>
 				</div>
 			</div>
@@ -196,28 +194,8 @@
 		<!--fileinput-->
 		<script type="text/javascript" src="fileinput/fileinput.min.js"></script>
 		<script type="text/javascript" src="fileinput/zh.js"></script>
-		<script type="text/javascript">
-			//实例化编辑器
-			var um = UM.getEditor('myEditor');
-
-			//fileinput初始化
-			function initFileInput(ctrlName, uploadUrl) {
-				var control = $('#' + ctrlName);
-
-				control.fileinput({
-					language: 'zh', //设置语言
-					uploadUrl: uploadUrl, //上传的地址
-					allowedFileExtensions: ['jpg', 'png', 'gif'], //接收的文件后缀
-					showUpload: false, //是否显示上传按钮
-					showCaption: false, //是否显示标题
-					browseClass: "btn btn-primary", //按钮样式             
-					previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-				});
-			}
-			$(function() {
-				initFileInput("cover", $("#cover").val());
-			})
-		</script>
+		<!-- 编辑界面JS -->
+		<script type="text/javascript" src="js/exprience/exprience.js"></script>
 	</body>
 
 </html>

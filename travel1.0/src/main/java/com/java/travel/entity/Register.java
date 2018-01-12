@@ -1,17 +1,17 @@
 package com.java.travel.entity;
 
 public class Register {
-    private Short REGISTERID;
+    private Integer REGISTERID;
 
     private String NICKNAME;
 
     private String PASSWORD;
 
-    public Short getREGISTERID() {
+    public Integer getREGISTERID() {
         return REGISTERID;
     }
 
-    public void setREGISTERID(Short REGISTERID) {
+    public void setREGISTERID(Integer REGISTERID) {
         this.REGISTERID = REGISTERID;
     }
 
@@ -30,17 +30,4 @@ public class Register {
     public void setPASSWORD(String PASSWORD) {
         this.PASSWORD = PASSWORD == null ? null : PASSWORD.trim();
     }
-    
-    public Register() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Register(Short rEGISTERID, String nICKNAME, String pASSWORD) {
-		super();
-		REGISTERID = rEGISTERID;
-		NICKNAME = nICKNAME;
-		PASSWORD = pASSWORD;
-	}
-    
-    
 }

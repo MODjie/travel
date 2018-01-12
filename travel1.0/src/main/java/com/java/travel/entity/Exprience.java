@@ -2,10 +2,10 @@ package com.java.travel.entity;
 
 import java.util.Date;
 
-public class Exprince {
-    private Short EXPRIENCEID;
+public class Exprience {
+    private Integer EXPRIENCEID;
 
-    private Short EXTYPEID;
+    private Integer EXTYPEID;
 
     private String EXTITLE;
 
@@ -15,23 +15,23 @@ public class Exprince {
 
     private Date EXPUBLISHTIME;
 
-    private String TRAVELADDRES;
-
     private String EXCOVER;
 
-    public Short getEXPRIENCEID() {
+    private String ISPUBLISH;
+
+    public Integer getEXPRIENCEID() {
         return EXPRIENCEID;
     }
 
-    public void setEXPRIENCEID(Short EXPRIENCEID) {
+    public void setEXPRIENCEID(Integer EXPRIENCEID) {
         this.EXPRIENCEID = EXPRIENCEID;
     }
 
-    public Short getEXTYPEID() {
+    public Integer getEXTYPEID() {
         return EXTYPEID;
     }
 
-    public void setEXTYPEID(Short EXTYPEID) {
+    public void setEXTYPEID(Integer EXTYPEID) {
         this.EXTYPEID = EXTYPEID;
     }
 
@@ -67,14 +67,6 @@ public class Exprince {
         this.EXPUBLISHTIME = EXPUBLISHTIME;
     }
 
-    public String getTRAVELADDRES() {
-        return TRAVELADDRES;
-    }
-
-    public void setTRAVELADDRES(String TRAVELADDRES) {
-        this.TRAVELADDRES = TRAVELADDRES == null ? null : TRAVELADDRES.trim();
-    }
-
     public String getEXCOVER() {
         return EXCOVER;
     }
@@ -82,13 +74,17 @@ public class Exprince {
     public void setEXCOVER(String EXCOVER) {
         this.EXCOVER = EXCOVER == null ? null : EXCOVER.trim();
     }
-    
-    public Exprince() {
-		// TODO Auto-generated constructor stub
-	}
 
-	public Exprince(Short eXPRIENCEID, Short eXTYPEID, String eXTITLE, String eXAUTHORNAME, String eXCONTENT,
-			Date eXPUBLISHTIME, String tRAVELADDRES, String eXCOVER) {
+    public String getISPUBLISH() {
+        return ISPUBLISH;
+    }
+
+    public void setISPUBLISH(String ISPUBLISH) {
+        this.ISPUBLISH = ISPUBLISH == null ? null : ISPUBLISH.trim();
+    }
+
+	public Exprience(Integer eXPRIENCEID, Integer eXTYPEID, String eXTITLE, String eXAUTHORNAME, String eXCONTENT,
+			Date eXPUBLISHTIME, String eXCOVER, String iSPUBLISH) {
 		super();
 		EXPRIENCEID = eXPRIENCEID;
 		EXTYPEID = eXTYPEID;
@@ -96,9 +92,11 @@ public class Exprince {
 		EXAUTHORNAME = eXAUTHORNAME;
 		EXCONTENT = eXCONTENT;
 		EXPUBLISHTIME = eXPUBLISHTIME;
-		TRAVELADDRES = tRAVELADDRES;
 		EXCOVER = eXCOVER;
+		ISPUBLISH = iSPUBLISH;
 	}
     
-    
+    public Exprience() {
+		// TODO Auto-generated constructor stub
+	}
 }

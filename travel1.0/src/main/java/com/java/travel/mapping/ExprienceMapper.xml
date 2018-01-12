@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.travel.mapper.ExprienceMapper">
+  <resultMap id="BaseResultMap" type="com.java.travel.entity.Exprience">
+    <id column="EXPRIENCEID" jdbcType="DECIMAL" property="EXPRIENCEID" />
+    <result column="EXTYPEID" jdbcType="DECIMAL" property="EXTYPEID" />
+    <result column="EXTITLE" jdbcType="VARCHAR" property="EXTITLE" />
+    <result column="EXAUTHORNAME" jdbcType="VARCHAR" property="EXAUTHORNAME" />
+    <result column="EXCONTENT" jdbcType="VARCHAR" property="EXCONTENT" />
+    <result column="EXPUBLISHTIME" jdbcType="TIMESTAMP" property="EXPUBLISHTIME" />
+    <result column="EXCOVER" jdbcType="VARCHAR" property="EXCOVER" />
+    <result column="ISPUBLISH" jdbcType="VARCHAR" property="ISPUBLISH" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    EXPRIENCEID, EXTYPEID, EXTITLE, EXAUTHORNAME, EXCONTENT, EXPUBLISHTIME, EXCOVER, 
+    ISPUBLISH
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from EXPRIENCE
+    where EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from EXPRIENCE
+    where EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.java.travel.entity.Exprience">
+    insert into EXPRIENCE (EXPRIENCEID, EXTYPEID, EXTITLE, 
+      EXAUTHORNAME, EXCONTENT, EXPUBLISHTIME, 
+      EXCOVER, ISPUBLISH)
+    values (#{EXPRIENCEID,jdbcType=DECIMAL}, #{EXTYPEID,jdbcType=DECIMAL}, #{EXTITLE,jdbcType=VARCHAR}, 
+      #{EXAUTHORNAME,jdbcType=VARCHAR}, #{EXCONTENT,jdbcType=VARCHAR}, #{EXPUBLISHTIME,jdbcType=TIMESTAMP}, 
+      #{EXCOVER,jdbcType=VARCHAR}, #{ISPUBLISH,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.java.travel.entity.Exprience">
+    insert into EXPRIENCE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="EXPRIENCEID != null">
+        EXPRIENCEID,
+      </if>
+      <if test="EXTYPEID != null">
+        EXTYPEID,
+      </if>
+      <if test="EXTITLE != null">
+        EXTITLE,
+      </if>
+      <if test="EXAUTHORNAME != null">
+        EXAUTHORNAME,
+      </if>
+      <if test="EXCONTENT != null">
+        EXCONTENT,
+      </if>
+      <if test="EXPUBLISHTIME != null">
+        EXPUBLISHTIME,
+      </if>
+      <if test="EXCOVER != null">
+        EXCOVER,
+      </if>
+      <if test="ISPUBLISH != null">
+        ISPUBLISH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="EXPRIENCEID != null">
+        #{EXPRIENCEID,jdbcType=DECIMAL},
+      </if>
+      <if test="EXTYPEID != null">
+        #{EXTYPEID,jdbcType=DECIMAL},
+      </if>
+      <if test="EXTITLE != null">
+        #{EXTITLE,jdbcType=VARCHAR},
+      </if>
+      <if test="EXAUTHORNAME != null">
+        #{EXAUTHORNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="EXCONTENT != null">
+        #{EXCONTENT,jdbcType=VARCHAR},
+      </if>
+      <if test="EXPUBLISHTIME != null">
+        #{EXPUBLISHTIME,jdbcType=TIMESTAMP},
+      </if>
+      <if test="EXCOVER != null">
+        #{EXCOVER,jdbcType=VARCHAR},
+      </if>
+      <if test="ISPUBLISH != null">
+        #{ISPUBLISH,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.java.travel.entity.Exprience">
+    update EXPRIENCE
+    <set>
+      <if test="EXTYPEID != null">
+        EXTYPEID = #{EXTYPEID,jdbcType=DECIMAL},
+      </if>
+      <if test="EXTITLE != null">
+        EXTITLE = #{EXTITLE,jdbcType=VARCHAR},
+      </if>
+      <if test="EXAUTHORNAME != null">
+        EXAUTHORNAME = #{EXAUTHORNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="EXCONTENT != null">
+        EXCONTENT = #{EXCONTENT,jdbcType=VARCHAR},
+      </if>
+      <if test="EXPUBLISHTIME != null">
+        EXPUBLISHTIME = #{EXPUBLISHTIME,jdbcType=TIMESTAMP},
+      </if>
+      <if test="EXCOVER != null">
+        EXCOVER = #{EXCOVER,jdbcType=VARCHAR},
+      </if>
+      <if test="ISPUBLISH != null">
+        ISPUBLISH = #{ISPUBLISH,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.java.travel.entity.Exprience">
+    update EXPRIENCE
+    set EXTYPEID = #{EXTYPEID,jdbcType=DECIMAL},
+      EXTITLE = #{EXTITLE,jdbcType=VARCHAR},
+      EXAUTHORNAME = #{EXAUTHORNAME,jdbcType=VARCHAR},
+      EXCONTENT = #{EXCONTENT,jdbcType=VARCHAR},
+      EXPUBLISHTIME = #{EXPUBLISHTIME,jdbcType=TIMESTAMP},
+      EXCOVER = #{EXCOVER,jdbcType=VARCHAR},
+      ISPUBLISH = #{ISPUBLISH,jdbcType=VARCHAR}
+    where EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL}
+  </update>
+</mapper>
