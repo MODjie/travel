@@ -15,19 +15,19 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import sun.misc.BASE64Decoder;
 import javax.servlet.http.HttpServletRequest;
 /**
- * UEditor文件上传辅助�?
+ * UEditor文件上传辅助类
  *
  */
 public class Uploader {
 	// 输出文件地址
 	private String url = "";
-	// 上传文件�?
+	// 上传文件名
 	private String fileName = "";
-	// 状�??
+	// 状态
 	private String state = "";
 	// 文件类型
 	private String type = "";
-	// 原始文件�?
+	// 原始文件名
 	private String originalName = "";
 	// 文件大小
 	private long size = 0;
@@ -91,7 +91,7 @@ public class Uploader {
 					Streams.copy(in, output, true);
 					this.state=this.errorInfo.get("SUCCESS");
 					this.size = file.length();
-					//UE中只会处理单张上传，完成后即�?�?
+					//UE中只会处理单张上传，完成后即退出
 					break;
 				} else {
 					String fname = fis.getFieldName();
@@ -122,7 +122,7 @@ public class Uploader {
 	}
 	
 	/**
-	 * 接受并保存以base64格式上传的文�?
+	 * 接受并保存以base64格式上传的文件
 	 * @param fieldName
 	 */
 	public void uploadBase64(String fieldName){
@@ -167,7 +167,7 @@ public class Uploader {
 	}
 
 	/**
-	 * 获取文件扩展�?
+	 * 获取文件扩展名
 	 * 
 	 * @return string
 	 */
@@ -176,7 +176,7 @@ public class Uploader {
 	}
 
 	/**
-	 * 依据原始文件名生成新文件�?
+	 * 依据原始文件名生成新文件名
 	 * @return
 	 */
 	private String getName(String fileName) {
@@ -186,7 +186,7 @@ public class Uploader {
 	}
 
 	/**
-	 * 根据字符串创建本地目�? 并按照日期建立子目录返回
+	 * 根据字符串创建本地目录 并按照日期建立子目录返回
 	 * @param path 
 	 * @return 
 	 */
@@ -206,7 +206,7 @@ public class Uploader {
 	}
 
 	/**
-	 * 根据传入的虚拟路径获取物理路�?
+	 * 根据传入的虚拟路径获取物理路径
 	 * 
 	 * @param path
 	 * @return

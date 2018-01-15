@@ -185,7 +185,7 @@
 		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<!--ueditor编辑器js-->
-		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/umeditor/third-party/jquery.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/umeditor/umeditor.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/umeditor/umeditor.config.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/umeditor/lang/zh-cn/zh-cn.js"></script>

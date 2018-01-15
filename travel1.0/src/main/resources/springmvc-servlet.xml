@@ -11,12 +11,15 @@
 	<context:annotation-config></context:annotation-config>
 
 	<!-- 设置静态资源不被过滤  静态资源可以正常访问,但是我们的控制器 RequestMapping无法访问-->
-	<!-- <mvc:resources location="/" mapping="/*.html"></mvc:resources>
-	<mvc:resources location="/images/" mapping="/images/*.gif"></mvc:resources>
-	<mvc:resources location="/bootstrap/js/" mapping="/bootstrap/js/*.js"></mvc:resources>
-	<mvc:resources location="/bootstrap/css/" mapping="/bootstrap/css/*.css"></mvc:resources>
-	<mvc:resources location="/js/" mapping="/js/*.js"></mvc:resources>
-	<mvc:resources location="/imgs/" mapping="/imgs/*.jpg"></mvc:resources> -->
+	<mvc:resources location="/" mapping="/*.html"></mvc:resources>
+	<mvc:resources location="/css/" mapping="/css/**"></mvc:resources>
+	<mvc:resources location="/fileinput/" mapping="/fileinput/**"></mvc:resources>
+	<mvc:resources location="/fonts/" mapping="/fonts/**"></mvc:resources>
+	<mvc:resources location="/Hui-iconfont/" mapping="/Hui-iconfont/**"></mvc:resources>
+	<mvc:resources location="/images/" mapping="/images/**"></mvc:resources>
+	<mvc:resources location="/js/" mapping="/js/**"></mvc:resources>
+	<mvc:resources location="/layer/" mapping="/layer/**"></mvc:resources>
+	<mvc:resources location="/plugins/" mapping="/plugins/**"></mvc:resources>
 	<!-- 可以保证我们的控制器类正常被访问-->
 	<mvc:annotation-driven></mvc:annotation-driven> 
 	
