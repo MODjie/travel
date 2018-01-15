@@ -99,4 +99,12 @@ public class Exprience {
     public Exprience() {
 		// TODO Auto-generated constructor stub
 	}
+
+	@Override
+	public String toString() {
+		return "Exprience [EXPRIENCEID=" + EXPRIENCEID + ", EXTYPEID=" + EXTYPEID + ", EXTITLE=" + EXTITLE
+				+ ", EXAUTHORNAME=" + EXAUTHORNAME + ", EXCONTENT=" + EXCONTENT + ", EXPUBLISHTIME=" + EXPUBLISHTIME
+				+ ", EXCOVER=" + EXCOVER + ", ISPUBLISH=" + ISPUBLISH + "]";
+	}
+    
 }

@@ -42,19 +42,12 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
-		<table tableName="EXPRIENCE" domainObjectName="Exprience"
+		<table tableName="EXTYPE" domainObjectName="Extype"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
 			<!-- 设置驼峰命名 -->
 			<property name="useActualColumnNames" value="true" />
-		</table>
-		<table tableName="REGISTER" domainObjectName="Register"
-			enableCountByExample="false" enableUpdateByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false">
-			<!-- 设置驼峰命名 -->
-			<property name="useActualColumnNames" value="true" />
-		</table>
+		</table>		
 	</context>
 </generatorConfiguration>

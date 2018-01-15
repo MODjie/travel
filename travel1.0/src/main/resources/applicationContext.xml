@@ -103,8 +103,8 @@
 	</bean> -->
 
 	<!-- 配置扫描器 MapperScannerConfigurer 需要用到mybatis-spring.jar -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.java.shiro.mapper"></property>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">	    
+		<property name="basePackage" value="com.java.travel.mapper"></property>
 		<!-- 注意这里的是value 不是ref -->
 		<property name="sqlSessionFactoryBeanName" value="sessionFactory"></property>
 	</bean>

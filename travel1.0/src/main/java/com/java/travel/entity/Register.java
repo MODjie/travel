@@ -30,4 +30,10 @@ public class Register {
     public void setPASSWORD(String PASSWORD) {
         this.PASSWORD = PASSWORD == null ? null : PASSWORD.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Register [REGISTERID=" + REGISTERID + ", NICKNAME=" + NICKNAME + ", PASSWORD=" + PASSWORD + "]";
+	}
+    
 }
