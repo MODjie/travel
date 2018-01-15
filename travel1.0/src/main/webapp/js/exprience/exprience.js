@@ -16,12 +16,15 @@ $(function() {
 	$(".saveDraft").click(function() {
 		var ex_title = $("#ex-title-content").val();
 		var ex_content = um.getContent();
+//		var ex_cover = ;
 		if(ex_title == ""){
 			layer.msg("请输入标题");
 		}else if (ex_type == "") {
 			layer.msg("请选择类型");
+		}else if (ex_content == null) {
+			layer.msg("请输入文章内容");
 		}
-		alert(ex_content);
+		alert(ex_cover);
 	});
 	
 });

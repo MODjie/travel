@@ -34,3 +34,7 @@
 .edit-footer button {
 	margin: 0 auto;
 }
+
+.type-btn a {
+	cursor: pointer;
+}

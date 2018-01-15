@@ -122,24 +122,24 @@
 						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 							<span class="pull-left type-content">请选择<span class="caret" style="margin-left: 10px;"></span></span> 							
 						</button>
-						<ul class="dropdown-menu " role="menu">
+						<ul class="dropdown-menu " role="menu" style="z-index: 1999">
 							<li>
-								<a href="#" style="margin: 0 auto;">见闻</a>
+								<a style="margin: 0 auto;">见闻</a>
 							</li>
 							<li>
-								<a href="#">游记</a>
+								<a >游记</a>
 							</li>
 							<li>
-								<a href="#">动态</a>
+								<a>动态</a>
 							</li>
 							<li>
-								<a href="#">攻略</a>
+								<a>攻略</a>
 							</li>
 							<li>
-								<a href="#">风景</a>
+								<a>风景</a>
 							</li>
 							<li>
-								<a href="#">美食</a>
+								<a>美食</a>
 							</li>
 						</ul>
 					</div>
