@@ -15,17 +15,20 @@ $(function() {
 	// 保存草稿点击事件
 	$(".saveDraft").click(
 			function() {
-				var exTitle = $("#ex-title-content").val();
+				var exTitle = $("#exTitle").val();
 				var exContent = um.getContent();
+				//将内容放到隐藏控件中		
+				$("#exContent").val(exContent);
+				$("#exType").val(exType);
 				// var exCover = ;
 				if (exTitle == "") {
 					layer.msg("请输入标题");
 				} else if (exType == "") {
 					layer.msg("请选择类型");
 				} else {
-					location.href = "exprienceEdit?exTitle=" + exTitle
-							+ "&exType=" + exType + "&exContent=" + exContent
-							+ "&exIsPublish=no"
+//					location.href = "exprienceEdit?exTitle=" + exTitle
+//							+ "&exType=" + exType + "&exContent=" + exContent
+//							+ "&exIsPublish=no"
 				}
 
 			});
