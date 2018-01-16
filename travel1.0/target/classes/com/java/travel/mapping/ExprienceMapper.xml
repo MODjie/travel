@@ -6,18 +6,24 @@
     <result column="EXTYPEID" jdbcType="DECIMAL" property="EXTYPEID" />
     <result column="EXTITLE" jdbcType="VARCHAR" property="EXTITLE" />
     <result column="EXAUTHORNAME" jdbcType="VARCHAR" property="EXAUTHORNAME" />
-    <result column="EXCONTENT" jdbcType="VARCHAR" property="EXCONTENT" />
     <result column="EXPUBLISHTIME" jdbcType="TIMESTAMP" property="EXPUBLISHTIME" />
     <result column="EXCOVER" jdbcType="VARCHAR" property="EXCOVER" />
     <result column="ISPUBLISH" jdbcType="VARCHAR" property="ISPUBLISH" />
   </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.java.travel.entity.Exprience">
+    <result column="EXCONTENT" jdbcType="CLOB" property="EXCONTENT" />
+  </resultMap>
   <sql id="Base_Column_List">
-    EXPRIENCEID, EXTYPEID, EXTITLE, EXAUTHORNAME, EXCONTENT, EXPUBLISHTIME, EXCOVER, 
-    ISPUBLISH
+    EXPRIENCEID, EXTYPEID, EXTITLE, EXAUTHORNAME, EXPUBLISHTIME, EXCOVER, ISPUBLISH
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    EXCONTENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from EXPRIENCE
     where EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL}
   </select>
@@ -27,11 +33,11 @@
   </delete>
   <insert id="insert" parameterType="com.java.travel.entity.Exprience">
     insert into EXPRIENCE (EXPRIENCEID, EXTYPEID, EXTITLE, 
-      EXAUTHORNAME, EXCONTENT, EXPUBLISHTIME, 
-      EXCOVER, ISPUBLISH)
+      EXAUTHORNAME, EXPUBLISHTIME, EXCOVER, 
+      ISPUBLISH, EXCONTENT)
     values (#{EXPRIENCEID,jdbcType=DECIMAL}, #{EXTYPEID,jdbcType=DECIMAL}, #{EXTITLE,jdbcType=VARCHAR}, 
-      #{EXAUTHORNAME,jdbcType=VARCHAR}, #{EXCONTENT,jdbcType=VARCHAR}, #{EXPUBLISHTIME,jdbcType=TIMESTAMP}, 
-      #{EXCOVER,jdbcType=VARCHAR}, #{ISPUBLISH,jdbcType=VARCHAR})
+      #{EXAUTHORNAME,jdbcType=VARCHAR}, #{EXPUBLISHTIME,jdbcType=TIMESTAMP}, #{EXCOVER,jdbcType=VARCHAR}, 
+      #{ISPUBLISH,jdbcType=VARCHAR}, #{EXCONTENT,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.java.travel.entity.Exprience">
     insert into EXPRIENCE
@@ -48,9 +54,6 @@
       <if test="EXAUTHORNAME != null">
         EXAUTHORNAME,
       </if>
-      <if test="EXCONTENT != null">
-        EXCONTENT,
-      </if>
       <if test="EXPUBLISHTIME != null">
         EXPUBLISHTIME,
       </if>
@@ -59,6 +62,9 @@
       </if>
       <if test="ISPUBLISH != null">
         ISPUBLISH,
+      </if>
+      <if test="EXCONTENT != null">
+        EXCONTENT,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -74,9 +80,6 @@
       <if test="EXAUTHORNAME != null">
         #{EXAUTHORNAME,jdbcType=VARCHAR},
       </if>
-      <if test="EXCONTENT != null">
-        #{EXCONTENT,jdbcType=VARCHAR},
-      </if>
       <if test="EXPUBLISHTIME != null">
         #{EXPUBLISHTIME,jdbcType=TIMESTAMP},
       </if>
@@ -85,6 +88,9 @@
       </if>
       <if test="ISPUBLISH != null">
         #{ISPUBLISH,jdbcType=VARCHAR},
+      </if>
+      <if test="EXCONTENT != null">
+        #{EXCONTENT,jdbcType=CLOB},
       </if>
     </trim>
   </insert>
@@ -100,9 +106,6 @@
       <if test="EXAUTHORNAME != null">
         EXAUTHORNAME = #{EXAUTHORNAME,jdbcType=VARCHAR},
       </if>
-      <if test="EXCONTENT != null">
-        EXCONTENT = #{EXCONTENT,jdbcType=VARCHAR},
-      </if>
       <if test="EXPUBLISHTIME != null">
         EXPUBLISHTIME = #{EXPUBLISHTIME,jdbcType=TIMESTAMP},
       </if>
@@ -112,7 +115,21 @@
       <if test="ISPUBLISH != null">
         ISPUBLISH = #{ISPUBLISH,jdbcType=VARCHAR},
       </if>
+      <if test="EXCONTENT != null">
+        EXCONTENT = #{EXCONTENT,jdbcType=CLOB},
+      </if>
     </set>
+    where EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.java.travel.entity.Exprience">
+    update EXPRIENCE
+    set EXTYPEID = #{EXTYPEID,jdbcType=DECIMAL},
+      EXTITLE = #{EXTITLE,jdbcType=VARCHAR},
+      EXAUTHORNAME = #{EXAUTHORNAME,jdbcType=VARCHAR},
+      EXPUBLISHTIME = #{EXPUBLISHTIME,jdbcType=TIMESTAMP},
+      EXCOVER = #{EXCOVER,jdbcType=VARCHAR},
+      ISPUBLISH = #{ISPUBLISH,jdbcType=VARCHAR},
+      EXCONTENT = #{EXCONTENT,jdbcType=CLOB}
     where EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.java.travel.entity.Exprience">
@@ -120,7 +137,6 @@
     set EXTYPEID = #{EXTYPEID,jdbcType=DECIMAL},
       EXTITLE = #{EXTITLE,jdbcType=VARCHAR},
       EXAUTHORNAME = #{EXAUTHORNAME,jdbcType=VARCHAR},
-      EXCONTENT = #{EXCONTENT,jdbcType=VARCHAR},
       EXPUBLISHTIME = #{EXPUBLISHTIME,jdbcType=TIMESTAMP},
       EXCOVER = #{EXCOVER,jdbcType=VARCHAR},
       ISPUBLISH = #{ISPUBLISH,jdbcType=VARCHAR}

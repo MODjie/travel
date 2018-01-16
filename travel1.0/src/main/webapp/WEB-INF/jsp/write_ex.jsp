@@ -98,7 +98,7 @@
 
 	<div class="container edit-body">
 		<div class="edit-wrap">
-			<form role="form" method="POST" action="exprienceEdit" enctype=\”multipart/form-data\” >
+			<form role="form" method="POST" action="exprienceEdit" enctype="multipart/form-data" onsubmit="return checkNull()">
 				<div class="ex-title">
 					<h4>标题</h4>
 					<input type="text" id="exTitle" placeholder="10字以内" name="EXTITLE" />
@@ -129,19 +129,18 @@
 				</div>
 				<div class="upload-cover">
 					<h4>封面上传</h4>
-					<input type="file" id="cover" class="projectfile" />
+					<input type="file" id="cover" name="cover" class="projectfile" />
 				</div>
 				<div class="edit-footer">
 					<button type="button" class="btn btn-primary btn-lg">预览</button>
 					<button type="submit" class="btn btn-primary btn-lg saveDraft"
 						style="margin-left: 20px;">保存草稿</button>
-					<button type="button" class="btn btn-primary btn-lg"
-						style="margin-left: 20px;">发布</button>
+					<button type="submit" class="btn btn-primary btn-lg publish"
+						style="margin-left: 20px;" >发布</button>
 				</div>
 				<!-- 隐藏控件，用来存放内容 -->
 				<input type="hidden" name="EXTYPE" id="exType" >  
 				<input type="hidden" name="EXCONTENT" id="exContent"> 
-				<input type="hidden" name="EXCOVER" id="EXCOVER" value="cover">
 				<input type="hidden" name="ISPUBLISH" id="ISPUBLISH" value="no"> 
 			</form>
 		</div>

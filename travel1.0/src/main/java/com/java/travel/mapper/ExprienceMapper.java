@@ -13,5 +13,7 @@ public interface ExprienceMapper {
 
     int updateByPrimaryKeySelective(Exprience record);
 
+    int updateByPrimaryKeyWithBLOBs(Exprience record);
+
     int updateByPrimaryKey(Exprience record);
 }

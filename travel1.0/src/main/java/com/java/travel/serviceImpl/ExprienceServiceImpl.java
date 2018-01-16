@@ -44,4 +44,9 @@ public class ExprienceServiceImpl implements ExprienceService{
 		return exprienceMapper.updateByPrimaryKey(record);
 	}
 
+	public int updateByPrimaryKeyWithBLOBs(Exprience record) {
+		// TODO Auto-generated method stub
+		return exprienceMapper.updateByPrimaryKeyWithBLOBs(record);
+	}
+
 }

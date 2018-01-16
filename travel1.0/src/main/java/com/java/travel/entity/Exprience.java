@@ -11,13 +11,13 @@ public class Exprience {
 
     private String EXAUTHORNAME;
 
-    private String EXCONTENT;
-
     private Date EXPUBLISHTIME;
 
     private String EXCOVER;
 
     private String ISPUBLISH;
+
+    private String EXCONTENT;
 
     public Integer getEXPRIENCEID() {
         return EXPRIENCEID;
@@ -51,14 +51,6 @@ public class Exprience {
         this.EXAUTHORNAME = EXAUTHORNAME == null ? null : EXAUTHORNAME.trim();
     }
 
-    public String getEXCONTENT() {
-        return EXCONTENT;
-    }
-
-    public void setEXCONTENT(String EXCONTENT) {
-        this.EXCONTENT = EXCONTENT == null ? null : EXCONTENT.trim();
-    }
-
     public Date getEXPUBLISHTIME() {
         return EXPUBLISHTIME;
     }
@@ -83,28 +75,11 @@ public class Exprience {
         this.ISPUBLISH = ISPUBLISH == null ? null : ISPUBLISH.trim();
     }
 
-	public Exprience(Integer eXPRIENCEID, Integer eXTYPEID, String eXTITLE, String eXAUTHORNAME, String eXCONTENT,
-			Date eXPUBLISHTIME, String eXCOVER, String iSPUBLISH) {
-		super();
-		EXPRIENCEID = eXPRIENCEID;
-		EXTYPEID = eXTYPEID;
-		EXTITLE = eXTITLE;
-		EXAUTHORNAME = eXAUTHORNAME;
-		EXCONTENT = eXCONTENT;
-		EXPUBLISHTIME = eXPUBLISHTIME;
-		EXCOVER = eXCOVER;
-		ISPUBLISH = iSPUBLISH;
-	}
-    
-    public Exprience() {
-		// TODO Auto-generated constructor stub
-	}
+    public String getEXCONTENT() {
+        return EXCONTENT;
+    }
 
-	@Override
-	public String toString() {
-		return "Exprience [EXPRIENCEID=" + EXPRIENCEID + ", EXTYPEID=" + EXTYPEID + ", EXTITLE=" + EXTITLE
-				+ ", EXAUTHORNAME=" + EXAUTHORNAME + ", EXCONTENT=" + EXCONTENT + ", EXPUBLISHTIME=" + EXPUBLISHTIME
-				+ ", EXCOVER=" + EXCOVER + ", ISPUBLISH=" + ISPUBLISH + "]";
-	}
-    
+    public void setEXCONTENT(String EXCONTENT) {
+        this.EXCONTENT = EXCONTENT == null ? null : EXCONTENT.trim();
+    }
 }
