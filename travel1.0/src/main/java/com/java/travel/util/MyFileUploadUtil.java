@@ -114,7 +114,7 @@ public class MyFileUploadUtil {
 	
 	/**
 	 * 获得随机的文件名
-	 * @param file
+	 * @param file 前台上传的文件
 	 * @return
 	 */
 	public String getRandomName(MultipartFile file) {		
