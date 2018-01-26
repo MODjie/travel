@@ -17,6 +17,8 @@ public class Exprience {
 
     private String ISPUBLISH;
 
+    private Integer COMMENTNUM;
+
     private String EXCONTENT;
 
     public Integer getEXPRIENCEID() {
@@ -75,6 +77,14 @@ public class Exprience {
         this.ISPUBLISH = ISPUBLISH == null ? null : ISPUBLISH.trim();
     }
 
+    public Integer getCOMMENTNUM() {
+        return COMMENTNUM;
+    }
+
+    public void setCOMMENTNUM(Integer COMMENTNUM) {
+        this.COMMENTNUM = COMMENTNUM;
+    }
+
     public String getEXCONTENT() {
         return EXCONTENT;
     }
@@ -82,4 +92,28 @@ public class Exprience {
     public void setEXCONTENT(String EXCONTENT) {
         this.EXCONTENT = EXCONTENT == null ? null : EXCONTENT.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Exprience [EXPRIENCEID=" + EXPRIENCEID + ", EXTYPEID=" + EXTYPEID + ", EXTITLE=" + EXTITLE
+				+ ", EXAUTHORNAME=" + EXAUTHORNAME + ", EXPUBLISHTIME=" + EXPUBLISHTIME + ", EXCOVER=" + EXCOVER
+				+ ", ISPUBLISH=" + ISPUBLISH + ", COMMENTNUM=" + COMMENTNUM + ", EXCONTENT=" + EXCONTENT + "]";
+	}
+
+	public Exprience(Integer eXPRIENCEID, Integer eXTYPEID, String eXTITLE, String eXAUTHORNAME, Date eXPUBLISHTIME,
+			String eXCOVER, String iSPUBLISH, Integer cOMMENTNUM, String eXCONTENT) {
+		super();
+		EXPRIENCEID = eXPRIENCEID;
+		EXTYPEID = eXTYPEID;
+		EXTITLE = eXTITLE;
+		EXAUTHORNAME = eXAUTHORNAME;
+		EXPUBLISHTIME = eXPUBLISHTIME;
+		EXCOVER = eXCOVER;
+		ISPUBLISH = iSPUBLISH;
+		COMMENTNUM = cOMMENTNUM;
+		EXCONTENT = eXCONTENT;
+	}
+    public Exprience() {
+		// TODO Auto-generated constructor stub
+	}
 }

@@ -9,12 +9,14 @@
     <result column="EXPUBLISHTIME" jdbcType="TIMESTAMP" property="EXPUBLISHTIME" />
     <result column="EXCOVER" jdbcType="VARCHAR" property="EXCOVER" />
     <result column="ISPUBLISH" jdbcType="VARCHAR" property="ISPUBLISH" />
+    <result column="COMMENTNUM" jdbcType="DECIMAL" property="COMMENTNUM" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.java.travel.entity.Exprience">
     <result column="EXCONTENT" jdbcType="CLOB" property="EXCONTENT" />
   </resultMap>
   <sql id="Base_Column_List">
-    EXPRIENCEID, EXTYPEID, EXTITLE, EXAUTHORNAME, EXPUBLISHTIME, EXCOVER, ISPUBLISH
+    EXPRIENCEID, EXTYPEID, EXTITLE, EXAUTHORNAME, EXPUBLISHTIME, EXCOVER, ISPUBLISH, 
+    COMMENTNUM
   </sql>
   <sql id="Blob_Column_List">
     EXCONTENT
@@ -34,10 +36,12 @@
   <insert id="insert" parameterType="com.java.travel.entity.Exprience">
     insert into EXPRIENCE (EXPRIENCEID, EXTYPEID, EXTITLE, 
       EXAUTHORNAME, EXPUBLISHTIME, EXCOVER, 
-      ISPUBLISH, EXCONTENT)
+      ISPUBLISH, COMMENTNUM, EXCONTENT
+      )
     values (#{EXPRIENCEID,jdbcType=DECIMAL}, #{EXTYPEID,jdbcType=DECIMAL}, #{EXTITLE,jdbcType=VARCHAR}, 
       #{EXAUTHORNAME,jdbcType=VARCHAR}, #{EXPUBLISHTIME,jdbcType=TIMESTAMP}, #{EXCOVER,jdbcType=VARCHAR}, 
-      #{ISPUBLISH,jdbcType=VARCHAR}, #{EXCONTENT,jdbcType=CLOB})
+      #{ISPUBLISH,jdbcType=VARCHAR}, #{COMMENTNUM,jdbcType=DECIMAL}, #{EXCONTENT,jdbcType=CLOB}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.java.travel.entity.Exprience">
     insert into EXPRIENCE
@@ -62,6 +66,9 @@
       </if>
       <if test="ISPUBLISH != null">
         ISPUBLISH,
+      </if>
+      <if test="COMMENTNUM != null">
+        COMMENTNUM,
       </if>
       <if test="EXCONTENT != null">
         EXCONTENT,
@@ -89,6 +96,9 @@
       <if test="ISPUBLISH != null">
         #{ISPUBLISH,jdbcType=VARCHAR},
       </if>
+      <if test="COMMENTNUM != null">
+        #{COMMENTNUM,jdbcType=DECIMAL},
+      </if>
       <if test="EXCONTENT != null">
         #{EXCONTENT,jdbcType=CLOB},
       </if>
@@ -115,6 +125,9 @@
       <if test="ISPUBLISH != null">
         ISPUBLISH = #{ISPUBLISH,jdbcType=VARCHAR},
       </if>
+      <if test="COMMENTNUM != null">
+        COMMENTNUM = #{COMMENTNUM,jdbcType=DECIMAL},
+      </if>
       <if test="EXCONTENT != null">
         EXCONTENT = #{EXCONTENT,jdbcType=CLOB},
       </if>
@@ -129,6 +142,7 @@
       EXPUBLISHTIME = #{EXPUBLISHTIME,jdbcType=TIMESTAMP},
       EXCOVER = #{EXCOVER,jdbcType=VARCHAR},
       ISPUBLISH = #{ISPUBLISH,jdbcType=VARCHAR},
+      COMMENTNUM = #{COMMENTNUM,jdbcType=DECIMAL},
       EXCONTENT = #{EXCONTENT,jdbcType=CLOB}
     where EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL}
   </update>
@@ -139,7 +153,8 @@
       EXAUTHORNAME = #{EXAUTHORNAME,jdbcType=VARCHAR},
       EXPUBLISHTIME = #{EXPUBLISHTIME,jdbcType=TIMESTAMP},
       EXCOVER = #{EXCOVER,jdbcType=VARCHAR},
-      ISPUBLISH = #{ISPUBLISH,jdbcType=VARCHAR}
+      ISPUBLISH = #{ISPUBLISH,jdbcType=VARCHAR},
+      COMMENTNUM = #{COMMENTNUM,jdbcType=DECIMAL}
     where EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL}
   </update>
 </mapper>

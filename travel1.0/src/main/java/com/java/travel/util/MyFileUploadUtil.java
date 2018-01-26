@@ -27,8 +27,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
  * String savePath = uploadUtil.getDefaultTargetPath(inputFileName,fileDir);
  * uploadUtil.upload("cover","/cover/");
  * 1、通过request参数实例化
- * 2、调用upload(String inputFileName,String fileDir);
- * 如果需要获取按默认方式保存的地址，则可以调用getDefaultTargetPath(String inputFileName,String fileDir);
+ * 2、调用upload(String inputFileName,String fileDir);返回的是地址 
  * @author 刘小杰
  * 2018年1月16日23:19:42
  */
@@ -67,37 +66,30 @@ public class MyFileUploadUtil {
 	 * 上传图片方法重载，只要传入以下两个参数就可以
 	 * @param inputFileName 上传文件控件的name
 	 * @param fileDir 目标文件夹
+	 * @return String 返回保存的相对路径
 	 */
-	public void upload(String inputFileName,String fileDir) {
+	public String upload(String inputFileName,String fileDir) {
 		MultipartFile file = this.getFile(inputFileName);
 		String fileName = this.getRandomName(file);
 		String savePath = this.getTargetPath(fileDir,fileName);
 		this.upload(file, savePath);
-	}
-	/**
-	 * 获取按默认方式(getRandom方法)命名的的文件路径
-	 * @param inputFileName 上传文件控件的name
-	 * @param fileDir 目标文件夹
-	 * @return
-	 */
-	public String getDefaultTargetPath(String inputFileName,String fileDir) {
-		MultipartFile file = this.getFile(inputFileName);
-		String fileName = this.getRandomName(file);
-		String targetPath = request.getSession().getServletContext().getRealPath(fileDir) + fileName;
-		return targetPath;
+		//获取相对路径
+		String readPath = request.getContextPath()+fileDir+fileName;
+		return readPath;
 	}
 	
 	/**
-	 * 文件存放目标路径
+	 * 文件存放目标路径（绝对路径）
 	 * 
 	 * @param fileDir 目标文件夹
 	 * @param fileName 存放的文件名称
 	 * @return
 	 */
 	public String getTargetPath(String fileDir, String fileName) {
-		String targetPath = request.getSession().getServletContext().getRealPath(fileDir) + fileName;
+		String targetPath = request.getSession().getServletContext().getRealPath(fileDir) + fileName;		
 		return targetPath;
 	}
+	
 	
 	/**
 	 * 得到表单上传的文件

@@ -12,14 +12,39 @@ $(function() {
 		$(".type-content").text(exType);
 	});
 	
+	//预览按钮点击事件
+	$(".preview").click(function() {
+		var exTitle = $("#exTitle").val();
+		var exContent = um.getContent();
+		//将内容放到隐藏控件中		
+		$("#exContent").val(exContent);
+		$("#exType").val(exType);
+		$("#ISPUBLISH").val("preview");
+//		//设置form的打开新窗口属性
+		$(this).parents(".form_form").attr("target","_blank");		
+	});	
+	//保存草稿按钮点击事件
+	$(".saveDraft").click(function() {
+		var exTitle = $("#exTitle").val();
+		var exContent = um.getContent();
+		//将内容放到隐藏控件中		
+		$("#exContent").val(exContent);
+		$("#exType").val(exType);
+		$("#ISPUBLISH").val("no");
+		//去除form的打开新窗口属性
+		$(this).parents(".form_form").removeAttr("target");
+	})
+	//发布按钮点击事件
 	$(".publish").click(function() {
 		var exTitle = $("#exTitle").val();
 		var exContent = um.getContent();
 		//将内容放到隐藏控件中		
 		$("#exContent").val(exContent);
 		$("#exType").val(exType);
-		
-	})
+		$("#ISPUBLISH").val("yes");
+		//去除form的打开新窗口属性
+		$(this).parents(".form_form").removeAttr("target");
+	});
 
 });
 

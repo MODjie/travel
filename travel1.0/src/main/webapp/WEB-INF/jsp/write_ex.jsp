@@ -98,10 +98,10 @@
 
 	<div class="container edit-body">
 		<div class="edit-wrap">
-			<form role="form" method="POST" action="exprienceEdit" enctype="multipart/form-data" onsubmit="return checkNull()">
+			<form role="form" class="form_form" method="POST" action="exprienceEdit" enctype="multipart/form-data" onsubmit="return checkNull()" >
 				<div class="ex-title">
 					<h4>标题</h4>
-					<input type="text" id="exTitle" placeholder="10字以内" name="EXTITLE" />
+					<input type="text" id="exTitle" placeholder="20字以内" maxlength="40" name="EXTITLE" />
 				</div>
 				<div class="ex-type">
 					<h4>类型</h4>
@@ -132,7 +132,7 @@
 					<input type="file" id="cover" name="cover" class="projectfile" />
 				</div>
 				<div class="edit-footer">
-					<button type="button" class="btn btn-primary btn-lg">预览</button>
+					<button type="submit" class="btn btn-primary btn-lg preview">预览</button>
 					<button type="submit" class="btn btn-primary btn-lg saveDraft"
 						style="margin-left: 20px;">保存草稿</button>
 					<button type="submit" class="btn btn-primary btn-lg publish"

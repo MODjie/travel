@@ -11,7 +11,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<link rel="icon" href="favicon.ico">
-		<title>Renda - clean blog theme based on Bootstrap</title>
+		<title>详情</title>
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
 		<!-- Bootstrap core CSS -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -112,16 +112,17 @@
 				<div class="row clearfix">
 					<div class="col-md-8">
 						<article class="blog-post">
-							<div class="blog-post-image">
-								<img src="images/750x500-1.jpg" alt="">
-							</div>
+							<%-- <div class="blog-post-image">
+								<img src="${exprience.EXCOVER }" alt="">
+							</div> --%>
 							<div class="blog-post-body">
-								<h2>世界那么大 你又能走多远</h2>
+								<h2>${exprience.EXTITLE }</h2>
 								<div class="post-meta">
-									<a href="#">有梦想的码农</a>
-									</span>/<span><i class="fa fa-clock-o"></i>2017年12月24日/<span><i class="fa fa-comment-o"></i> <a href="#">343</a></span></div>
+									<a href="#">${exprience.EXAUTHORNAME }</a>
+										</span>/<span><i class="fa fa-clock-o"></i>${exprience.EXPUBLISHTIME }/<span><i class="fa fa-comment-o"></i> 
+									<a href="#">${exprience.COMMENTNUM }</a></span></div>
 								<div class="blog-post-body">
-									<p>但仍然有不少执迷不悟的文青频频表示说，自己的心灵深处被它击中，于是决定辞职去世界冒险。他们辞职后很可能会悲伤地发现自己的存款甚至撑不过半个月的生活开销。在阻碍人们践行“世界那么大，我想去看看”这一伟大精神的诸多因素中，金钱还不是最主要的因素，更重要的因素在于责任，作为一个社会人的责任。</p>
+									${exprience.EXCONTENT }
 								</div>
 							</div>
 							<hr />

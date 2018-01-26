@@ -21,10 +21,10 @@
 }
 
 .ex-type .type-btn  button{
-	width: 1325%;
+	width: 1139px;
 }
 .ex-type .type-btn .dropdown-menu{
-	min-width: 1325%;
+	min-width: 100%;
 }
 
 .edit-footer{
