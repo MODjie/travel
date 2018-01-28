@@ -53,7 +53,7 @@ public class ExprienceController {
 			mav.setViewName("preview");
 		}else if (exprience.getISPUBLISH().equals("no")) {
 			exService.insert(exprience);
-			mav.setViewName("write_ex");
+			mav.setViewName("exprienceList");
 		}else if (exprience.getISPUBLISH().equals("yes")) {
 			exService.insert(exprience);
 			mav.setViewName("post");

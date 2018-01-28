@@ -35,5 +35,16 @@ public class Register {
 	public String toString() {
 		return "Register [REGISTERID=" + REGISTERID + ", NICKNAME=" + NICKNAME + ", PASSWORD=" + PASSWORD + "]";
 	}
+
+	public Register(Integer rEGISTERID, String nICKNAME, String pASSWORD) {
+		super();
+		REGISTERID = rEGISTERID;
+		NICKNAME = nICKNAME;
+		PASSWORD = pASSWORD;
+	}
+	
+	public Register() {
+		// TODO Auto-generated constructor stub
+	}
     
 }

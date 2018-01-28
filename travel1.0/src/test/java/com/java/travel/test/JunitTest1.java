@@ -11,8 +11,10 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.java.travel.entity.Register;
 import com.java.travel.mapper.ExtypeMapper;
 import com.java.travel.service.ExTypeService;
+import com.java.travel.service.RegisterService;
 import com.java.travel.serviceImpl.ExTypeServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -20,6 +22,8 @@ import com.java.travel.serviceImpl.ExTypeServiceImpl;
 public class JunitTest1 {
 	@Resource
 	ExTypeService exTypeService;
+	@Resource
+	RegisterService registerService;
 	@Test	
 	public void test1() {
 		System.out.println(exTypeService.selectByName("¼ûÎÅ"));
@@ -40,6 +44,8 @@ public class JunitTest1 {
 	
 	@Test
 	public void test3() {
-		System.out.println(new Date());
+		Register record = new Register(5,"87878","222");
+		registerService.insert(record);
+		System.out.println(registerService.selectByPrimaryKey(1));
 	}
 }

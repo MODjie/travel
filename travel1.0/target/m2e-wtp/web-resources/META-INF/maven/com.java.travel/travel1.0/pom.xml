@@ -137,7 +137,7 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>1.0.12</version>
-		</dependency>		
+		</dependency>
 		<!-- pagehelpler插件 -->
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
@@ -175,6 +175,18 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.2</version>
 		</dependency>
+		<!-- 添加json依赖 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.4</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>travel1.0</finalName>

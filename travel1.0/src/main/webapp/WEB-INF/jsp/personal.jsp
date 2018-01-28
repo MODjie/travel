@@ -189,6 +189,9 @@
 						<a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
 					</li>
 					<li>
+						<a href="exprienceList.html" title="文章管理" style="color: #cc005f;"><i class="fa icon-book"></i></a>
+					</li>
+					<li>
 						<a href="exprienceList.html" title="好友圈"><i class="fa Hui-iconfont Hui-iconfont-share-pengyouquan"></i></a>
 					</li>
 				</ul>

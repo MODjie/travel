@@ -47,10 +47,10 @@
 				<div id="navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li class="active">
-							<a href="index.html">主页</a>
+							<a href="home.jsp">主页</a>
 						</li>
 						<li>
-							<a href="personal.html">个人中心</a>
+							<a href="personal.jsp">个人中心</a>
 						</li>
 						<li class="pick-type">
 							<a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">
@@ -364,6 +364,7 @@
 									<div class="form">
 										<form method="post" html="{:multipart=>true}" data-remote="true" action="/register" accept-charset="UTF-8">
 											<input id="email" class="form-control" type="text" placeholder="邮箱/手机号" name="email">
+											<input id="nickName" class="form-control" type="text" placeholder="昵称" name="nickName">
 											<input id="password" class="form-control" type="password" placeholder="密码" name="password">
 											<input id="password_confirmation" class="form-control" type="password" placeholder="确认密码" name="password_confirmation">
 											<input class="btn btn-default btn-register" type="submit" value="创建账户" name="commit">
@@ -402,8 +403,7 @@
 
 		<script src="js/custom.js"></script>
 		<script src="plugins/owl-carousel/owl.carousel.min.js"></script>
-		<script src="js/login-register.js" type="text/javascript"></script>
-		<script type="text/javascript" src="js/exprience/exprience.js"></script>
+		<script src="js/login-register.js" type="text/javascript"></script>		
 	</body>
 
 </html>
