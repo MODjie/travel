@@ -6,11 +6,19 @@
 	<display-name>travel1.0</display-name>
 
 	<!-- shiro过滤器定义 -->
-	<!-- <filter> <filter-name>shiroFilter</filter-name> <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> 
-		<init-param> 该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理 
-		<param-name>targetFilterLifecycle</param-name> <param-value>true</param-value> 
-		</init-param> </filter> <filter-mapping> <filter-name>shiroFilter</filter-name> 
-		<url-pattern>/*</url-pattern> </filter-mapping> -->
+	<filter>
+		<filter-name>shiroFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<!-- 该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理 -->
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>shiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 	<!-- 配置spring的监听 -->
 
@@ -48,17 +56,11 @@
 
 
 	<!-- 设置静态资源不被过滤 -->
-	<!-- <servlet-mapping>
-		<servlet-name>default</servlet-name>
-		<url-pattern>/css/*</url-pattern>
-		<url-pattern>/fileinput/*</url-pattern>
-		<url-pattern>/fonts/*</url-pattern>
-		<url-pattern>/Hui-iconfont/*</url-pattern>
-		<url-pattern>/images/*</url-pattern>
-		<url-pattern>/js/*</url-pattern>
-		<url-pattern>/layer/*</url-pattern>
-		<url-pattern>/plugins/*</url-pattern>
-	</servlet-mapping> -->
+	<!-- <servlet-mapping> <servlet-name>default</servlet-name> <url-pattern>/css/*</url-pattern> 
+		<url-pattern>/fileinput/*</url-pattern> <url-pattern>/fonts/*</url-pattern> 
+		<url-pattern>/Hui-iconfont/*</url-pattern> <url-pattern>/images/*</url-pattern> 
+		<url-pattern>/js/*</url-pattern> <url-pattern>/layer/*</url-pattern> <url-pattern>/plugins/*</url-pattern> 
+		</servlet-mapping> -->
 
 	<!-- 加入请求编码的过滤器 开始 -->
 

@@ -351,10 +351,10 @@
 									</div>
 									<div class="error"></div>
 									<div class="form loginBox">
-										<form method="post" action="/login" accept-charset="UTF-8">
+										<form  accept-charset="UTF-8">
 											<input class="form-control account" type="text" placeholder="邮箱/手机号/昵称" name="account">
 											<input class="form-control password" type="password" placeholder="密码" name="password">
-											<input class="btn btn-default btn-login" type="button" value="登录" onclick="loginAjax()">
+											<input class="btn btn-default btn-login" type="button" value="登录" ">
 										</form>
 									</div>
 								</div>
