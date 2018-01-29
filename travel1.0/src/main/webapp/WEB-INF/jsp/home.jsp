@@ -352,8 +352,8 @@
 									<div class="error"></div>
 									<div class="form loginBox">
 										<form method="post" action="/login" accept-charset="UTF-8">
-											<input id="email" class="form-control" type="text" placeholder="邮箱/手机号/昵称" name="email">
-											<input id="password" class="form-control" type="password" placeholder="密码" name="password">
+											<input class="form-control account" type="text" placeholder="邮箱/手机号/昵称" name="account">
+											<input class="form-control password" type="password" placeholder="密码" name="password">
 											<input class="btn btn-default btn-login" type="button" value="登录" onclick="loginAjax()">
 										</form>
 									</div>
@@ -362,12 +362,12 @@
 							<div class="box">
 								<div class="content registerBox" style="display:none;">
 									<div class="form">
-										<form method="post" html="{:multipart=>true}" data-remote="true" action="/register" accept-charset="UTF-8">
-											<input id="email" class="form-control" type="text" placeholder="邮箱/手机号" name="email">
-											<input id="nickName" class="form-control" type="text" placeholder="昵称" name="nickName">
-											<input id="password" class="form-control" type="password" placeholder="密码" name="password">
-											<input id="password_confirmation" class="form-control" type="password" placeholder="确认密码" name="password_confirmation">
-											<input class="btn btn-default btn-register" type="submit" value="创建账户" name="commit">
+										<form data-remote="true" accept-charset="UTF-8">
+											<input class="form-control telphone" type="text" placeholder="手机号" maxlength="11" name="telphone" onkeyup='this.value=this.value.replace(/\D/gi,"")'>
+											<input class="form-control registerNickName" type="text" placeholder="昵称" maxlength="10" name="registerNickName">
+											<input class="form-control registerPassword" type="password" placeholder="密码" maxlength="16" name="registerPassword">
+											<input class="form-control password_confirmation" type="password" placeholder="确认密码" maxlength="16"  name="password_confirmation">
+											<input class="btn btn-default btn-register" type="button" value="创建账户">
 										</form>
 									</div>
 								</div>

@@ -20,6 +20,10 @@
     where REGISTERID = #{REGISTERID,jdbcType=DECIMAL}
   </delete>
   <insert id="insert" parameterType="com.java.travel.entity.Register">
+      <!-- 返回主键到实体类对象中 -->
+      <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="REGISTERID">  
+        SELECT SEQUENCE_REGISTER.nextval FROM DUAL  
+   	 </selectKey> 
     insert into REGISTER (REGISTERID, NICKNAME, PASSWORD
       )
     values (#{REGISTERID,jdbcType=DECIMAL}, #{NICKNAME,jdbcType=VARCHAR}, #{PASSWORD,jdbcType=VARCHAR}

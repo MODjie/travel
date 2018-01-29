@@ -3,18 +3,26 @@ package com.java.travel.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.java.travel.entity.ExUser;
+import com.java.travel.service.ExUserService;
+import com.java.travel.service.RegisterService;
 
 @Controller
 public class UserController {
-	
+	@Resource
+	RegisterService registerService;
+	@Resource
+	ExUserService exUserService;
 	/**
 	 * 第一次访问网站跳转到主页
 	 * @return
@@ -23,26 +31,7 @@ public class UserController {
 	public String showHome() {
 		return "home";
 	}
-	
-	/**
-	 * 如果未登录就弹出注册窗口，否则跳转到编辑见闻界面
-	 */
-	/*@RequestMapping(value="write")
-	public ModelAndView writeEx(String currentPage , HttpServletRequest request) {
-		ModelAndView modelAndView = new ModelAndView();
-		HttpSession session = request.getSession();
-		String userName = (String) session.getAttribute("userName");
-		System.out.println(userName);		 
-		if (userName!=null) {
-			String loginRequest = "请登录";
-			modelAndView.addObject("loginRequest",loginRequest);
-			modelAndView.setViewName(currentPage);
-		}else {
-			
-			modelAndView.setViewName("write_ex");
-		}
-		return modelAndView;
-	}*/
+		
 	/**
 	 * 跳转到编辑界面
 	 * @return
@@ -54,10 +43,23 @@ public class UserController {
 	
 	/**
 	 * 注册
+	 * @param exUser
+	 * @return
 	 */
 	@RequestMapping(value="register", method=RequestMethod.POST)
-	public void register() {
-		//创建user视图，具有register和user的属性
+	@ResponseBody
+	public ExUser register(ExUser exUser) {
+		//设置用户默认属性
+		exUser.setROLEID(1);
+		exUser.setHEADADDRESS("images/head/defaultHead.png");
+		exUser.setMOOD("一句话介绍下自己吧，让别人更了解你");
+		exUser.setGROWTHVALUE(0);
+		exUser.setTODAYVALUE(0);
+		exUser.setNORMALLEVEL(1);
+		exUser.setDAYVALLIMIT(1000);
+		
+		exUserService.insert(exUser);
+		return exUser;
 	}
 	/**
 	 * 判断是否有用户登录
@@ -70,12 +72,27 @@ public class UserController {
 		HttpSession session = request.getSession();
 		List<String> list = new ArrayList<String>();
 		String userName = (String) session.getAttribute("userName");
-		System.out.println(userName);
 		if (userName != null) {
 			list.add("已登录");			
 		}else {
 			list.add("未登录");
 		}
 		return list;
+	}
+	/**
+	 * 判断是否已经存在此用户
+	 * @param nickName
+	 * @return 1表示账号可用，-1表示用户已存在
+	 */
+	@RequestMapping(value="hasUser",method=RequestMethod.GET)
+	@ResponseBody
+	public int hasUser(String nickName) {
+		ExUser exUser = exUserService.selectByNickName(nickName);
+		if (exUser==null) {
+			return 1;
+		}else {
+			return-1;
+		}
+		
 	}
 }

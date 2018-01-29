@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.travel.mapper.ExUserMapper">
+  <resultMap id="BaseResultMap" type="com.java.travel.entity.ExUser">
+    <id column="USERID" jdbcType="DECIMAL" property="USERID" />
+    <result column="ROLEID" jdbcType="DECIMAL" property="ROLEID" />
+    <result column="AGE" jdbcType="DECIMAL" property="AGE" />
+    <result column="HEADADDRESS" jdbcType="VARCHAR" property="HEADADDRESS" />
+    <result column="NICKNAME" jdbcType="VARCHAR" property="NICKNAME" />
+    <result column="MOOD" jdbcType="VARCHAR" property="MOOD" />
+    <result column="TEL" jdbcType="VARCHAR" property="TEL" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="EMAIL" />
+    <result column="GROWTHVALUE" jdbcType="DECIMAL" property="GROWTHVALUE" />
+    <result column="TODAYVALUE" jdbcType="DECIMAL" property="TODAYVALUE" />
+    <result column="NORMALLEVEL" jdbcType="DECIMAL" property="NORMALLEVEL" />
+    <result column="DAYVALLIMIT" jdbcType="DECIMAL" property="DAYVALLIMIT" />
+    <result column="PROVINCE" jdbcType="VARCHAR" property="PROVINCE" />
+    <result column="CITY" jdbcType="VARCHAR" property="CITY" />
+    <result column="COUNTY" jdbcType="VARCHAR" property="COUNTY" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="PASSWORD" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    USERID, ROLEID, AGE, HEADADDRESS, NICKNAME, MOOD, TEL, EMAIL, GROWTHVALUE, TODAYVALUE, 
+    NORMALLEVEL, DAYVALLIMIT, PROVINCE, CITY, COUNTY, PASSWORD
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from EXUSER
+    where USERID = #{USERID,jdbcType=DECIMAL}
+  </select>
+  
+  <!-- 通过昵称查找用户 -->
+  <select id="selectByNickName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from EXUSER
+    where NICKNAME = #{NICKNAME,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from EXUSER
+    where USERID = #{USERID,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.java.travel.entity.ExUser">
+    insert into EXUSER (USERID, ROLEID, AGE, 
+      HEADADDRESS, NICKNAME, MOOD, 
+      TEL, EMAIL, GROWTHVALUE, 
+      TODAYVALUE, NORMALLEVEL, DAYVALLIMIT, 
+      PROVINCE, CITY, COUNTY, 
+      PASSWORD)
+    values (#{USERID,jdbcType=DECIMAL}, #{ROLEID,jdbcType=DECIMAL}, #{AGE,jdbcType=DECIMAL}, 
+      #{HEADADDRESS,jdbcType=VARCHAR}, #{NICKNAME,jdbcType=VARCHAR}, #{MOOD,jdbcType=VARCHAR}, 
+      #{TEL,jdbcType=VARCHAR}, #{EMAIL,jdbcType=VARCHAR}, #{GROWTHVALUE,jdbcType=DECIMAL}, 
+      #{TODAYVALUE,jdbcType=DECIMAL}, #{NORMALLEVEL,jdbcType=DECIMAL}, #{DAYVALLIMIT,jdbcType=DECIMAL}, 
+      #{PROVINCE,jdbcType=VARCHAR}, #{CITY,jdbcType=VARCHAR}, #{COUNTY,jdbcType=VARCHAR}, 
+      #{PASSWORD,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.java.travel.entity.ExUser">
+    insert into EXUSER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="USERID != null">
+        USERID,
+      </if>
+      <if test="ROLEID != null">
+        ROLEID,
+      </if>
+      <if test="AGE != null">
+        AGE,
+      </if>
+      <if test="HEADADDRESS != null">
+        HEADADDRESS,
+      </if>
+      <if test="NICKNAME != null">
+        NICKNAME,
+      </if>
+      <if test="MOOD != null">
+        MOOD,
+      </if>
+      <if test="TEL != null">
+        TEL,
+      </if>
+      <if test="EMAIL != null">
+        EMAIL,
+      </if>
+      <if test="GROWTHVALUE != null">
+        GROWTHVALUE,
+      </if>
+      <if test="TODAYVALUE != null">
+        TODAYVALUE,
+      </if>
+      <if test="NORMALLEVEL != null">
+        NORMALLEVEL,
+      </if>
+      <if test="DAYVALLIMIT != null">
+        DAYVALLIMIT,
+      </if>
+      <if test="PROVINCE != null">
+        PROVINCE,
+      </if>
+      <if test="CITY != null">
+        CITY,
+      </if>
+      <if test="COUNTY != null">
+        COUNTY,
+      </if>
+      <if test="PASSWORD != null">
+        PASSWORD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="USERID != null">
+        #{USERID,jdbcType=DECIMAL},
+      </if>
+      <if test="ROLEID != null">
+        #{ROLEID,jdbcType=DECIMAL},
+      </if>
+      <if test="AGE != null">
+        #{AGE,jdbcType=DECIMAL},
+      </if>
+      <if test="HEADADDRESS != null">
+        #{HEADADDRESS,jdbcType=VARCHAR},
+      </if>
+      <if test="NICKNAME != null">
+        #{NICKNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="MOOD != null">
+        #{MOOD,jdbcType=VARCHAR},
+      </if>
+      <if test="TEL != null">
+        #{TEL,jdbcType=VARCHAR},
+      </if>
+      <if test="EMAIL != null">
+        #{EMAIL,jdbcType=VARCHAR},
+      </if>
+      <if test="GROWTHVALUE != null">
+        #{GROWTHVALUE,jdbcType=DECIMAL},
+      </if>
+      <if test="TODAYVALUE != null">
+        #{TODAYVALUE,jdbcType=DECIMAL},
+      </if>
+      <if test="NORMALLEVEL != null">
+        #{NORMALLEVEL,jdbcType=DECIMAL},
+      </if>
+      <if test="DAYVALLIMIT != null">
+        #{DAYVALLIMIT,jdbcType=DECIMAL},
+      </if>
+      <if test="PROVINCE != null">
+        #{PROVINCE,jdbcType=VARCHAR},
+      </if>
+      <if test="CITY != null">
+        #{CITY,jdbcType=VARCHAR},
+      </if>
+      <if test="COUNTY != null">
+        #{COUNTY,jdbcType=VARCHAR},
+      </if>
+      <if test="PASSWORD != null">
+        #{PASSWORD,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.java.travel.entity.ExUser">
+    update EXUSER
+    <set>
+      <if test="ROLEID != null">
+        ROLEID = #{ROLEID,jdbcType=DECIMAL},
+      </if>
+      <if test="AGE != null">
+        AGE = #{AGE,jdbcType=DECIMAL},
+      </if>
+      <if test="HEADADDRESS != null">
+        HEADADDRESS = #{HEADADDRESS,jdbcType=VARCHAR},
+      </if>
+      <if test="NICKNAME != null">
+        NICKNAME = #{NICKNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="MOOD != null">
+        MOOD = #{MOOD,jdbcType=VARCHAR},
+      </if>
+      <if test="TEL != null">
+        TEL = #{TEL,jdbcType=VARCHAR},
+      </if>
+      <if test="EMAIL != null">
+        EMAIL = #{EMAIL,jdbcType=VARCHAR},
+      </if>
+      <if test="GROWTHVALUE != null">
+        GROWTHVALUE = #{GROWTHVALUE,jdbcType=DECIMAL},
+      </if>
+      <if test="TODAYVALUE != null">
+        TODAYVALUE = #{TODAYVALUE,jdbcType=DECIMAL},
+      </if>
+      <if test="NORMALLEVEL != null">
+        NORMALLEVEL = #{NORMALLEVEL,jdbcType=DECIMAL},
+      </if>
+      <if test="DAYVALLIMIT != null">
+        DAYVALLIMIT = #{DAYVALLIMIT,jdbcType=DECIMAL},
+      </if>
+      <if test="PROVINCE != null">
+        PROVINCE = #{PROVINCE,jdbcType=VARCHAR},
+      </if>
+      <if test="CITY != null">
+        CITY = #{CITY,jdbcType=VARCHAR},
+      </if>
+      <if test="COUNTY != null">
+        COUNTY = #{COUNTY,jdbcType=VARCHAR},
+      </if>
+      <if test="PASSWORD != null">
+        PASSWORD = #{PASSWORD,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USERID = #{USERID,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.java.travel.entity.ExUser">
+    update EXUSER
+    set ROLEID = #{ROLEID,jdbcType=DECIMAL},
+      AGE = #{AGE,jdbcType=DECIMAL},
+      HEADADDRESS = #{HEADADDRESS,jdbcType=VARCHAR},
+      NICKNAME = #{NICKNAME,jdbcType=VARCHAR},
+      MOOD = #{MOOD,jdbcType=VARCHAR},
+      TEL = #{TEL,jdbcType=VARCHAR},
+      EMAIL = #{EMAIL,jdbcType=VARCHAR},
+      GROWTHVALUE = #{GROWTHVALUE,jdbcType=DECIMAL},
+      TODAYVALUE = #{TODAYVALUE,jdbcType=DECIMAL},
+      NORMALLEVEL = #{NORMALLEVEL,jdbcType=DECIMAL},
+      DAYVALLIMIT = #{DAYVALLIMIT,jdbcType=DECIMAL},
+      PROVINCE = #{PROVINCE,jdbcType=VARCHAR},
+      CITY = #{CITY,jdbcType=VARCHAR},
+      COUNTY = #{COUNTY,jdbcType=VARCHAR},
+      PASSWORD = #{PASSWORD,jdbcType=VARCHAR}
+    where USERID = #{USERID,jdbcType=DECIMAL}
+  </update>
+</mapper>

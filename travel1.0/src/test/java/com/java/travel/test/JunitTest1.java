@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.java.travel.entity.Register;
 import com.java.travel.mapper.ExtypeMapper;
 import com.java.travel.service.ExTypeService;
+import com.java.travel.service.ExUserService;
 import com.java.travel.service.RegisterService;
 import com.java.travel.serviceImpl.ExTypeServiceImpl;
 
@@ -24,6 +25,8 @@ public class JunitTest1 {
 	ExTypeService exTypeService;
 	@Resource
 	RegisterService registerService;
+	@Resource
+	ExUserService exUserService;
 	@Test	
 	public void test1() {
 		System.out.println(exTypeService.selectByName("¼ûÎÅ"));
@@ -44,8 +47,13 @@ public class JunitTest1 {
 	
 	@Test
 	public void test3() {
-		Register record = new Register(5,"87878","222");
+		Register record = new Register(123,"465sdfgaf5456","222");
 		registerService.insert(record);
-		System.out.println(registerService.selectByPrimaryKey(1));
+		System.out.println(record.getREGISTERID());
+	}
+
+	@Test
+	public void test4() {
+		System.out.println(exUserService.selectByNickName("½Ü¸ç"));
 	}
 }
