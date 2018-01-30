@@ -13,30 +13,28 @@ import org.apache.shiro.subject.PrincipalCollection;
 import com.java.travel.entity.ExUser;
 import com.java.travel.service.ExUserService;
 
-public class MyRealm extends AuthorizingRealm {
+public class TelphoneRealm extends AuthorizingRealm{
 
 	@Resource
 	ExUserService exUserService;
-	/**
-	 * 为当限前登录的用户授予角色和权限
-	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * 验证当前登录的用户
-	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		String nickName = (String) token.getPrincipal();
-		ExUser exUser = exUserService.selectByNickName(nickName);
+		// TODO Auto-generated method stub
+		String telphoneNum = (String) token.getPrincipal();
+		System.out.println(4444);
+		ExUser exUser = exUserService.selectByTelphoneNum(telphoneNum);
 		if (exUser != null) {
-			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(exUser.getNICKNAME(), exUser.getPASSWORD(), "xx");
+			System.out.println(3333);
+			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(exUser.getTEL(), "xx", "xx");
 			return authcInfo;
 		} else {
+			System.out.println(777);			
 			return null;
 		}
 	}

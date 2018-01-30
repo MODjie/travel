@@ -156,6 +156,28 @@ function identifyCodeAjax(tel) {
 	 
 }
 
+//验证码登录Ajax请求
+function identifyCodeLoginAjax() {
+	var tel = $(".telphone2").val();
+	$.ajax({
+		type : "get",
+		url : "codeLogin",
+		data : {
+			telphoneNum : tel
+		},
+		dataType : "json",
+		async : false, //不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
+		success : function(data) {
+			if (data == 1) {
+				alert("登录成功");
+			}else {
+				shakeModal("请检查手机号码");
+			}
+			
+		}		
+	});	 
+}
+
 // 出错窗口震动警告
 function shakeModal(warm) {
 	$('#loginModal .modal-dialog').addClass('shake');
@@ -173,8 +195,7 @@ function inputRight(warm) {
 	$('.error').addClass('alert alert-success');
 }
 // 验证手机号码
-function checkMobile() {
-	var sMobile = $(".telphone").val();
+function checkMobile(sMobile) {
 	if (!(/^1[3|4|5|7|8][0-9]\d{8}$/.test(sMobile))) {
 		shakeModal("手机号码格式不正确");
 		// $(".telphone").focus();
@@ -250,8 +271,7 @@ function checkPasswordConfim() {
 }
 
 // 验证码验证
-function checkIdentifyCode(realCode) {
-	var inputCode = $(".identifyCode").val();
+function checkIdentifyCode(realCode,inputCode) {
 	if (inputCode == realCode) {
 		inputRight("验证码正确");
 		return true;
@@ -292,20 +312,26 @@ $(function() {
 				openLoginModal();
 			}
 		}
-	/*
-	 * , error:function(xhr){ alert("失败了") }
-	 */
 	});
 
 	// 验证码输入框失去焦点验证
-	$(".identifyCode").blur(function() {
-		checkIdentifyCode(realCode);
+	$(".identifyCode,.identifyCode2").blur(function() {
+		checkIdentifyCode(realCode,$(this).val());
 	});
 	// 注册窗口中的获取验证码按钮点击事件
 	$(".btn-getCode").click(function() {
 		var identifyCode = 0;
 		var tel = $(".telphone").val();
-		if (checkMobile() == true) {
+		if (checkMobile($(tel)) == true) {
+			realCode = identifyCodeAjax(tel);
+			countDown($(this));
+		}
+	});
+	// 验证码登录窗口中的获取验证码按钮点击事件
+	$(".btn-getCode2").click(function() {
+		var identifyCode = 0;
+		var tel = $(".telphone2").val();
+		if (checkMobile(tel) == true) {
 			realCode = identifyCodeAjax(tel);
 			countDown($(this));
 		}
@@ -326,10 +352,10 @@ $(function() {
 	// 注册按钮点击事件,发送ajax请求
 	$(".btn-register").click(
 			function() {
-				if (checkMobile() == true && checkNickName() == true
+				if (checkMobile($(".telphone").val()) == true && checkNickName() == true
 						&& checkPassword() == true
 						&& checkPasswordConfim() == true
-						&& checkIdentifyCode(realCode) == true) {
+						&& checkIdentifyCode(realCode,$(".identifyCode").val()) == true) {
 					registerAjax();
 				}
 			});
@@ -337,5 +363,11 @@ $(function() {
 	// 登录按钮点击事件，发送ajax请求
 	$(".btn-login").click(function() {
 		loginAjax();
+	})
+	//验证码登录按钮点击事件，发送ajax请求
+	$(".btn-code-login").click(function() {		
+		if (checkIdentifyCode(realCode,$(".identifyCode2").val()) == true) {
+			identifyCodeLoginAjax();
+		}
 	})
 });

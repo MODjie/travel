@@ -38,6 +38,14 @@
     where NICKNAME = #{NICKNAME,jdbcType=VARCHAR}
   </select>
   
+  <!-- 通过手机号码查找用户 -->
+  <select id="selectByTelphoneNum" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from EXUSER
+    where TEL = #{TEL,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from EXUSER
     where USERID = #{USERID,jdbcType=DECIMAL}

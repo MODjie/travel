@@ -64,11 +64,19 @@
 	
 	<!-- shiro的配置 -->
 	<!-- 自定义Realm -->
-	<bean id="myRealm" class="com.java.travel.realm.MyRealm" />
-
+	<bean id="userNamePasswordRealm" class="com.java.travel.realm.UserNamePasswordRealm" />
+	<bean id="telphoneRealm" class="com.java.travel.realm.TelphoneRealm" /> 
 	<!-- 安全管理器 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		<property name="realm" ref="myRealm" />
+		<!-- 单realm的配置 -->
+		<!-- <property name="realm" ref="myRealm" /> -->
+		<!-- 多realm的配置 -->
+		<property name="realms">  
+        <list>  
+            <ref bean="userNamePasswordRealm" /> 
+            <ref bean="telphoneRealm" />
+        </list>  
+    </property>
 	</bean>
 
 	<!-- Shiro过滤器 -->
@@ -84,6 +92,8 @@
 			<value>
 				/showHome=anon
 				/hasUser=anon
+				/getIdentifyCode=anon
+				/codeLogin=anon
 				/writeEx=authc
 				/exprienceEdit=authc			
 			</value>

@@ -49,4 +49,9 @@ public class ExUserServiceImpl implements ExUserService {
 		return exUserMapper.selectByNickName(nickName);
 	}
 
+	public ExUser selectByTelphoneNum(String telphoneNum) {
+		// TODO Auto-generated method stub
+		return exUserMapper.selectByTelphoneNum(telphoneNum);
+	}
+
 }

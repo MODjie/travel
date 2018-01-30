@@ -260,6 +260,7 @@
 
 .login .btn-login,
 .codeLoginBox .btn-getCode2,
+.codeLoginBox .btn-code-login,
 .forgotPasswordBox .btn-getCode3,
 .registerBox .btn-getCode,
 .registerBox .btn-register {
@@ -276,6 +277,7 @@
 
 .login .btn-login:hover,
 .codeLoginBox .btn-getCode2:hover,
+.codeLoginBox .btn-code-login:hover,
 .forgotPasswordBox .btn-getCode3:hover,
 .registerBox .btn-getCode:hover,
 .registerBox .btn-register:hover {

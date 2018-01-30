@@ -56,4 +56,8 @@
 //	public void test4() {
 //		System.out.println(exUserService.selectByNickName("½Ü¸ç"));
 //	}
+//	@Test
+//	public void test5() {
+//		System.out.println(exUserService.selectByTelphoneNum("15659561005"));
+//	}
 //}

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.java.travel.entity.ExUser;
 import com.java.travel.service.ExUserService;
 import com.java.travel.service.RegisterService;
+import com.java.travel.token.TelphoneToken;
 import com.java.travel.util.IndustrySMS;
 
 @Controller
@@ -132,6 +133,27 @@ public class UserController {
 			return -3;
 		}
 	}
+	
+	/**
+	 * 短信验证码登录
+	 * @param telphoneNum
+	 * @return
+	 */
+	@RequestMapping(value = "codeLogin", method = RequestMethod.GET)
+	@ResponseBody
+	public int codeLogin(String telphoneNum) {		
+		Subject subject = SecurityUtils.getSubject();
+		TelphoneToken token = new TelphoneToken(telphoneNum);
+		try {
+			subject.login(token);
+			System.out.println(1111);
+			return 1;
+		}  catch (Exception e) {
+			System.out.println(2222);
+			return -1;
+		}
+	}
+	
 	/**
 	 * 获取短信验证码
 	 * @return
