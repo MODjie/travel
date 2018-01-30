@@ -1,23 +1,61 @@
 function showRegisterForm() {
-	$('.loginBox').fadeOut('fast', function() {
-		$('.registerBox').fadeIn('fast');
-		$('.login-footer').fadeOut('fast', function() {
-			$('.register-footer').fadeIn('fast');
-		});
-		$('.modal-title').html('合作账号登录');
-	});
+	$('.loginBox,.codeLoginBox,.forgotPasswordBox').fadeOut(
+			'fast',
+			function() {
+				$('.registerBox').fadeIn('fast');
+				$('.login-footer,.code-login-footer,.forgot-password-footer')
+						.fadeOut('fast', function() {
+							$('.register-footer').fadeIn('fast');
+						});
+				$('.modal-title').html('合作账号登录');
+			});
 	$('.error').removeClass('alert alert-danger').html('');
 
 }
 function showLoginForm() {
-	$('#loginModal .registerBox').fadeOut('fast', function() {
-		$('.loginBox').fadeIn('fast');
-		$('.register-footer').fadeOut('fast', function() {
-			$('.login-footer').fadeIn('fast');
-		});
+	$('#loginModal .registerBox,.codeLoginBox,.forgotPasswordBox')
+			.fadeOut(
+					'fast',
+					function() {
+						$('.loginBox').fadeIn('fast');
+						$(
+								'.register-footer,.code-login-footer,.forgot-password-footer')
+								.fadeOut('fast', function() {
+									$('.login-footer').fadeIn('fast');
+								});
 
-		$('.modal-title').html('合作账号登录');
-	});
+						$('.modal-title').html('合作账号登录');
+					});
+	$('.error').removeClass('alert alert-danger').html('');
+}
+
+function showCodeLoginForm() {
+	$('#loginModal .registerBox,.loginBox,.forgotPasswordBox').fadeOut(
+			'fast',
+			function() {
+				$('.codeLoginBox').fadeIn('fast');
+				$('.register-footer,.login-footer,.forgot-password-footer')
+						.fadeOut('fast', function() {
+							$('.code-login-footer').fadeIn('fast');
+						});
+
+				$('.modal-title').html('合作账号登录');
+			});
+	$('.error').removeClass('alert alert-danger').html('');
+}
+
+function showForgotPasswordForm() {
+	$('#loginModal .registerBox,.loginBox,.codeLoginBox').fadeOut(
+			'fast',
+			function() {
+				$('.forgotPasswordBox').fadeIn('fast');
+				$('.register-footer,.login-footer,.code-login-footer').fadeOut(
+						'fast', function() {
+							$('.forgot-password-footer').fadeIn('fast');
+						});
+
+				$('.modal-title').html('合作账号登录');
+			});
 	$('.error').removeClass('alert alert-danger').html('');
 }
 
@@ -40,11 +78,11 @@ function openRegisterModal() {
 function loginAjax() {
 	var nickName = $(".account").val();
 	var password = $(".password").val();
-	if (nickName=="") {
+	if (nickName == "") {
 		shakeModal("账号不能为空");
-	}else if (password=="") {
+	} else if (password == "") {
 		shakeModal("密码不能为空");
-	}else {
+	} else {
 		$.ajax({
 			type : "get",
 			url : "login",
@@ -66,7 +104,6 @@ function loginAjax() {
 			}
 		});
 	}
-	
 
 }
 
@@ -92,11 +129,31 @@ function registerAjax() {
 			$(".password").val(data.password);
 			openLoginModal();
 			$(".telphone").val("");
+			$(".identifyCode").val("");
 			$(".registerNickName").val("");
 			$(".registerPassword").val("");
 			$(".password_confirmation").val("");
 		}
 	});
+}
+
+// 获取验证码Ajax请求
+function identifyCodeAjax(tel) {
+	var identifyCode = -1;
+	$.ajax({
+		type : "get",
+		url : "getIdentifyCode",
+		data : {
+			tel : tel
+		},
+		dataType : "json",
+		async : false, //不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
+		success : function(data) {
+			identifyCode = data;
+		}		
+	});
+	return identifyCode;
+	 
 }
 
 // 出错窗口震动警告
@@ -118,7 +175,7 @@ function inputRight(warm) {
 // 验证手机号码
 function checkMobile() {
 	var sMobile = $(".telphone").val();
-	if (!(/^1[3|4|5|8][0-9]\d{8}$/.test(sMobile))) {
+	if (!(/^1[3|4|5|7|8][0-9]\d{8}$/.test(sMobile))) {
 		shakeModal("手机号码格式不正确");
 		// $(".telphone").focus();
 		return false;
@@ -192,7 +249,39 @@ function checkPasswordConfim() {
 	}
 }
 
+// 验证码验证
+function checkIdentifyCode(realCode) {
+	var inputCode = $(".identifyCode").val();
+	if (inputCode == realCode) {
+		inputRight("验证码正确");
+		return true;
+	} else if (inputCode == "") {
+		shakeModal("请输入验证码");
+		return false;
+	} else {
+		shakeModal("验证码错误");
+		return false;
+	}
+}
+//重新获取验证码倒计时
+function countDown(getCodeBtn) {
+	var countTime = 119;
+	$(getCodeBtn).attr('disabled',"true");
+	var myVar  = setInterval(function(){ 		 
+		   getCodeBtn.val("重新获取："+countTime);
+		   countTime=countTime-1;		   
+		   if (countTime<-1) {
+				clearInterval(myVar);
+				$(getCodeBtn).removeAttr("disabled");
+				getCodeBtn.val("获取验证码");
+			} 
+	}, 1000);		
+}
+
+
 $(function() {
+	// 正确的验证码
+	var realCode;
 	// 加载主页时判断是否有用户，如果没有就提示登录注册模态框
 	$.ajax({
 		type : "GET",
@@ -208,9 +297,18 @@ $(function() {
 	 */
 	});
 
-	// 手机号input失去焦点验证手机号格式
-	$(".telphone").blur(function() {
-		checkMobile();
+	// 验证码输入框失去焦点验证
+	$(".identifyCode").blur(function() {
+		checkIdentifyCode(realCode);
+	});
+	// 注册窗口中的获取验证码按钮点击事件
+	$(".btn-getCode").click(function() {
+		var identifyCode = 0;
+		var tel = $(".telphone").val();
+		if (checkMobile() == true) {
+			realCode = identifyCodeAjax(tel);
+			countDown($(this));
+		}
 	});
 	// 昵称input失去焦点发送ajax请求验证昵称是否可用
 	$(".registerNickName").blur(function() {
@@ -224,16 +322,19 @@ $(function() {
 	$(".password_confirmation").blur(function() {
 		checkPasswordConfim();
 	});
+
 	// 注册按钮点击事件,发送ajax请求
 	$(".btn-register").click(
 			function() {
 				if (checkMobile() == true && checkNickName() == true
 						&& checkPassword() == true
-						&& checkPasswordConfim() == true) {
+						&& checkPasswordConfim() == true
+						&& checkIdentifyCode(realCode) == true) {
 					registerAjax();
 				}
 			});
-	//登录按钮点击事件，发送ajax请求
+
+	// 登录按钮点击事件，发送ajax请求
 	$(".btn-login").click(function() {
 		loginAjax();
 	})

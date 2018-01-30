@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.java.travel.entity.ExUser;
 import com.java.travel.service.ExUserService;
 import com.java.travel.service.RegisterService;
+import com.java.travel.util.IndustrySMS;
 
 @Controller
 public class UserController {
@@ -109,7 +110,12 @@ public class UserController {
 		}
 
 	}
-
+	/**
+	 * 登录
+	 * @param nickName
+	 * @param password
+	 * @return
+	 */
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	@ResponseBody
 	public int login(String nickName, String password) {
@@ -125,5 +131,15 @@ public class UserController {
 		} catch (Exception e) {
 			return -3;
 		}
+	}
+	/**
+	 * 获取短信验证码
+	 * @return
+	 */
+	@RequestMapping(value="getIdentifyCode",method=RequestMethod.GET)
+	@ResponseBody
+	public int getIdentifyCode(String tel) {
+		int num = IndustrySMS.execute(tel);
+		return 1;
 	}
 }

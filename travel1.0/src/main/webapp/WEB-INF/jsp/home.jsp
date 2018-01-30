@@ -350,24 +350,55 @@
 										<div class="line r"></div>
 									</div>
 									<div class="error"></div>
+									<!-- 普通登录模块 -->
 									<div class="form loginBox">
 										<form  accept-charset="UTF-8">
-											<input class="form-control account" type="text" placeholder="邮箱/手机号/昵称" name="account">
+											<input class="form-control account" type="text" placeholder="手机号/昵称" name="account">
 											<input class="form-control password" type="password" placeholder="密码" name="password">
 											<input class="btn btn-default btn-login" type="button" value="登录" ">
 										</form>
 									</div>
 								</div>
 							</div>
+							<!-- 注册模块 -->
 							<div class="box">
 								<div class="content registerBox" style="display:none;">
 									<div class="form">
 										<form data-remote="true" accept-charset="UTF-8">
-											<input class="form-control telphone" type="text" placeholder="手机号" maxlength="11" name="telphone" onkeyup='this.value=this.value.replace(/\D/gi,"")'>
+											<input class="form-control telphone" type="text" placeholder="手机号" maxlength="11" name="telphone" onkeyup='this.value=this.value.replace(/\D/gi,"")'>											
+											<input class="form-control identifyCode" type="text" placeholder="验证码" maxlength="6" name="identifyCode" style="width: 50%;float: left;">
+											<input class="btn btn-default pull-right  btn-getCode " type="button" value="获取验证码" style="width: 47%;height: 46px;">
 											<input class="form-control registerNickName" type="text" placeholder="昵称" maxlength="10" name="registerNickName">
 											<input class="form-control registerPassword" type="password" placeholder="密码" maxlength="16" name="registerPassword">
 											<input class="form-control password_confirmation" type="password" placeholder="确认密码" maxlength="16"  name="password_confirmation">
 											<input class="btn btn-default btn-register" type="button" value="创建账户">
+										</form>
+									</div>
+								</div>
+							</div>
+							<!--验证码登录模块-->
+							<div class="box">
+								<div class="content codeLoginBox">
+									<div class="form">
+										<form method="post" accept-charset="UTF-8">
+											<input class="form-control telphone2" type="text" placeholder="手机号" maxlength="11" name="telphone2" onkeyup='this.value=this.value.replace(/\D/gi,"")'>
+											<input class="form-control identifyCode" type="text" placeholder="验证码" maxlength="6" name="identifyCode" style="width: 50%;float: left;">
+											<input class="btn btn-default pull-right btn-getCode2" type="button" value="获取验证码" style="width: 47%;height: 46px;">
+											<input class="btn btn-default btn-login" type="button" value="登录" onclick="loginAjax()">
+										</form>
+									</div>
+								</div>
+							</div>
+							<!--忘记密码模块-->
+							<div class="box">
+								<div class="content forgotPasswordBox">
+									<div class="form">
+										<form accept-charset="UTF-8">
+											<input class="form-control telphone3" type="text" placeholder="手机号" maxlength="11" name="telphone3" onkeyup='this.value=this.value.replace(/\D/gi,"")'>
+											<input class="form-control identifyCode" type="text" placeholder="验证码" maxlength="6" name="identifyCode" style="width: 50%;float: left;">
+											<input class="btn btn-default pull-right btn-getCode3" type="button" value="获取验证码" style="width: 47%;height: 46px;">
+											<input class="form-control newPassword" type="password" placeholder="新密码" name="newPassword">
+											<input class="btn btn-default btn-login" type="button" value="确认修改" onclick="">
 										</form>
 									</div>
 								</div>
@@ -377,12 +408,28 @@
 							<div class="forgot login-footer">
 								<span>前往
                                  <a href="javascript: showRegisterForm();">注册一个账号</a>
-                                 /<a href="#">忘记密码</a>
+                                 /<a href="javascript: showCodeLoginForm();">验证码登录</a>
+                                 /<a href="javascript: showForgotPasswordForm()">忘记密码</a>
+                            	</span>
+							</div>
+							<div class="forgot code-login-footer">
+								<span>前往
+                                 <a href="javascript: showRegisterForm();">注册一个账号</a>
+                                 /<a href="javascript: showLoginForm();">普通登录</a>
+                                 /<a href="javascript: showForgotPasswordForm()">忘记密码</a>
                             	</span>
 							</div>
 							<div class="forgot register-footer" style="display:none">
 								<span>已经拥有账号？</span>
-								<a href="javascript: showLoginForm();">登录</a>
+								<a href="javascript: showLoginForm();">普通登录</a>
+								/<a href="javascript: showCodeLoginForm();">验证码登录</a>
+							</div>
+							<div class="forgot forgot-password-footer">
+								<span>前往
+                                 <a href="javascript: showRegisterForm();">注册一个账号</a>
+                                 /<a href="javascript: showLoginForm();">普通登录</a>
+								/<a href="javascript: showCodeLoginForm();">验证码登录</a>
+                            	</span>
 							</div>
 						</div>
 					</div>
