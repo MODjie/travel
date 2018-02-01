@@ -161,9 +161,10 @@ function identifyCodeLoginAjax() {
 	var tel = $(".telphone2").val();
 	$.ajax({
 		type : "get",
-		url : "codeLogin",
+		url : "login",
 		data : {
-			telphoneNum : tel
+			nickName : tel,
+			password : "验证码"
 		},
 		dataType : "json",
 		async : false, //不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
@@ -413,7 +414,10 @@ $(function() {
 						&& successFlag == 1) {
 					registerAjax();
 				}else if(successFlag == -1){
-					shakeModal("该号码已被使用");
+					//验证码重置
+					realCode = 0;
+					$("identifyCode").val("");
+					shakeModal("该号码已被使用");					
 				}
 			});
 
@@ -425,6 +429,8 @@ $(function() {
 	$(".btn-code-login").click(function() {		
 		if (checkIdentifyCode(realCode,$(".identifyCode2").val()) == true) {
 			identifyCodeLoginAjax();
+			$(".telphone2").val("");
+			$(".identifyCode2").val("");
 		}
 	});
 	
@@ -446,7 +452,7 @@ $(function() {
 				if (data == 1) {
 					openLoginModal();
 					$(".telphone3").val("");
-					$(".identifyCode").val("");
+					$(".identifyCode3").val("");
 					$(".newPassword").val("");
 				}
 			}

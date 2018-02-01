@@ -102,7 +102,10 @@
 				/showHome=anon
 				/hasUser=anon
 				/getIdentifyCode=anon
-				/codeLogin=anon
+				/updatePassword=anon
+				/getIdentifyCode=anon
+				/hasUserByTel=anon
+				/hasUserByNickName=anon
 				/writeEx=authc
 				/exprienceEdit=authc
 			</value>

@@ -144,10 +144,8 @@ public class UserController {
 			return -2;
 		} catch (AuthenticationException e) {
             System.out.println(e.getMessage());
-            return -1;
-        } catch (Exception e) {
-			return -3;
-		}
+            return -3;
+        }
 	}
 	
 	/**
