@@ -152,8 +152,10 @@
 					<c:forEach items="${currentExList }" var="exprience">
 						<article class="blog-post">
 						<div class="blog-post-image">
-							<input type="hidden" class="currentExprience" value="${exprience.EXPRIENCEID}">
-							<a  href="toPost?exprienceId=${exprience.EXPRIENCEID}"><img src="${exprience.EXCOVER}"></a>
+							<input type="hidden" class="currentExprience"
+								value="${exprience.EXPRIENCEID}"> <a
+								href="toPost?exprienceId=${exprience.EXPRIENCEID}"><img
+								src="${exprience.EXCOVER}"></a>
 						</div>
 						<div class="blog-post-body">
 							<h2>
@@ -165,12 +167,10 @@
 										class="fa fa-comment-o"></i> <a href="#">${exprience.COMMENTNUM}</a></span>
 							</div>
 							<!-- 文章内容开始 -->
-							<div class="homeExContent">
-								${exprience.EXCONTENT}								
-							</div>
-							
+							<div class="homeExContent">${exprience.EXCONTENT}</div>
+
 							<!-- 文章内容结束 -->
-							<div class="read-more">								
+							<div class="read-more">
 								<a style="cursor: pointer;">继续阅读</a>
 							</div>
 						</div>
@@ -201,8 +201,8 @@
 
 				</div>
 				<!-- sidebar-widget -->
-				<div class="sidebar-widget">
-					<h3 class="sidebar-title">码游周排行</h3>
+				<div class="sidebar-widget sidebar-weekrank">
+					<h3 class="sidebar-title ">码游周排行</h3>
 					<div class="widget-container">
 						<article class="widget-post">
 						<div class="post-image">
@@ -274,19 +274,6 @@
 							</div>
 						</div>
 						</article>
-					</div>
-				</div>
-				<div class="sidebar-widget">
-					<h3 class="sidebar-title">分类</h3>
-					<div class="widget-container">
-						<ul>
-							<li><a href="#">见闻</a></li>
-							<li><a href="#">游记</a></li>
-							<li><a href="#">动态</a></li>
-							<li><a href="#">攻略</a></li>
-							<li><a href="#">风景</a></li>
-							<li><a href="#">美食</a></li>
-						</ul>
 					</div>
 				</div>
 			</div>
@@ -467,13 +454,27 @@
 	<script src="js/custom.js"></script>
 	<script src="plugins/owl-carousel/owl.carousel.min.js"></script>
 	<script src="js/login-register.js" type="text/javascript"></script>
-	<script src="js/home.js" type="text/javascript"></script>	
+	<script src="js/home.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		var nickName = "${currentUser.NICKNAME}";
 		//主页加载时，如果用户未登录，则弹出模态窗口
 		if (nickName == "") {
 			openLoginModal();
 		}
+
+		var bodyWidth = $(document.body).width();
+		//search-box 随屏幕滚动 
+		$(window).scroll(function() {
+			console.log($(window).scrollTop());
+			if ($(window).scrollTop() > 1031) {
+				$(".sidebar-weekrank").css("position", "fixed");
+				$(".sidebar-weekrank").css("top", "70px");
+				$(".sidebar-weekrank").css("width", bodyWidth * 0.2409);
+			} else {
+				$(".sidebar-weekrank").css("position", "");
+			}
+
+		});
 	</script>
 </body>
 
