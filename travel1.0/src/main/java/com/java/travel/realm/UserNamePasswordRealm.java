@@ -45,6 +45,8 @@ public class UserNamePasswordRealm extends AuthorizingRealm {
 		if (nickName.length() == 11) {
 			exUser = exUserService.selectByTelphoneNum(nickName);
 			if (exUser != null) {
+				//这里要注意，如果是验证码登录是不需要密码的，因此在控制器中创建token实例时，第二个参数传任意字符串即可，
+				//然后在这里判断。为了保险起见，我传的是中文的验证码，因为前台输入密码是不能输入中文的。
 				if (password.equals("验证码")) {
 					password="验证码";
 				}else  {

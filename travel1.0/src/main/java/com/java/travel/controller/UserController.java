@@ -96,7 +96,7 @@ public class UserController {
 	}
 
 	/**
-	 * 判断是否已经存在此用户
+	 * 通过昵称判断是否已经存在此用户
 	 * 
 	 * @param nickName
 	 * @return 1表示账号可用，-1表示用户已存在
@@ -112,6 +112,11 @@ public class UserController {
 		}
 
 	}
+	/**
+	 * 通过手机号码
+	 * @param telphoneNum
+	 * @return
+	 */
 	@RequestMapping(value = "hasUserByTel", method = RequestMethod.GET)
 	@ResponseBody
 	public int hasUserByTel(String telphoneNum) {
@@ -142,8 +147,7 @@ public class UserController {
 			return -1;
 		} catch (IncorrectCredentialsException ex) {// 用户名密码不匹配。
 			return -2;
-		} catch (AuthenticationException e) {
-            System.out.println(e.getMessage());
+		} catch (AuthenticationException e) {//其他异常
             return -3;
         }
 	}
@@ -152,7 +156,7 @@ public class UserController {
 	 * 短信验证码登录
 	 * @param telphoneNum
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value = "codeLogin", method = RequestMethod.GET)
 	@ResponseBody
 	public int codeLogin(String telphoneNum) {		
@@ -164,7 +168,7 @@ public class UserController {
 		}  catch (Exception e) {
 			return -1;
 		}
-	}
+	}*/
 	
 	/**
 	 * 获取短信验证码
