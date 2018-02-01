@@ -262,6 +262,7 @@
 .codeLoginBox .btn-getCode2,
 .codeLoginBox .btn-code-login,
 .forgotPasswordBox .btn-getCode3,
+.forgotPasswordBox .btn-update-password,
 .registerBox .btn-getCode,
 .registerBox .btn-register {
 	background-color: #00BBFF;
@@ -279,6 +280,7 @@
 .codeLoginBox .btn-getCode2:hover,
 .codeLoginBox .btn-code-login:hover,
 .forgotPasswordBox .btn-getCode3:hover,
+.forgotPasswordBox .btn-update-password:hover,
 .registerBox .btn-getCode:hover,
 .registerBox .btn-register:hover {
 	background-color: #00A4E4;

@@ -90,16 +90,24 @@
 
 	<!-- 加入请求编码的过滤器 结束 -->
 
-	<!-- 设置put请求 -->
-	<filter>
+	<!-- 表单提交设置put请求 -->
+	<!-- <filter>
 		<filter-name>HttpMethodFilter</filter-name>
 		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>HttpMethodFilter</filter-name>
 		<url-pattern>/*</url-pattern>
+	</filter-mapping> -->
+	<!-- jquery中ajax提交设置put请求 -->
+	<filter>
+		<filter-name>HttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>HttpMethodFilter</filter-name>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>

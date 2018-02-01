@@ -13,7 +13,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import com.java.travel.entity.ExUser;
 import com.java.travel.service.ExUserService;
 
-public class TelphoneRealm extends AuthorizingRealm{
+public class TelphoneCodeRealm extends AuthorizingRealm{
 
 	@Resource
 	ExUserService exUserService;
@@ -27,14 +27,11 @@ public class TelphoneRealm extends AuthorizingRealm{
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		// TODO Auto-generated method stub
 		String telphoneNum = (String) token.getPrincipal();
-		System.out.println(4444);
 		ExUser exUser = exUserService.selectByTelphoneNum(telphoneNum);
 		if (exUser != null) {
-			System.out.println(3333);
-			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(exUser.getTEL(), "xx", "xx");
+			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(exUser.getTEL(), "ok", "xx");
 			return authcInfo;
-		} else {
-			System.out.println(777);			
+		} else {		
 			return null;
 		}
 	}

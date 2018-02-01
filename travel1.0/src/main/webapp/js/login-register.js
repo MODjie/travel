@@ -93,7 +93,7 @@ function loginAjax() {
 			dataType : "json",
 			success : function(data) {
 				if (data == 1) {
-					alert("登录成功");
+					alert("登录成功1");
 				} else if (data == -1) {
 					shakeModal("账号不存在");
 				} else if (data == -2) {
@@ -169,7 +169,7 @@ function identifyCodeLoginAjax() {
 		async : false, //不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
 		success : function(data) {
 			if (data == 1) {
-				alert("登录成功");
+				alert("登录成功2");
 			}else {
 				shakeModal("请检查手机号码");
 			}
@@ -216,11 +216,12 @@ function checkNickName() {
 	} else {
 		$.ajax({
 			type : "GET",
-			url : "hasUser",
+			url : "hasUserByNickName",
 			data : {
 				nickName : nickName
 			},
 			dataType : "json",
+			async : false,
 			success : function(data) {
 				if (data == -1) {
 					shakeModal("该用户已存在");
@@ -235,15 +236,14 @@ function checkNickName() {
 	}
 	// 在ajax方法中return无效，所以返回出来一个标志变量
 	if (successFlag == -1) {
-		return true;
-	} else {
 		return false;
+	} else {
+		return true;
 	}
 }
 
 // 验证密码
-function checkPassword() {
-	var password = $(".registerPassword").val();
+function checkPassword(password) {
 	if (password.length < 6) {
 		shakeModal("密码不能小于6位");
 		return false;
@@ -302,6 +302,9 @@ function countDown(getCodeBtn) {
 $(function() {
 	// 正确的验证码
 	var realCode;
+	//各验证的标志
+	var isTelRight = false;
+	var isNicknameRight = false;
 	// 加载主页时判断是否有用户，如果没有就提示登录注册模态框
 	$.ajax({
 		type : "GET",
@@ -322,7 +325,8 @@ $(function() {
 	$(".btn-getCode").click(function() {
 		var identifyCode = 0;
 		var tel = $(".telphone").val();
-		if (checkMobile($(tel)) == true) {
+		isTelRight = checkMobile(tel);
+		if (isTelRight == true) {
 			realCode = identifyCodeAjax(tel);
 			countDown($(this));
 		}
@@ -336,13 +340,43 @@ $(function() {
 			countDown($(this));
 		}
 	});
+	//忘记密码获取验证码按钮点击事件
+	$(".btn-getCode3").click(function() {
+		var identifyCode = 0;
+		var tel = $(".telphone3").val();
+		if (checkMobile(tel) == true ) {
+			//发送输入手机号是否已经注册过的
+			$.ajax({
+				type : "GET",
+				url : "hasUserByTel",
+				data : {
+					telphoneNum : tel
+				},
+				async : false,
+				dataType : "json",
+				success : function(data) {						
+					if (data == -1) {							
+						successFlag = 1;
+					} else {
+						shakeModal("该号码未注册");
+						successFlag = -1;
+					}
+				}
+			});
+			if (successFlag==1) {
+				realCode = identifyCodeAjax(tel);
+				countDown($(this));
+			}
+			
+		}
+	});
 	// 昵称input失去焦点发送ajax请求验证昵称是否可用
 	$(".registerNickName").blur(function() {
-		checkNickName();
+		isNicknameRight = checkNickName();
 	});
 	// 密码失去焦点验证
-	$(".registerPassword").blur(function() {
-		checkPassword();
+	$(".registerPassword,.newPassword").blur(function() {
+		checkPassword($(this).val());
 	});
 	// 确认密码失去焦点验证
 	$(".password_confirmation").blur(function() {
@@ -352,22 +386,70 @@ $(function() {
 	// 注册按钮点击事件,发送ajax请求
 	$(".btn-register").click(
 			function() {
-				if (checkMobile($(".telphone").val()) == true && checkNickName() == true
-						&& checkPassword() == true
+				var tel = $(".telphone").val();
+				var successFlag = 0;
+				//发送ajax请求判断手机号是否可用
+				$.ajax({
+					type : "GET",
+					url : "hasUserByTel",
+					data : {
+						telphoneNum : tel
+					},
+					async : false,
+					dataType : "json",
+					success : function(data) {						
+						if (data == -1) {							
+							successFlag = -1;
+						} else {
+							inputRight("该号码可用");
+							successFlag = 1;
+						}
+					}
+				});
+				if (isTelRight == true && isNicknameRight == true
+						&& checkPassword($(".registerPassword").val()) == true
 						&& checkPasswordConfim() == true
-						&& checkIdentifyCode(realCode,$(".identifyCode").val()) == true) {
+						&& checkIdentifyCode(realCode,$(".identifyCode").val()) == true
+						&& successFlag == 1) {
 					registerAjax();
+				}else if(successFlag == -1){
+					shakeModal("该号码已被使用");
 				}
 			});
 
 	// 登录按钮点击事件，发送ajax请求
 	$(".btn-login").click(function() {
 		loginAjax();
-	})
+	});
 	//验证码登录按钮点击事件，发送ajax请求
 	$(".btn-code-login").click(function() {		
 		if (checkIdentifyCode(realCode,$(".identifyCode2").val()) == true) {
 			identifyCodeLoginAjax();
 		}
-	})
+	});
+	
+	
+	//忘记密码确认修改按钮点击事件
+	$(".btn-update-password").click(function() {
+		var tel = $(".telphone3").val();
+		var password = $(".newPassword").val();
+		$.ajax({
+			type : "put",
+			url : "updatePassword",
+			data : {
+				telphoneNum : tel,
+				password : password
+			},
+			dataType : "json",
+			async: false,			
+			success : function(data) {
+				if (data == 1) {
+					openLoginModal();
+					$(".telphone3").val("");
+					$(".identifyCode").val("");
+					$(".newPassword").val("");
+				}
+			}
+		});
+	});
 });

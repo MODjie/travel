@@ -384,7 +384,7 @@
 											<input class="form-control telphone2" type="text" placeholder="手机号" maxlength="11" name="telphone2" onkeyup='this.value=this.value.replace(/\D/gi,"")'>
 											<input class="form-control identifyCode2" type="text" placeholder="验证码" maxlength="6" name="identifyCode2" style="width: 50%;float: left;">
 											<input class="btn btn-default pull-right btn-getCode2" type="button" value="获取验证码" style="width: 47%;height: 46px;">
-											<input class="btn btn-default btn-code-login" type="button" value="登录" onclick="loginAjax()">
+											<input class="btn btn-default btn-code-login" type="button" value="登录"">
 										</form>
 									</div>
 								</div>
@@ -395,10 +395,10 @@
 									<div class="form">
 										<form accept-charset="UTF-8">
 											<input class="form-control telphone3" type="text" placeholder="手机号" maxlength="11" name="telphone3" onkeyup='this.value=this.value.replace(/\D/gi,"")'>
-											<input class="form-control identifyCode" type="text" placeholder="验证码" maxlength="6" name="identifyCode" style="width: 50%;float: left;">
+											<input class="form-control identifyCode3" type="text" placeholder="验证码" maxlength="6" name="identifyCode" style="width: 50%;float: left;">
 											<input class="btn btn-default pull-right btn-getCode3" type="button" value="获取验证码" style="width: 47%;height: 46px;">
-											<input class="form-control newPassword" type="password" placeholder="新密码" name="newPassword">
-											<input class="btn btn-default btn-login" type="button" value="确认修改" onclick="">
+											<input class="form-control newPassword" type="password" placeholder="新密码" maxlength="16" name="newPassword">
+											<input class="btn btn-default btn-update-password" type="button" value="确认修改" >
 										</form>
 									</div>
 								</div>

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.java.travel.entity.ExUser;
 import com.java.travel.service.ExUserService;
 import com.java.travel.service.RegisterService;
-import com.java.travel.token.TelphoneToken;
+import com.java.travel.token.UserNamePasswordTelphoneToken;
 import com.java.travel.util.IndustrySMS;
 
 @Controller
@@ -100,9 +101,9 @@ public class UserController {
 	 * @param nickName
 	 * @return 1表示账号可用，-1表示用户已存在
 	 */
-	@RequestMapping(value = "hasUser", method = RequestMethod.GET)
+	@RequestMapping(value = "hasUserByNickName", method = RequestMethod.GET)
 	@ResponseBody
-	public int hasUser(String nickName) {
+	public int hasUserByNickName(String nickName) {
 		ExUser exUser = exUserService.selectByNickName(nickName);
 		if (exUser == null) {
 			return 1;
@@ -111,6 +112,18 @@ public class UserController {
 		}
 
 	}
+	@RequestMapping(value = "hasUserByTel", method = RequestMethod.GET)
+	@ResponseBody
+	public int hasUserByTel(String telphoneNum) {
+		ExUser exUser = exUserService.selectByTelphoneNum(telphoneNum);
+		if (exUser == null) {
+			return 1;
+		} else {
+			return -1;
+		}
+
+	}
+	
 	/**
 	 * 登录
 	 * @param nickName
@@ -120,7 +133,7 @@ public class UserController {
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	@ResponseBody
 	public int login(String nickName, String password) {
-		Subject subject = SecurityUtils.getSubject();
+		Subject subject = SecurityUtils.getSubject();		
 		UsernamePasswordToken token = new UsernamePasswordToken(nickName, password);
 		try {
 			subject.login(token);
@@ -129,7 +142,10 @@ public class UserController {
 			return -1;
 		} catch (IncorrectCredentialsException ex) {// 用户名密码不匹配。
 			return -2;
-		} catch (Exception e) {
+		} catch (AuthenticationException e) {
+            System.out.println(e.getMessage());
+            return -1;
+        } catch (Exception e) {
 			return -3;
 		}
 	}
@@ -143,13 +159,11 @@ public class UserController {
 	@ResponseBody
 	public int codeLogin(String telphoneNum) {		
 		Subject subject = SecurityUtils.getSubject();
-		TelphoneToken token = new TelphoneToken(telphoneNum);
+		UsernamePasswordToken token = new UsernamePasswordToken(telphoneNum,"验证码");
 		try {
 			subject.login(token);
-			System.out.println(1111);
 			return 1;
 		}  catch (Exception e) {
-			System.out.println(2222);
 			return -1;
 		}
 	}
@@ -161,7 +175,21 @@ public class UserController {
 	@RequestMapping(value="getIdentifyCode",method=RequestMethod.GET)
 	@ResponseBody
 	public int getIdentifyCode(String tel) {
-		int num = IndustrySMS.execute(tel);
+//		int num = IndustrySMS.execute(tel);
 		return 1;
+	}
+	/**
+	 * 修改密码
+	 * @param telphoneNum
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping(value="updatePassword",method=RequestMethod.PUT)
+	@ResponseBody
+	public int updatePassword(String telphoneNum,String password) {
+		ExUser exUser = exUserService.selectByTelphoneNum(telphoneNum);
+		exUser.setPASSWORD(password);
+		int result = exUserService.updateByPrimaryKey(exUser);
+		return result;
 	}
 }

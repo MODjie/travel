@@ -61,24 +61,33 @@
 			</array>
 		</property>
 	</bean>
-	
+
 	<!-- shiro的配置 -->
 	<!-- 自定义Realm -->
 	<bean id="userNamePasswordRealm" class="com.java.travel.realm.UserNamePasswordRealm" />
-	<bean id="telphoneRealm" class="com.java.travel.realm.TelphoneRealm" /> 
+	<!-- <bean id="telphoneCodeRealm" class="com.java.travel.realm.TelphoneCodeRealm" /> -->
 	<!-- 安全管理器 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<!-- 单realm的配置 -->
-		<!-- <property name="realm" ref="myRealm" /> -->
+		<property name="realm" ref="userNamePasswordRealm" /> 
 		<!-- 多realm的配置 -->
-		<property name="realms">  
-        <list>  
-            <ref bean="userNamePasswordRealm" /> 
-            <ref bean="telphoneRealm" />
-        </list>  
-    </property>
+		<!-- <property name="authenticator" ref="myModularRealmAuthenticator"></property>
+		<property name="realms">
+			<list>
+				<ref bean="userNamePasswordRealm" />
+				<ref bean="telphoneCodeRealm" />
+			</list>
+		</property>	 -->	 
 	</bean>
-
+	<!-- 配置多个realm的时候如何认证 -->
+	<!-- <bean id="myModularRealmAuthenticator" class="com.java.travel.ModularRealmAuthenticator.MyModularRealmAuthenticator">
+		<property name="authenticationStrategy">
+			认证策略
+			<bean class="org.apache.shiro.authc.pam.AllSuccessfulStrategy"></bean>
+			<bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"></bean>
+			<bean class="org.apache.shiro.authc.pam.FirstSuccessfulStrategy"></bean>
+		</property>
+	</bean> -->
 	<!-- Shiro过滤器 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<!-- Shiro的核心安全接口,这个属性是必须的 -->
@@ -95,10 +104,10 @@
 				/getIdentifyCode=anon
 				/codeLogin=anon
 				/writeEx=authc
-				/exprienceEdit=authc			
+				/exprienceEdit=authc
 			</value>
 		</property>
-	</bean> 
+	</bean>
 
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
@@ -111,7 +120,7 @@
 		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
 		<property name="securityManager" ref="securityManager" />
 	</bean>
-	
+
 	<!-- 配置扫描器 MapperScannerConfigurer 需要用到mybatis-spring.jar -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.java.travel.mapper"></property>
@@ -132,6 +141,6 @@
 		<property name="maxUploadSize" value="104857600" />
 		<property name="maxInMemorySize" value="4096" />
 	</bean>
-	
-	
+
+
 </beans>
