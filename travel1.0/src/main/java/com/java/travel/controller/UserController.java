@@ -47,13 +47,11 @@ public class UserController {
 		ExUser currentUser = null;
 		
 		Subject subject = SecurityUtils.getSubject();
-		 Session session = subject.getSession();
+		Session session = subject.getSession();
 		String nickName = (String) session.getAttribute("nickName");
 		if (nickName != null) {
 			currentUser = exUserService.selectByNickName(nickName);			
-		} else {
-			
-		}
+		} 
 		modelAndView.addObject("currentUser", currentUser);
 		modelAndView.addObject("currentExList", currentExList);
 		modelAndView.addObject("weekRankExList", weekRankExList);
@@ -189,7 +187,7 @@ public class UserController {
 	public String logout() {
 		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
-		return "home";
+		return "redirect:/showHome";
 	}
 	
 	/**

@@ -51,7 +51,7 @@
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="home.jsp">主页</a></li>
+				<li class="active"><a href="showHome">主页</a></li>
 				<li><a href="personal.jsp">个人中心</a></li>
 				<li class="pick-type"><a href="#" class="dropdown-toggle"
 					id="dropdownMenu1" data-toggle="dropdown"> <span>旅游见闻</span>
@@ -165,10 +165,13 @@
 										class="fa fa-comment-o"></i> <a href="#">${exprience.COMMENTNUM}</a></span>
 							</div>
 							<!-- 文章内容开始 -->
-							${exprience.EXCONTENT}
+							<div class="homeExContent">
+								${exprience.EXCONTENT}								
+							</div>
+							
 							<!-- 文章内容结束 -->
-							<div class="read-more">
-								<a href="#">继续阅读</a>
+							<div class="read-more">								
+								<a style="cursor: pointer;">继续阅读</a>
 							</div>
 						</div>
 						</article>
@@ -464,7 +467,7 @@
 	<script src="js/custom.js"></script>
 	<script src="plugins/owl-carousel/owl.carousel.min.js"></script>
 	<script src="js/login-register.js" type="text/javascript"></script>
-	<script src="js/exprience/toPostList.js" type="text/javascript"></script>
+	<script src="js/home.js" type="text/javascript"></script>	
 	<script type="text/javascript">
 		var nickName = "${currentUser.NICKNAME}";
 		//主页加载时，如果用户未登录，则弹出模态窗口

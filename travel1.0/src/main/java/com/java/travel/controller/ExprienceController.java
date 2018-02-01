@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.java.travel.entity.ExUser;
 import com.java.travel.entity.Exprience;
 
 import com.java.travel.service.ExTypeService;
+import com.java.travel.service.ExUserService;
 import com.java.travel.service.ExprienceService;
 import com.java.travel.util.MyFileUploadUtil;
 
@@ -25,6 +27,8 @@ public class ExprienceController {
 	ExprienceService exService;
 	@Resource
 	ExTypeService exTypeService;
+	@Resource
+	ExUserService exUserService;
 
 	/**
 	 * 新增文章
@@ -77,7 +81,19 @@ public class ExprienceController {
 	public ModelAndView toPost(int exprienceId) {
 		ModelAndView modelAndView = new ModelAndView("post");
 		Exprience exprience = exService.selectByPrimaryKey(exprienceId);
+		String authorName = exprience.getEXAUTHORNAME();
+		ExUser author = exUserService.selectByNickName(authorName);
+		//获取当前用户
+		ExUser currentUser = null;
+		Subject subject = SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		String nickName = (String) session.getAttribute("nickName");
+		if (nickName != null) {
+			currentUser = exUserService.selectByNickName(nickName);			
+		} 
 		modelAndView.addObject("exprience",exprience);
+		modelAndView.addObject("author",author);
+		modelAndView.addObject("currentUser",currentUser);
 		return modelAndView;
 	}
 }

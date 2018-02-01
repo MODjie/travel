@@ -106,8 +106,10 @@
 				/getIdentifyCode=anon
 				/hasUserByTel=anon
 				/hasUserByNickName=anon
+				/toPost=anon
+				
 				/writeEx=authc
-				/exprienceEdit=authc
+				/exprienceEdit=authc				
 			</value>
 		</property>
 	</bean>

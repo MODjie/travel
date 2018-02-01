@@ -93,7 +93,7 @@ function loginAjax() {
 			dataType : "json",
 			success : function(data) {
 				if (data == 1) {					
-					location.href="showHome";					
+					window.location.reload();					
 				} else if (data == -1) {
 					shakeModal("账号不存在");
 				} else if (data == -2) {
@@ -172,7 +172,7 @@ function identifyCodeLoginAjax() {
 		async : false, //不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
 		success : function(data) {
 			if (data == 1) {
-				location.href="showHome";				
+				window.location.reload();				
 			}else if (data == -4) {
 				shakeModal("不能重复登录");
 			}else {
