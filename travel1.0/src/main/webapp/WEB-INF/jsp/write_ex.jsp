@@ -181,7 +181,7 @@
 	<script type="text/javascript" src="fileinput/fileinput.min.js"></script>
 	<script type="text/javascript" src="fileinput/zh.js"></script>
 	<!-- 编辑界面JS -->
-	<script type="text/javascript" src="js/exprience/exprience.js"></script>
+	<script type="text/javascript" src="js/exprience/exprienceEdit.js"></script>
 </body>
 
 </html>

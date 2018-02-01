@@ -15,6 +15,7 @@
 //import com.java.travel.mapper.ExtypeMapper;
 //import com.java.travel.service.ExTypeService;
 //import com.java.travel.service.ExUserService;
+//import com.java.travel.service.ExprienceService;
 //import com.java.travel.service.RegisterService;
 //import com.java.travel.serviceImpl.ExTypeServiceImpl;
 //
@@ -27,6 +28,8 @@
 //	RegisterService registerService;
 //	@Resource
 //	ExUserService exUserService;
+//	@Resource
+//	private ExprienceService exprienceService;
 //	@Test	
 //	public void test1() {
 //		System.out.println(exTypeService.selectByName("¼ûÎÅ"));
@@ -59,5 +62,10 @@
 //	@Test
 //	public void test5() {
 //		System.out.println(exUserService.selectByTelphoneNum("15659561005"));
+//	}
+//	
+//	@Test
+//	public void test6() {
+//		System.out.println(exprienceService.selectAllExprience());
 //	}
 //}

@@ -92,13 +92,15 @@ function loginAjax() {
 			},
 			dataType : "json",
 			success : function(data) {
-				if (data == 1) {
-					alert("登录成功1");
+				if (data == 1) {					
+					location.href="showHome";					
 				} else if (data == -1) {
 					shakeModal("账号不存在");
 				} else if (data == -2) {
 					shakeModal("密码错误");
-				} else {
+				} else if (data == -4) {
+					shakeModal("不能重复登录");
+				}else {
 					shakeModal("未知错误，请刷新页面重新登录");
 				}
 			}
@@ -170,7 +172,9 @@ function identifyCodeLoginAjax() {
 		async : false, //不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
 		success : function(data) {
 			if (data == 1) {
-				alert("登录成功2");
+				location.href="showHome";				
+			}else if (data == -4) {
+				shakeModal("不能重复登录");
 			}else {
 				shakeModal("请检查手机号码");
 			}
@@ -306,18 +310,7 @@ $(function() {
 	//各验证的标志
 	var isTelRight = false;
 	var isNicknameRight = false;
-	// 加载主页时判断是否有用户，如果没有就提示登录注册模态框
-	$.ajax({
-		type : "GET",
-		url : "isLogin",
-		dataType : "json",
-		success : function(data) {
-			if (data == "未登录") {
-				openLoginModal();
-			}
-		}
-	});
-
+	
 	// 验证码输入框失去焦点验证
 	$(".identifyCode,.identifyCode2").blur(function() {
 		checkIdentifyCode(realCode,$(this).val());

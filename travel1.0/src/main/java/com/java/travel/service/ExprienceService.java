@@ -1,5 +1,7 @@
 package com.java.travel.service;
 
+import java.util.List;
+
 import com.java.travel.entity.Exprience;
 
 public interface ExprienceService {
@@ -10,6 +12,9 @@ public interface ExprienceService {
     int insertSelective(Exprience record);
 
     Exprience selectByPrimaryKey(Integer EXPRIENCEID);
+    
+  //查询所有的exprience
+    List<Exprience> selectAllExprience(); 
 
     int updateByPrimaryKeySelective(Exprience record);
 

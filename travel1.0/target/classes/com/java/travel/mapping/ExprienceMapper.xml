@@ -21,6 +21,15 @@
   <sql id="Blob_Column_List">
     EXCONTENT
   </sql>
+  <!-- 查询所有的exprience -->
+   <select id="selectAllExprience"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from EXPRIENCE
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />

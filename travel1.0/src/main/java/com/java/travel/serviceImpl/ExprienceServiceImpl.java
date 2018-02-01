@@ -1,5 +1,7 @@
 package com.java.travel.serviceImpl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -47,6 +49,11 @@ public class ExprienceServiceImpl implements ExprienceService{
 	public int updateByPrimaryKeyWithBLOBs(Exprience record) {
 		// TODO Auto-generated method stub
 		return exprienceMapper.updateByPrimaryKeyWithBLOBs(record);
+	}
+
+	public List<Exprience> selectAllExprience() {
+		// TODO Auto-generated method stub
+		return exprienceMapper.selectAllExprience();
 	}
 
 }

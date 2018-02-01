@@ -15,32 +15,49 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.java.travel.entity.ExUser;
+import com.java.travel.entity.Exprience;
 import com.java.travel.service.ExUserService;
+import com.java.travel.service.ExprienceService;
 import com.java.travel.service.RegisterService;
-import com.java.travel.token.UserNamePasswordTelphoneToken;
-import com.java.travel.util.IndustrySMS;
 
 @Controller
 public class UserController {
 	@Resource
-	RegisterService registerService;
+	private RegisterService registerService;
 	@Resource
-	ExUserService exUserService;
-
+	private ExUserService exUserService;
+	@Resource
+	private ExprienceService exprienceService;
 	/**
-	 * 第一次访问网站跳转到主页
+	 * 跳转到主页
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "showHome", method = RequestMethod.GET)
-	public String showHome() {
-		return "home";
+	public ModelAndView showHome() {
+		ModelAndView modelAndView = new ModelAndView("home");
+		List<Exprience> currentExList = exprienceService.selectAllExprience();
+		List<Exprience> weekRankExList = null;
+		ExUser currentUser = null;
+		
+		Subject subject = SecurityUtils.getSubject();
+		 Session session = subject.getSession();
+		String nickName = (String) session.getAttribute("nickName");
+		if (nickName != null) {
+			currentUser = exUserService.selectByNickName(nickName);			
+		} else {
+			
+		}
+		modelAndView.addObject("currentUser", currentUser);
+		modelAndView.addObject("currentExList", currentExList);
+		modelAndView.addObject("weekRankExList", weekRankExList);
+		return modelAndView;
 	}
 
 	/**
@@ -81,7 +98,7 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "isLogin", method = RequestMethod.GET)
+/*	@RequestMapping(value = "isLogin", method = RequestMethod.GET)
 	@ResponseBody
 	public List<String> isLogin(HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -93,7 +110,7 @@ public class UserController {
 			list.add("未登录");
 		}
 		return list;
-	}
+	}*/
 
 	/**
 	 * 通过昵称判断是否已经存在此用户
@@ -138,10 +155,23 @@ public class UserController {
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	@ResponseBody
 	public int login(String nickName, String password) {
-		Subject subject = SecurityUtils.getSubject();		
+		Subject subject = SecurityUtils.getSubject();
+		Session session = subject.getSession();
 		UsernamePasswordToken token = new UsernamePasswordToken(nickName, password);
 		try {
 			subject.login(token);
+			//session绑定用户昵称
+			ExUser exUser;
+			if (nickName.length()==11) {
+				exUser = exUserService.selectByTelphoneNum(nickName);
+			}else {
+				exUser = exUserService.selectByNickName(nickName);
+			}
+			//如果session已存在的用户名与接收的用户名相同，则返回-4
+			if (session.getAttribute("nickName")!=null && session.getAttribute("nickName").equals(exUser.getNICKNAME())) {
+				return -4;
+			}
+			session.setAttribute("nickName", exUser.getNICKNAME());			
 			return 1;
 		} catch (UnknownAccountException ex) {// 用户名没有找到。
 			return -1;
@@ -150,6 +180,16 @@ public class UserController {
 		} catch (AuthenticationException e) {//其他异常
             return -3;
         }
+	}
+	/**
+	 * 退出登录
+	 * @return
+	 */
+	@RequestMapping(value="logout")
+	public String logout() {
+		Subject subject = SecurityUtils.getSubject();
+		subject.logout();
+		return "home";
 	}
 	
 	/**
