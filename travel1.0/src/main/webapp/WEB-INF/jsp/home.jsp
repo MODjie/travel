@@ -147,9 +147,9 @@
 	<div class="container">
 		<section>
 		<div class="row">
-			<div class="col-md-8">
-				<c:if test="${currentExList!=null}">
-					<c:forEach items="${currentExList }" var="exprience">
+			<div class="col-md-8 ex-content-div">
+				<c:if test="${pageInfo.list!=null}">
+					<c:forEach items="${pageInfo.list }" var="exprience">
 						<article class="blog-post">
 						<div class="blog-post-image">
 							<input type="hidden" class="currentExprience"
@@ -171,6 +171,7 @@
 
 							<!-- 文章内容结束 -->
 							<div class="read-more">
+								<input type="hidden" value="1">
 								<a style="cursor: pointer;">继续阅读</a>
 							</div>
 						</div>
@@ -186,7 +187,16 @@
 				<div class="sidebar-widget">
 					<h3 class="sidebar-title">关于我</h3>
 					<shiro:guest>
-						当前是游客身份，请登录
+						<div class="widget-container widget-about">
+							<a href="personal.html"><img
+								src="images/head/defaultHead.png" alt="140x140"
+								class="img-circle img-responsive center-block"></a>
+							<h4>亲爱的旅行者</h4>
+							<p>
+								当前是游客身份，请前往 <a data-toggle="modal" onclick="openLoginModal();" style="cursor: pointer; color: rgb(91,192,222);">登录</a>/<a
+									data-toggle="modal" onclick="openRegisterModal();" style="cursor: pointer; color: rgb(91,192,222); ">注册</a>
+							</p>
+						</div>
 					</shiro:guest>
 					<shiro:user>
 						<div class="widget-container widget-about">
@@ -455,6 +465,8 @@
 	<script src="plugins/owl-carousel/owl.carousel.min.js"></script>
 	<script src="js/login-register.js" type="text/javascript"></script>
 	<script src="js/home.js" type="text/javascript"></script>
+	<!--layer-->
+	<script type="text/javascript" src="layer/2.4/layer.js"></script>
 	<script type="text/javascript">
 		var nickName = "${currentUser.NICKNAME}";
 		//主页加载时，如果用户未登录，则弹出模态窗口
@@ -465,7 +477,6 @@
 		var bodyWidth = $(document.body).width();
 		//search-box 随屏幕滚动 
 		$(window).scroll(function() {
-			console.log($(window).scrollTop());
 			if ($(window).scrollTop() > 1031) {
 				$(".sidebar-weekrank").css("position", "fixed");
 				$(".sidebar-weekrank").css("top", "70px");

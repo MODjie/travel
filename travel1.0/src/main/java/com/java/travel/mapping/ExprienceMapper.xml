@@ -6,7 +6,7 @@
     <result column="EXTYPEID" jdbcType="DECIMAL" property="EXTYPEID" />
     <result column="EXTITLE" jdbcType="VARCHAR" property="EXTITLE" />
     <result column="EXAUTHORNAME" jdbcType="VARCHAR" property="EXAUTHORNAME" />
-    <result column="EXPUBLISHTIME" jdbcType="TIMESTAMP" property="EXPUBLISHTIME" />
+    <result column="EXPUBLISHTIME" jdbcType="VARCHAR" property="EXPUBLISHTIME" />
     <result column="EXCOVER" jdbcType="VARCHAR" property="EXCOVER" />
     <result column="ISPUBLISH" jdbcType="VARCHAR" property="ISPUBLISH" />
     <result column="COMMENTNUM" jdbcType="DECIMAL" property="COMMENTNUM" />
@@ -21,15 +21,6 @@
   <sql id="Blob_Column_List">
     EXCONTENT
   </sql>
-  <!-- 查询所有的exprience -->
-   <select id="selectAllExprience"  resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from EXPRIENCE
-  </select>
-  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
@@ -38,6 +29,16 @@
     from EXPRIENCE
     where EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL}
   </select>
+  
+  <select id="selectAllExprience"  resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from EXPRIENCE order by EXPUBLISHTIME desc
+    
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from EXPRIENCE
     where EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL}
@@ -48,7 +49,7 @@
       ISPUBLISH, COMMENTNUM, EXCONTENT
       )
     values (#{EXPRIENCEID,jdbcType=DECIMAL}, #{EXTYPEID,jdbcType=DECIMAL}, #{EXTITLE,jdbcType=VARCHAR}, 
-      #{EXAUTHORNAME,jdbcType=VARCHAR}, #{EXPUBLISHTIME,jdbcType=TIMESTAMP}, #{EXCOVER,jdbcType=VARCHAR}, 
+      #{EXAUTHORNAME,jdbcType=VARCHAR}, #{EXPUBLISHTIME,jdbcType=VARCHAR}, #{EXCOVER,jdbcType=VARCHAR}, 
       #{ISPUBLISH,jdbcType=VARCHAR}, #{COMMENTNUM,jdbcType=DECIMAL}, #{EXCONTENT,jdbcType=CLOB}
       )
   </insert>
@@ -97,7 +98,7 @@
         #{EXAUTHORNAME,jdbcType=VARCHAR},
       </if>
       <if test="EXPUBLISHTIME != null">
-        #{EXPUBLISHTIME,jdbcType=TIMESTAMP},
+        #{EXPUBLISHTIME,jdbcType=VARCHAR},
       </if>
       <if test="EXCOVER != null">
         #{EXCOVER,jdbcType=VARCHAR},
@@ -126,7 +127,7 @@
         EXAUTHORNAME = #{EXAUTHORNAME,jdbcType=VARCHAR},
       </if>
       <if test="EXPUBLISHTIME != null">
-        EXPUBLISHTIME = #{EXPUBLISHTIME,jdbcType=TIMESTAMP},
+        EXPUBLISHTIME = #{EXPUBLISHTIME,jdbcType=VARCHAR},
       </if>
       <if test="EXCOVER != null">
         EXCOVER = #{EXCOVER,jdbcType=VARCHAR},
@@ -148,7 +149,7 @@
     set EXTYPEID = #{EXTYPEID,jdbcType=DECIMAL},
       EXTITLE = #{EXTITLE,jdbcType=VARCHAR},
       EXAUTHORNAME = #{EXAUTHORNAME,jdbcType=VARCHAR},
-      EXPUBLISHTIME = #{EXPUBLISHTIME,jdbcType=TIMESTAMP},
+      EXPUBLISHTIME = #{EXPUBLISHTIME,jdbcType=VARCHAR},
       EXCOVER = #{EXCOVER,jdbcType=VARCHAR},
       ISPUBLISH = #{ISPUBLISH,jdbcType=VARCHAR},
       COMMENTNUM = #{COMMENTNUM,jdbcType=DECIMAL},
@@ -160,7 +161,7 @@
     set EXTYPEID = #{EXTYPEID,jdbcType=DECIMAL},
       EXTITLE = #{EXTITLE,jdbcType=VARCHAR},
       EXAUTHORNAME = #{EXAUTHORNAME,jdbcType=VARCHAR},
-      EXPUBLISHTIME = #{EXPUBLISHTIME,jdbcType=TIMESTAMP},
+      EXPUBLISHTIME = #{EXPUBLISHTIME,jdbcType=VARCHAR},
       EXCOVER = #{EXCOVER,jdbcType=VARCHAR},
       ISPUBLISH = #{ISPUBLISH,jdbcType=VARCHAR},
       COMMENTNUM = #{COMMENTNUM,jdbcType=DECIMAL}

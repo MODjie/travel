@@ -92,15 +92,16 @@ function loginAjax() {
 			},
 			dataType : "json",
 			success : function(data) {
-				if (data == 1) {					
-					window.location.reload();					
+				if (data == 1) {
+					layer.msg("登录成功");
+					window.location.reload();
 				} else if (data == -1) {
 					shakeModal("账号不存在");
 				} else if (data == -2) {
 					shakeModal("密码错误");
 				} else if (data == -4) {
 					shakeModal("不能重复登录");
-				}else {
+				} else {
 					shakeModal("未知错误，请刷新页面重新登录");
 				}
 			}
@@ -135,6 +136,7 @@ function registerAjax() {
 			$(".registerNickName").val("");
 			$(".registerPassword").val("");
 			$(".password_confirmation").val("");
+			layer.msg("注册成功");
 		}
 	});
 }
@@ -149,16 +151,16 @@ function identifyCodeAjax(tel) {
 			tel : tel
 		},
 		dataType : "json",
-		async : false, //不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
+		async : false, // 不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
 		success : function(data) {
 			identifyCode = data;
-		}		
+		}
 	});
 	return identifyCode;
-	 
+
 }
 
-//验证码登录Ajax请求
+// 验证码登录Ajax请求
 function identifyCodeLoginAjax() {
 	var tel = $(".telphone2").val();
 	$.ajax({
@@ -169,18 +171,19 @@ function identifyCodeLoginAjax() {
 			password : "验证码"
 		},
 		dataType : "json",
-		async : false, //不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
+		async : false, // 不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
 		success : function(data) {
 			if (data == 1) {
-				window.location.reload();				
-			}else if (data == -4) {
+				layer.msg('登录成功')
+				window.location.reload();
+			} else if (data == -4) {
 				shakeModal("不能重复登录");
-			}else {
+			} else {
 				shakeModal("请检查手机号码");
 			}
-			
-		}		
-	});	 
+
+		}
+	});
 }
 
 // 出错窗口震动警告
@@ -276,7 +279,7 @@ function checkPasswordConfim() {
 }
 
 // 验证码验证
-function checkIdentifyCode(realCode,inputCode) {
+function checkIdentifyCode(realCode, inputCode) {
 	if (inputCode == realCode) {
 		inputRight("验证码正确");
 		return true;
@@ -288,32 +291,31 @@ function checkIdentifyCode(realCode,inputCode) {
 		return false;
 	}
 }
-//重新获取验证码倒计时
+// 重新获取验证码倒计时
 function countDown(getCodeBtn) {
 	var countTime = 119;
-	$(getCodeBtn).attr('disabled',"true");
-	var myVar  = setInterval(function(){ 		 
-		   getCodeBtn.val("重新获取："+countTime);
-		   countTime=countTime-1;		   
-		   if (countTime<-1) {
-				clearInterval(myVar);
-				$(getCodeBtn).removeAttr("disabled");
-				getCodeBtn.val("获取验证码");
-			} 
-	}, 1000);		
+	$(getCodeBtn).attr('disabled', "true");
+	var myVar = setInterval(function() {
+		getCodeBtn.val("重新获取：" + countTime);
+		countTime = countTime - 1;
+		if (countTime < -1) {
+			clearInterval(myVar);
+			$(getCodeBtn).removeAttr("disabled");
+			getCodeBtn.val("获取验证码");
+		}
+	}, 1000);
 }
-
 
 $(function() {
 	// 正确的验证码
 	var realCode;
-	//各验证的标志
+	// 各验证的标志
 	var isTelRight = false;
 	var isNicknameRight = false;
-	
+
 	// 验证码输入框失去焦点验证
 	$(".identifyCode,.identifyCode2").blur(function() {
-		checkIdentifyCode(realCode,$(this).val());
+		checkIdentifyCode(realCode, $(this).val());
 	});
 	// 注册窗口中的获取验证码按钮点击事件
 	$(".btn-getCode").click(function() {
@@ -334,12 +336,12 @@ $(function() {
 			countDown($(this));
 		}
 	});
-	//忘记密码获取验证码按钮点击事件
+	// 忘记密码获取验证码按钮点击事件
 	$(".btn-getCode3").click(function() {
 		var identifyCode = 0;
 		var tel = $(".telphone3").val();
-		if (checkMobile(tel) == true ) {
-			//发送输入手机号是否已经注册过的
+		if (checkMobile(tel) == true) {
+			// 发送输入手机号是否已经注册过的
 			$.ajax({
 				type : "GET",
 				url : "hasUserByTel",
@@ -348,8 +350,8 @@ $(function() {
 				},
 				async : false,
 				dataType : "json",
-				success : function(data) {						
-					if (data == -1) {							
+				success : function(data) {
+					if (data == -1) {
 						successFlag = 1;
 					} else {
 						shakeModal("该号码未注册");
@@ -357,11 +359,11 @@ $(function() {
 					}
 				}
 			});
-			if (successFlag==1) {
+			if (successFlag == 1) {
 				realCode = identifyCodeAjax(tel);
 				countDown($(this));
 			}
-			
+
 		}
 	});
 	// 昵称input失去焦点发送ajax请求验证昵称是否可用
@@ -378,57 +380,59 @@ $(function() {
 	});
 
 	// 注册按钮点击事件,发送ajax请求
-	$(".btn-register").click(
-			function() {
-				var tel = $(".telphone").val();
-				var successFlag = 0;
-				//发送ajax请求判断手机号是否可用
-				$.ajax({
-					type : "GET",
-					url : "hasUserByTel",
-					data : {
-						telphoneNum : tel
-					},
-					async : false,
-					dataType : "json",
-					success : function(data) {						
-						if (data == -1) {							
-							successFlag = -1;
-						} else {
-							inputRight("该号码可用");
-							successFlag = 1;
+	$(".btn-register")
+			.click(
+					function() {
+						var tel = $(".telphone").val();
+						var successFlag = 0;
+						// 发送ajax请求判断手机号是否可用
+						$.ajax({
+							type : "GET",
+							url : "hasUserByTel",
+							data : {
+								telphoneNum : tel
+							},
+							async : false,
+							dataType : "json",
+							success : function(data) {
+								if (data == -1) {
+									successFlag = -1;
+								} else {
+									inputRight("该号码可用");
+									successFlag = 1;
+								}
+							}
+						});
+						if (isTelRight == true
+								&& isNicknameRight == true
+								&& checkPassword($(".registerPassword").val()) == true
+								&& checkPasswordConfim() == true
+								&& checkIdentifyCode(realCode, $(
+										".identifyCode").val()) == true
+								&& successFlag == 1) {
+							registerAjax();
+						} else if (successFlag == -1) {
+							// 验证码重置
+							realCode = 0;
+							$("identifyCode").val("");
+							shakeModal("该号码已被使用");
 						}
-					}
-				});
-				if (isTelRight == true && isNicknameRight == true
-						&& checkPassword($(".registerPassword").val()) == true
-						&& checkPasswordConfim() == true
-						&& checkIdentifyCode(realCode,$(".identifyCode").val()) == true
-						&& successFlag == 1) {
-					registerAjax();
-				}else if(successFlag == -1){
-					//验证码重置
-					realCode = 0;
-					$("identifyCode").val("");
-					shakeModal("该号码已被使用");					
-				}
-			});
+					});
 
 	// 登录按钮点击事件，发送ajax请求
 	$(".btn-login").click(function() {
 		loginAjax();
 	});
-	//验证码登录按钮点击事件，发送ajax请求
-	$(".btn-code-login").click(function() {		
-		if (checkIdentifyCode(realCode,$(".identifyCode2").val()) == true) {
+	// 验证码登录按钮点击事件，发送ajax请求
+	$(".btn-code-login").click(function() {
+		if (checkIdentifyCode(realCode, $(".identifyCode2").val()) == true) {
 			identifyCodeLoginAjax();
 			$(".telphone2").val("");
 			$(".identifyCode2").val("");
 		}
 	});
-	
-	
-	//忘记密码确认修改按钮点击事件
+
+	// 忘记密码确认修改按钮点击事件
 	$(".btn-update-password").click(function() {
 		var tel = $(".telphone3").val();
 		var password = $(".newPassword").val();
@@ -440,9 +444,10 @@ $(function() {
 				password : password
 			},
 			dataType : "json",
-			async: false,			
+			async : false,
 			success : function(data) {
 				if (data == 1) {
+					layer.msg("修改成功");
 					openLoginModal();
 					$(".telphone3").val("");
 					$(".identifyCode3").val("");

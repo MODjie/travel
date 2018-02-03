@@ -219,8 +219,8 @@
 					</div>
 				</div>
 				<!-- sidebar-widget -->
-				<div class="sidebar-widget">
-					<h3 class="sidebar-title">码游周排行</h3>
+				<div class="sidebar-widget sidebar-weekrank">
+					<h3 class="sidebar-title ">码游周排行</h3>
 					<div class="widget-container">
 						<article class="widget-post">
 						<div class="post-image">
@@ -293,20 +293,7 @@
 						</div>
 						</article>
 					</div>
-				</div>
-				<div class="sidebar-widget">
-					<h3 class="sidebar-title">分类</h3>
-					<div class="widget-container">
-						<ul>
-							<li><a href="#">见闻</a></li>
-							<li><a href="#">游记</a></li>
-							<li><a href="#">动态</a></li>
-							<li><a href="#">攻略</a></li>
-							<li><a href="#">风景</a></li>
-							<li><a href="#">美食</a></li>
-						</ul>
-					</div>
-				</div>
+				</div>				
 			</div>
 			</aside>
 		</div>
@@ -481,7 +468,22 @@
 	<!--layer-->
 	<script type="text/javascript" src="layer/2.4/layer.js"></script>
 	
-	<script src="js/login-register.js" type="text/javascript"></script>	
+	<script src="js/login-register.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		var bodyWidth = $(document.body).width();
+		//search-box 随屏幕滚动 
+		$(window).scroll(function() {
+			console.log($(window).scrollTop());
+			if ($(window).scrollTop() > 448) {
+				$(".sidebar-weekrank").css("position", "fixed");
+				$(".sidebar-weekrank").css("top", "70px");
+				$(".sidebar-weekrank").css("width", bodyWidth * 0.2409);
+			} else {
+				$(".sidebar-weekrank").css("position", "");
+			}
+
+		});
+	</script>	
 </body>
 
 </html>

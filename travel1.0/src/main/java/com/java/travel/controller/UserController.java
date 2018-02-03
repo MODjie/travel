@@ -1,11 +1,8 @@
 package com.java.travel.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -20,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.java.travel.entity.ExUser;
 import com.java.travel.entity.Exprience;
 import com.java.travel.service.ExUserService;
@@ -42,7 +41,13 @@ public class UserController {
 	@RequestMapping(value = "showHome", method = RequestMethod.GET)
 	public ModelAndView showHome() {
 		ModelAndView modelAndView = new ModelAndView("home");
+		//分页
+		PageHelper.startPage(1,5);
+		//去数据库查询
 		List<Exprience> currentExList = exprienceService.selectAllExprience();
+		//将查询的信息封装到pageinfo中
+		 PageInfo<Exprience> pageInfo =new PageInfo<Exprience>(currentExList);
+		  System.out.println(pageInfo);
 		List<Exprience> weekRankExList = null;
 		ExUser currentUser = null;
 		
@@ -53,7 +58,7 @@ public class UserController {
 			currentUser = exUserService.selectByNickName(nickName);			
 		} 
 		modelAndView.addObject("currentUser", currentUser);
-		modelAndView.addObject("currentExList", currentExList);
+		modelAndView.addObject("pageInfo", pageInfo);
 		modelAndView.addObject("weekRankExList", weekRankExList);
 		return modelAndView;
 	}

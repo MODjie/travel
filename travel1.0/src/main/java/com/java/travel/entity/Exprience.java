@@ -1,7 +1,5 @@
 package com.java.travel.entity;
 
-import java.util.Date;
-
 public class Exprience {
     private Integer EXPRIENCEID;
 
@@ -11,7 +9,7 @@ public class Exprience {
 
     private String EXAUTHORNAME;
 
-    private Date EXPUBLISHTIME;
+    private String EXPUBLISHTIME;
 
     private String EXCOVER;
 
@@ -53,12 +51,12 @@ public class Exprience {
         this.EXAUTHORNAME = EXAUTHORNAME == null ? null : EXAUTHORNAME.trim();
     }
 
-    public Date getEXPUBLISHTIME() {
+    public String getEXPUBLISHTIME() {
         return EXPUBLISHTIME;
     }
 
-    public void setEXPUBLISHTIME(Date EXPUBLISHTIME) {
-        this.EXPUBLISHTIME = EXPUBLISHTIME;
+    public void setEXPUBLISHTIME(String EXPUBLISHTIME) {
+        this.EXPUBLISHTIME = EXPUBLISHTIME == null ? null : EXPUBLISHTIME.trim();
     }
 
     public String getEXCOVER() {
@@ -92,28 +90,4 @@ public class Exprience {
     public void setEXCONTENT(String EXCONTENT) {
         this.EXCONTENT = EXCONTENT == null ? null : EXCONTENT.trim();
     }
-
-	@Override
-	public String toString() {
-		return "Exprience [EXPRIENCEID=" + EXPRIENCEID + ", EXTYPEID=" + EXTYPEID + ", EXTITLE=" + EXTITLE
-				+ ", EXAUTHORNAME=" + EXAUTHORNAME + ", EXPUBLISHTIME=" + EXPUBLISHTIME + ", EXCOVER=" + EXCOVER
-				+ ", ISPUBLISH=" + ISPUBLISH + ", COMMENTNUM=" + COMMENTNUM + ", EXCONTENT=" + EXCONTENT + "]";
-	}
-
-	public Exprience(Integer eXPRIENCEID, Integer eXTYPEID, String eXTITLE, String eXAUTHORNAME, Date eXPUBLISHTIME,
-			String eXCOVER, String iSPUBLISH, Integer cOMMENTNUM, String eXCONTENT) {
-		super();
-		EXPRIENCEID = eXPRIENCEID;
-		EXTYPEID = eXTYPEID;
-		EXTITLE = eXTITLE;
-		EXAUTHORNAME = eXAUTHORNAME;
-		EXPUBLISHTIME = eXPUBLISHTIME;
-		EXCOVER = eXCOVER;
-		ISPUBLISH = iSPUBLISH;
-		COMMENTNUM = cOMMENTNUM;
-		EXCONTENT = eXCONTENT;
-	}
-    public Exprience() {
-		// TODO Auto-generated constructor stub
-	}
 }

@@ -53,7 +53,7 @@
 				<bean class="com.github.pagehelper.PageInterceptor">
 					<property name="properties">
 						<value>
-							helperDialect=mysql
+							helperDialect=oracle
 							reasonable=true
 						</value>
 					</property>
@@ -107,6 +107,7 @@
 				/hasUserByTel=anon
 				/hasUserByNickName=anon
 				/toPost=anon
+				/getAfterLoadEx=anon
 				
 				/writeEx=authc
 				/exprienceEdit=authc				
