@@ -47,7 +47,6 @@ public class UserController {
 		List<Exprience> currentExList = exprienceService.selectAllExprience();
 		//将查询的信息封装到pageinfo中
 		 PageInfo<Exprience> pageInfo =new PageInfo<Exprience>(currentExList);
-		  System.out.println(pageInfo);
 		List<Exprience> weekRankExList = null;
 		ExUser currentUser = null;
 		

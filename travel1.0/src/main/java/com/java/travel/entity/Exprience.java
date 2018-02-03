@@ -90,4 +90,31 @@ public class Exprience {
     public void setEXCONTENT(String EXCONTENT) {
         this.EXCONTENT = EXCONTENT == null ? null : EXCONTENT.trim();
     }
+    
+    public Exprience() {
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "Exprience [EXPRIENCEID=" + EXPRIENCEID + ", EXTYPEID=" + EXTYPEID + ", EXTITLE=" + EXTITLE
+				+ ", EXAUTHORNAME=" + EXAUTHORNAME + ", EXPUBLISHTIME=" + EXPUBLISHTIME + ", EXCOVER=" + EXCOVER
+				+ ", ISPUBLISH=" + ISPUBLISH + ", COMMENTNUM=" + COMMENTNUM + ", EXCONTENT=" + EXCONTENT + "]";
+	}
+
+	public Exprience(Integer eXPRIENCEID, Integer eXTYPEID, String eXTITLE, String eXAUTHORNAME, String eXPUBLISHTIME,
+			String eXCOVER, String iSPUBLISH, Integer cOMMENTNUM, String eXCONTENT) {
+		super();
+		EXPRIENCEID = eXPRIENCEID;
+		EXTYPEID = eXTYPEID;
+		EXTITLE = eXTITLE;
+		EXAUTHORNAME = eXAUTHORNAME;
+		EXPUBLISHTIME = eXPUBLISHTIME;
+		EXCOVER = eXCOVER;
+		ISPUBLISH = iSPUBLISH;
+		COMMENTNUM = cOMMENTNUM;
+		EXCONTENT = eXCONTENT;
+	}
+    
+    
 }

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.travel.mapper.ExCommentMapper">
+  <resultMap id="BaseResultMap" type="com.java.travel.entity.ExComment">
+    <id column="COMMENTID" jdbcType="DECIMAL" property="COMMENTID" />
+    <result column="EXPRIENCEID" jdbcType="DECIMAL" property="EXPRIENCEID" />
+    <result column="USERANAME" jdbcType="VARCHAR" property="USERANAME" />
+    <result column="COMMENTCONTENRT" jdbcType="VARCHAR" property="COMMENTCONTENRT" />
+    <result column="COMMENTTIME" jdbcType="VARCHAR" property="COMMENTTIME" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    COMMENTID, EXPRIENCEID, USERANAME, COMMENTCONTENRT, COMMENTTIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from EXCOMMENT
+    where COMMENTID = #{COMMENTID,jdbcType=DECIMAL}
+  </select>
+  <!-- 查找全部评论 -->
+  <select id="selectCommentsByExid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from EXCOMMENT order by COMMENTTIME desc    
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from EXCOMMENT
+    where COMMENTID = #{COMMENTID,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.java.travel.entity.ExComment">
+    insert into EXCOMMENT (COMMENTID, EXPRIENCEID, USERANAME, 
+      COMMENTCONTENRT, COMMENTTIME)
+    values (#{COMMENTID,jdbcType=DECIMAL}, #{EXPRIENCEID,jdbcType=DECIMAL}, #{USERANAME,jdbcType=VARCHAR}, 
+      #{COMMENTCONTENRT,jdbcType=VARCHAR}, #{COMMENTTIME,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.java.travel.entity.ExComment">
+    insert into EXCOMMENT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="COMMENTID != null">
+        COMMENTID,
+      </if>
+      <if test="EXPRIENCEID != null">
+        EXPRIENCEID,
+      </if>
+      <if test="USERANAME != null">
+        USERANAME,
+      </if>
+      <if test="COMMENTCONTENRT != null">
+        COMMENTCONTENRT,
+      </if>
+      <if test="COMMENTTIME != null">
+        COMMENTTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="COMMENTID != null">
+        #{COMMENTID,jdbcType=DECIMAL},
+      </if>
+      <if test="EXPRIENCEID != null">
+        #{EXPRIENCEID,jdbcType=DECIMAL},
+      </if>
+      <if test="USERANAME != null">
+        #{USERANAME,jdbcType=VARCHAR},
+      </if>
+      <if test="COMMENTCONTENRT != null">
+        #{COMMENTCONTENRT,jdbcType=VARCHAR},
+      </if>
+      <if test="COMMENTTIME != null">
+        #{COMMENTTIME,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.java.travel.entity.ExComment">
+    update EXCOMMENT
+    <set>
+      <if test="EXPRIENCEID != null">
+        EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL},
+      </if>
+      <if test="USERANAME != null">
+        USERANAME = #{USERANAME,jdbcType=VARCHAR},
+      </if>
+      <if test="COMMENTCONTENRT != null">
+        COMMENTCONTENRT = #{COMMENTCONTENRT,jdbcType=VARCHAR},
+      </if>
+      <if test="COMMENTTIME != null">
+        COMMENTTIME = #{COMMENTTIME,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where COMMENTID = #{COMMENTID,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.java.travel.entity.ExComment">
+    update EXCOMMENT
+    set EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL},
+      USERANAME = #{USERANAME,jdbcType=VARCHAR},
+      COMMENTCONTENRT = #{COMMENTCONTENRT,jdbcType=VARCHAR},
+      COMMENTTIME = #{COMMENTTIME,jdbcType=VARCHAR}
+    where COMMENTID = #{COMMENTID,jdbcType=DECIMAL}
+  </update>
+</mapper>

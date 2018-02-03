@@ -110,7 +110,8 @@
 				/getAfterLoadEx=anon
 				
 				/writeEx=authc
-				/exprienceEdit=authc				
+				/exprienceEdit=authc	
+				/comment = authc			
 			</value>
 		</property>
 	</bean>

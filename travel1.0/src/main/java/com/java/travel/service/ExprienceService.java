@@ -2,6 +2,8 @@ package com.java.travel.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.java.travel.entity.Exprience;
 
 public interface ExprienceService {

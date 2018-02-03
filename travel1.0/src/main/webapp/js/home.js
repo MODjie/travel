@@ -28,9 +28,8 @@ $(function() {
 					})
 					readMore.prev().html(exContents[length]);
 				} else {
-//					pickUpFlag = true;
 					//当前文章高度
-					currentExHeight = $(this).parent().prev().height();					
+					var currentExHeight = $(this).parent().prev().height();					
 					//当前鼠标移动距离
 					var currentScrollHeight = $(window).scrollTop();
 //					alert("当前鼠标移动距离"+currentScrollHeight);
@@ -49,10 +48,6 @@ $(function() {
 
 			});
 
-	//滚动条回滚标志
-	var pickUpFlag = false;
-	//当前文章高度
-	var currentExHeight = 0;
 	// 滚动条距底部的距离
 	var BOTTOM_OFFSET = 0;// 请求数据的页码
 	var exPageNum = 1;
@@ -75,10 +70,6 @@ $(function() {
 			exContents = createListItems(exPageNum,exContents);
 		}
 		
-		//滚动条回滚
-//		if (pickUpFlag == true) {
-//			
-//		}
 	});
 
 });

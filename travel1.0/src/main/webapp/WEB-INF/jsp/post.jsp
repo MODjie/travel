@@ -133,8 +133,9 @@
 				</div>
 				<hr />
 				<div class="comment-edit">
-					<textarea></textarea>
-					<button type="button" class="btn btn-info pull-right ">评论</button>
+					<input type="hidden" id="commentExId" value="${exprience.EXPRIENCEID }">
+					<textarea placeholder="100字以内"></textarea>
+					<button type="button" class="btn btn-info pull-right" id="comment-btn">评论</button>
 				</div>
 				</article>
 				<div class="comment-div">
@@ -220,7 +221,7 @@
 				</div>
 				<!-- sidebar-widget -->
 				<div class="sidebar-widget sidebar-weekrank">
-					<h3 class="sidebar-title ">码游周排行</h3>
+					<h3 class="sidebar-title ">热门作品</h3>
 					<div class="widget-container">
 						<article class="widget-post">
 						<div class="post-image">
@@ -473,7 +474,7 @@
 		var bodyWidth = $(document.body).width();
 		//search-box 随屏幕滚动 
 		$(window).scroll(function() {
-			console.log($(window).scrollTop());
+			/* console.log($(window).scrollTop()); */
 			if ($(window).scrollTop() > 448) {
 				$(".sidebar-weekrank").css("position", "fixed");
 				$(".sidebar-weekrank").css("top", "70px");

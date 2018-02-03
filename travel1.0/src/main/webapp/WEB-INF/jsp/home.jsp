@@ -159,7 +159,7 @@
 						</div>
 						<div class="blog-post-body">
 							<h2>
-								<a href="post.html">${exprience.EXTITLE}</a>
+								<a href="toPost?exprienceId=${exprience.EXPRIENCEID}">${exprience.EXTITLE}</a>
 							</h2>
 							<div class="post-meta">
 								<a href="#">${exprience.EXAUTHORNAME}</a> </span>/<span><i

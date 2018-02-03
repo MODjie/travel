@@ -13,7 +13,7 @@ public interface ExprienceMapper {
 
     Exprience selectByPrimaryKey(Integer EXPRIENCEID);
     
-  //查询所有的exprience
+    //查询所有的exprience
     List<Exprience> selectAllExprience(); 
 
     int updateByPrimaryKeySelective(Exprience record);

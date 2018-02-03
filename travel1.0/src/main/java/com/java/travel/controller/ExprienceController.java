@@ -18,9 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.java.travel.entity.ExComment;
 import com.java.travel.entity.ExUser;
 import com.java.travel.entity.Exprience;
-
+import com.java.travel.service.ExCommentService;
 import com.java.travel.service.ExTypeService;
 import com.java.travel.service.ExUserService;
 import com.java.travel.service.ExprienceService;
@@ -29,11 +30,13 @@ import com.java.travel.util.MyFileUploadUtil;
 @Controller
 public class ExprienceController {
 	@Resource
-	ExprienceService exService;
+	private ExprienceService exService;
 	@Resource
-	ExTypeService exTypeService;
+	private ExTypeService exTypeService;
 	@Resource
-	ExUserService exUserService;
+	private ExUserService exUserService;
+	@Resource
+	private ExCommentService exCommentService;
 
 	/**
 	 * 新增文章
@@ -105,7 +108,11 @@ public class ExprienceController {
 		modelAndView.addObject("currentUser", currentUser);
 		return modelAndView;
 	}
-
+	/**
+	 * 获取动态加载内容
+	 * @param exPageNum
+	 * @return
+	 */
 	@RequestMapping(value = "getAfterLoadEx", method = RequestMethod.GET)
 	@ResponseBody
 	public PageInfo<Exprience> getAfterLoadEx(Integer exPageNum) {
@@ -119,5 +126,29 @@ public class ExprienceController {
 			pageInfo.setList(null);
 		}
 		return pageInfo;		
+	}
+	
+	@RequestMapping(value = "comment", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ExComment> comment(int exprienceId,String commentContent){
+		//获取当前用户，即评论人昵称
+		Subject subject = SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		String commentAname = (String) session.getAttribute("nickName");
+		//获取当前时间
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+		Date date = new Date();
+		String commentTime = sdf.format(date);
+		
+		ExComment comment = new ExComment();
+		comment.setEXPRIENCEID(exprienceId);
+		comment.setUSERANAME(commentAname);
+		comment.setCOMMENTCONTENRT(commentContent);
+		comment.setCOMMENTTIME(commentTime);
+		
+		exCommentService.insert(comment);
+		List<ExComment> list = exCommentService.selectCommentsByExid(exprienceId);
+//		PageHelper.startPage(pageNum, pageSize);
+		return list;
 	}
 }

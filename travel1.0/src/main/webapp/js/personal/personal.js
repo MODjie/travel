@@ -7,7 +7,8 @@ $(function() {
 			skin: 'layui-layer-lan',
 			shadeClose: true, //点击关闭遮罩层  
 			area: ['40%', '46%'],
-			content: 'mood.html'//弹框显示的url 
+			content: 'mood.jsp'//弹框显示的url 
 		});
 	});
+	
 });
