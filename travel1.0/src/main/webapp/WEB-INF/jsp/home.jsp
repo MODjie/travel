@@ -179,9 +179,6 @@
 					</c:forEach>
 				</c:if>
 			</div>
-			<div class="copyrights">
-				Collect from <a href="http://www.cssmoban.com/">手机网站模板</a>
-			</div>
 			<div class="col-md-4 sidebar-gutter">
 				<aside> <!-- sidebar-widget -->
 				<div class="sidebar-widget">

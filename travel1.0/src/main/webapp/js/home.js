@@ -1,8 +1,4 @@
-$(function() {
-	//滚动条回滚标志
-	var pickUpFlag = false;
-	//当前文章高度
-	var currentExHeight = 0;	
+$(function() {	
 	// 定义一个数组用来存放所有文章内容
 	var exContents = new Array();
 	// 加载主页时，遍历所有文章内容，并且截取第一个<p>标签中的内容，将完整内容存入数组exContents
@@ -33,8 +29,14 @@ $(function() {
 					readMore.prev().html(exContents[length]);
 				} else {
 //					pickUpFlag = true;
-//					currentExHeight = $(this).parents(".blog-post").height();
-//					alert(currentExHeight);
+					//当前文章高度
+					currentExHeight = $(this).parent().prev().height();					
+					//当前鼠标移动距离
+					var currentScrollHeight = $(window).scrollTop();
+//					alert("当前鼠标移动距离"+currentScrollHeight);
+//					alert("当前文章的高度"+currentExHeight);
+					$(window).scrollTop(currentScrollHeight-currentExHeight);
+					 
 					$(this).text("继续阅读");					
 					readMore.find("input").val("1");
 					var exContent = readMore.prev().html();
@@ -47,8 +49,10 @@ $(function() {
 
 			});
 
-	var pos = 0;
-	
+	//滚动条回滚标志
+	var pickUpFlag = false;
+	//当前文章高度
+	var currentExHeight = 0;
 	// 滚动条距底部的距离
 	var BOTTOM_OFFSET = 0;// 请求数据的页码
 	var exPageNum = 1;
@@ -69,12 +73,11 @@ $(function() {
 		if ((BOTTOM_OFFSET + scrollTop) >= docHeight - windowHeight) {
 			exPageNum = exPageNum + 1;
 			exContents = createListItems(exPageNum,exContents);
-//			createListItems(exPageNum);
 		}
 		
 		//滚动条回滚
 //		if (pickUpFlag == true) {
-//			 $currentWindow.scrollTop(scrollTop);			 
+//			
 //		}
 	});
 
