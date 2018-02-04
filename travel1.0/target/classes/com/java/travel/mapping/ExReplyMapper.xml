@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.travel.mapper.ExReplyMapper">
+	<resultMap id="BaseResultMap" type="com.java.travel.entity.ExReply">
+		<id column="REPLYID" jdbcType="DECIMAL" property="REPLYID" />
+		<result column="COMMENTID" jdbcType="DECIMAL" property="COMMENTID" />
+		<result column="REPLYUSERANAME" jdbcType="VARCHAR" property="REPLYUSERANAME" />
+		<result column="REPLYCONTENT" jdbcType="VARCHAR" property="REPLYCONTENT" />
+		<result column="REPLYTIME" jdbcType="VARCHAR" property="REPLYTIME" />
+		<result column="REPLYUSERBNAME" jdbcType="VARCHAR" property="REPLYUSERBNAME" />
+	</resultMap>
+	<resultMap type="com.java.travel.entity.ExReplyDetail" id="ExReplyDetail"
+		extends="BaseResultMap">
+		<result column="HEADADDRESS" jdbcType="VARCHAR" property="HEADADDRESS" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		REPLYID, COMMENTID, REPLYUSERANAME, REPLYCONTENT,
+		REPLYTIME, REPLYUSERBNAME
+	</sql>
+	<sql id="Reply_Column_List">
+		HEADADDRESS
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from EXREPLY
+		where REPLYID = #{REPLYID,jdbcType=DECIMAL}
+	</select>
+	<!-- 通过评论编号查找回复 -->
+	<select id="selectReplyByCommentId" parameterType="java.lang.Integer" resultMap="ExReplyDetail">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Reply_Column_List" />
+		from EXREPLY_VIEW where COMMENTID = #{commentId,jdbcType=DECIMAL}
+		order by REPLYTIME desc
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		EXREPLY
+		where REPLYID = #{REPLYID,jdbcType=DECIMAL}
+	</delete>
+	<insert id="insert" parameterType="com.java.travel.entity.ExReply">
+		insert into EXREPLY (REPLYID,
+		COMMENTID, REPLYUSERANAME,
+		REPLYCONTENT, REPLYTIME, REPLYUSERBNAME
+		)
+		values (#{REPLYID,jdbcType=DECIMAL}, #{COMMENTID,jdbcType=DECIMAL},
+		#{REPLYUSERANAME,jdbcType=VARCHAR},
+		#{REPLYCONTENT,jdbcType=VARCHAR},
+		#{REPLYTIME,jdbcType=VARCHAR}, #{REPLYUSERBNAME,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.java.travel.entity.ExReply">
+		insert into EXREPLY
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="REPLYID != null">
+				REPLYID,
+			</if>
+			<if test="COMMENTID != null">
+				COMMENTID,
+			</if>
+			<if test="REPLYUSERANAME != null">
+				REPLYUSERANAME,
+			</if>
+			<if test="REPLYCONTENT != null">
+				REPLYCONTENT,
+			</if>
+			<if test="REPLYTIME != null">
+				REPLYTIME,
+			</if>
+			<if test="REPLYUSERBNAME != null">
+				REPLYUSERBNAME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="REPLYID != null">
+				#{REPLYID,jdbcType=DECIMAL},
+			</if>
+			<if test="COMMENTID != null">
+				#{COMMENTID,jdbcType=DECIMAL},
+			</if>
+			<if test="REPLYUSERANAME != null">
+				#{REPLYUSERANAME,jdbcType=VARCHAR},
+			</if>
+			<if test="REPLYCONTENT != null">
+				#{REPLYCONTENT,jdbcType=VARCHAR},
+			</if>
+			<if test="REPLYTIME != null">
+				#{REPLYTIME,jdbcType=VARCHAR},
+			</if>
+			<if test="REPLYUSERBNAME != null">
+				#{REPLYUSERBNAME,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.java.travel.entity.ExReply">
+		update EXREPLY
+		<set>
+			<if test="COMMENTID != null">
+				COMMENTID = #{COMMENTID,jdbcType=DECIMAL},
+			</if>
+			<if test="REPLYUSERANAME != null">
+				REPLYUSERANAME = #{REPLYUSERANAME,jdbcType=VARCHAR},
+			</if>
+			<if test="REPLYCONTENT != null">
+				REPLYCONTENT = #{REPLYCONTENT,jdbcType=VARCHAR},
+			</if>
+			<if test="REPLYTIME != null">
+				REPLYTIME = #{REPLYTIME,jdbcType=VARCHAR},
+			</if>
+			<if test="REPLYUSERBNAME != null">
+				REPLYUSERBNAME = #{REPLYUSERBNAME,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where REPLYID = #{REPLYID,jdbcType=DECIMAL}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.java.travel.entity.ExReply">
+		update EXREPLY
+		set
+		COMMENTID = #{COMMENTID,jdbcType=DECIMAL},
+		REPLYUSERANAME =
+		#{REPLYUSERANAME,jdbcType=VARCHAR},
+		REPLYCONTENT =
+		#{REPLYCONTENT,jdbcType=VARCHAR},
+		REPLYTIME =
+		#{REPLYTIME,jdbcType=VARCHAR},
+		REPLYUSERBNAME =
+		#{REPLYUSERBNAME,jdbcType=VARCHAR}
+		where REPLYID =
+		#{REPLYID,jdbcType=DECIMAL}
+	</update>
+</mapper>

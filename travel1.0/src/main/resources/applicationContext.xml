@@ -112,7 +112,8 @@
 				
 				/writeEx=authc
 				/exprienceEdit=authc	
-				/comment = authc			
+				/comment=authc	
+				/reply=authc		
 			</value>
 		</property>
 	</bean>

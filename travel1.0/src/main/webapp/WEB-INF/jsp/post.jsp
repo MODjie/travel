@@ -153,9 +153,10 @@
 										<div class="comment-main">
 											<header class="comment-header">
 											<div class="comment-meta">
-												<a class="comment-author" href="#">@${comment.USERANAME }</a> 评论于   
+												<a class="comment-author" href="#">@<span>${comment.USERANAME }</span></a> 评论于   
 												<time title="${comment.COMMENTTIME }"
 													datetime="${comment.COMMENTTIME }">${comment.COMMENTTIME }</time>
+												<input type="hidden" class="commentId-input" value="${comment.COMMENTID }">
 												<a class="reply pull-right">回复</a>
 											</div>
 											</header>
@@ -163,12 +164,15 @@
 												<p>
 													${comment.COMMENTCONTENRT }
 												</p>
+												<div id="reply-wrapper"></div>
 											</div>
 										</div></li>
 								</ul>
 							</div>
 						</c:forEach>
 					</c:if>
+					<input type="hidden" id="commentId-input-alone" value="">
+					<input type="hidden" id="replyUserBName" value="">
 				</div>
 				<div style="margin-bottom: 65px"></div>
 			</div>

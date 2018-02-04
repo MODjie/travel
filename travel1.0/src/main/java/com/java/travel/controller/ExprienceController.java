@@ -20,9 +20,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.java.travel.entity.ExComment;
 import com.java.travel.entity.ExCommentDetail;
+import com.java.travel.entity.ExReply;
+import com.java.travel.entity.ExReplyDetail;
 import com.java.travel.entity.ExUser;
 import com.java.travel.entity.Exprience;
 import com.java.travel.service.ExCommentService;
+import com.java.travel.service.ExReplyService;
 import com.java.travel.service.ExTypeService;
 import com.java.travel.service.ExUserService;
 import com.java.travel.service.ExprienceService;
@@ -38,6 +41,8 @@ public class ExprienceController {
 	private ExUserService exUserService;
 	@Resource
 	private ExCommentService exCommentService;
+	@Resource
+	private ExReplyService exReplyService;
 
 	/**
 	 * 新增文章
@@ -144,7 +149,7 @@ public class ExprienceController {
 
 	@RequestMapping(value = "getAfterLoadCommentReply", method = RequestMethod.GET)
 	@ResponseBody
-	public PageInfo<ExCommentDetail> getAfterLoadCommentReply(Integer exPageNum,Integer exprienceId) {
+	public PageInfo<ExCommentDetail> getAfterLoadCommentReply(Integer exPageNum, Integer exprienceId) {
 		// 分页
 		PageHelper.startPage(exPageNum, 5);
 		// 去数据库查询
@@ -155,9 +160,9 @@ public class ExprienceController {
 		}
 		return pageInfo;
 	}
-	
+
 	/**
-	 * 获取评论
+	 * 添加评论并获取前五条
 	 * 
 	 * @param exprienceId
 	 * @param commentContent
@@ -165,7 +170,7 @@ public class ExprienceController {
 	 */
 	@RequestMapping(value = "comment", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo<ExCommentDetail> comment(int exprienceId, String commentContent) {
+	public PageInfo<ExCommentDetail> comment(Integer exprienceId, String commentContent) {
 		// 获取当前用户，即评论人昵称
 		Subject subject = SecurityUtils.getSubject();
 		Session session = subject.getSession();
@@ -187,7 +192,44 @@ public class ExprienceController {
 		PageHelper.startPage(1, 5);
 		List<ExCommentDetail> commentList = exCommentService.selectCommentsByExid(exprienceId);
 		PageInfo<ExCommentDetail> pageInfo = new PageInfo<ExCommentDetail>(commentList);
+
+		return pageInfo;
+	}
+	
+	/**
+	 * 添加回复并获取前五条
+	 * @param commentId
+	 * @param replyContent
+	 * @param replyUserBName
+	 * @return
+	 */
+	@RequestMapping(value = "reply", method = RequestMethod.POST)
+	@ResponseBody
+	public PageInfo<ExReplyDetail> reply(Integer commentId, String replyContent,String replyUserBName) {
+
+		// 获取当前用户，即回复人昵称
+		Subject subject = SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		String replyUserAname = (String) session.getAttribute("nickName");
+
+		// 获取当前时间
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+		Date date = new Date();
+		String replyTime = sdf.format(date);
+
+		ExReply exReply = new ExReply();
+		exReply.setCOMMENTID(commentId);
+		exReply.setREPLYCONTENT(replyContent);
+		exReply.setREPLYTIME(replyTime);
+		exReply.setREPLYUSERANAME(replyUserAname);
+		exReply.setREPLYUSERBNAME(replyUserBName);
 		
+		exReplyService.insert(exReply);
+		// 回复分页
+		PageHelper.startPage(1, 5);
+		List<ExReplyDetail> replyList = exReplyService.selectReplyByCommentId(commentId);
+		PageInfo<ExReplyDetail> pageInfo = new PageInfo<ExReplyDetail>(replyList);
+
 		return pageInfo;
 	}
 }
