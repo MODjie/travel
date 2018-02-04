@@ -447,7 +447,7 @@
 			} else {
 				$(".sidebar-weekrank").css("position", "");
 			}
-
+			
 		});
 	</script>
 </body>

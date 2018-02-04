@@ -144,7 +144,7 @@ public class ExprienceController {
 
 	@RequestMapping(value = "getAfterLoadCommentReply", method = RequestMethod.GET)
 	@ResponseBody
-	public PageInfo<ExCommentDetail> getAfterLoadCommentReply(Integer exPageNum,int exprienceId) {
+	public PageInfo<ExCommentDetail> getAfterLoadCommentReply(Integer exPageNum,Integer exprienceId) {
 		// 分页
 		PageHelper.startPage(exPageNum, 5);
 		// 去数据库查询

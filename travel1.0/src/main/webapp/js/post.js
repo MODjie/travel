@@ -1,4 +1,4 @@
-$(function() {	
+$(function() {			
 	// 回复弹窗
 	$(".reply").click(function() {
 		layer.open({
@@ -111,7 +111,7 @@ function createListItems(exPageNum,exprienceId) {
 				success : function(data) {
 					if (data.list != null) {
 						showCommentReply(data);															
-					} else {
+					} else {						
 						layer.msg("没有更多了");
 					}
 				}
