@@ -97,9 +97,16 @@
 					dataType : "json",
 					async : false, // 不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
 					success : function(data) {
-						parent.alert(JSON.stringify(data))
 						$(".reply-text").val("");
 						showReply(data, commentId);
+						//将查看回复div隐藏
+						parent.$(".reply-wrapper").each(function() {
+							if ($(this).html()=="") {
+								$(this).parents(".comment-div").next().css("display","block");
+							}else {
+								$(this).parents(".comment-div").next().css("display","none");
+							}
+						})
 					},
 					error : function() {
 						parent.layer.msg("登录才能回复哦");
@@ -122,15 +129,14 @@
 		var replyArea;
 		parent.$(".comment-body").each(function() {
 			if ($(this).prev().find(".commentId-input").val() == commentId) {
-				replyArea = $(this).find("#reply-wrapper");
-				$(this).find("#reply-wrapper").empty();
-				parent.alert(commentId);
+				replyArea = $(this).find(".reply-wrapper");
+				$(this).find(".reply-wrapper").empty();
 			}
 		});
 		//显示回复
 		$
 				.each(
-						data.list,
+						data,
 						function(index, reply) {
 							replyArea
 									.append("<div class='reply-content'> <ul class='commentList'> <li class='item cl'> <a href='#'><i class='avatar size-L radius'><img alt='头像' class='img-circle' src='"+reply.headaddress+"' width='50px'></i></a> <div class='comment-main'> <header class='comment-header'> <div class='comment-meta'> <a class='comment-author' href='#'>@<span>"

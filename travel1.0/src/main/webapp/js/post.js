@@ -1,19 +1,51 @@
 $(function() {
 	// 回复弹窗
-	$(document).on("click",".reply",function(){
-		// 获取commentId,replyUserBName
-		var commentId = $(this).prev().val();
-		var replyUserBName = $(this).siblings(".comment-author").find("span").text();
-		alert(replyUserBName);
-		$("#commentId-input-alone").val(commentId);
-		$("#replyUserBName").val(replyUserBName);
-		layer.open({
-			type : 2,
-			title : '编辑回复内容',
-			skin : 'layui-layer-lan',
-			shadeClose : true, // 点击关闭遮罩层
-			area : [ '40%', '46%' ],
-			content : 'reply.jsp',// 弹框显示的url
+	$(document).on(
+			"click",
+			".reply",
+			function() {
+				// 获取commentId,replyUserBName
+				var commentId = $(this).prev().val();
+				var replyUserBName = $(this).siblings(".comment-author").find(
+						"span").text();
+				$("#commentId-input-alone").val(commentId);
+				$("#replyUserBName").val(replyUserBName);
+				layer.open({
+					type : 2,
+					title : '编辑回复内容',
+					skin : 'layui-layer-lan',
+					shadeClose : true, // 点击关闭遮罩层
+					area : [ '40%', '46%' ],
+					content : 'reply.jsp'// 弹框显示的url								
+				});							
+			});
+
+	// 查看回复div点击事件
+	$(document).on("click", ".show-reply", function() {
+		var currentBtn = $(this);
+		var replyArea = $(this).prev().find(".reply-wrapper");
+		var commentId = $(this).prev().find(".commentId-input").val();
+		$.ajax({
+			type : "get",
+			url : "reply",
+			data : {
+				commentId : commentId
+			},
+			dataType : "json",
+			async : false, // 不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
+			success : function(data) {
+				// alert(JSON.stringify(data))
+				currentBtn.css("display", "none");
+				if (data == null) {
+					layer.msg("此评论暂时还没有回复")
+				}else {
+					showReply(data, replyArea, commentId);
+				}			
+			},
+			error : function() {
+				layer.msg("登录才能查看回复");
+				openLoginModal();
+			}
 		});
 	});
 
@@ -41,7 +73,8 @@ $(function() {
 				// alert(JSON.stringify(data))
 				contentArea.val("");
 				$(".comment-div").empty();
-				showCommentReply(data);
+				$(".show-reply").remove();
+				showComment(data);
 			},
 			error : function() {
 				layer.msg("登录才能评论哦");
@@ -78,8 +111,8 @@ $(function() {
 	});
 });
 
-// 显示评论回复
-function showCommentReply(data) {
+// 显示评论
+function showComment(data) {
 	$
 			.each(
 					data.list,
@@ -100,7 +133,35 @@ function showCommentReply(data) {
 												+ comment.commentid
 												+ "'> <a class='reply pull-right'>回复</a> </div> </header> <div class='comment-body'> <p>  "
 												+ comment.commentcontenrt
-												+ " </p> <div id='reply-wrapper'></div> </div> </div></li> </ul> </div>");
+												+ " </p> <div class='reply-wrapper'></div> </div> </div></li> </ul> </div><div class='show-reply'>查看回复 </div>");
+					});
+}
+
+// 显示回复
+function showReply(data, replyArea, commentId) {
+	// 显示回复
+	$
+			.each(
+					data,
+					function(index, reply) {
+						replyArea
+								.append("<div class='reply-content'> <ul class='commentList'> <li class='item cl'> <a href='#'><i class='avatar size-L radius'><img alt='头像' class='img-circle' src='"
+										+ reply.headaddress
+										+ "' width='50px'></i></a> <div class='comment-main'> <header class='comment-header'> <div class='comment-meta'> <a class='comment-author' href='#'>@<span>"
+										+ reply.replyuseraname
+										+ "</span></a> 回复 <a class='comment-author' href='#'>@"
+										+ reply.replyuserbname
+										+ "</a>于 <time title='"
+										+ reply.replytime
+										+ "' datetime='"
+										+ reply.replytime
+										+ "'>"
+										+ reply.replytime
+										+ "</time><input type='hidden'  value='"
+										+ commentId
+										+ "'> <a class='reply pull-right'>回复</a> </div> </header> <div class='comment-body'> <p> "
+										+ reply.replycontent
+										+ "</p> </div> </div> </li> </ul> </div>");
 					});
 }
 
@@ -117,7 +178,7 @@ function createListItems(exPageNum, exprienceId) {
 		async : false, // 不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
 		success : function(data) {
 			if (data.list != null) {
-				showCommentReply(data);
+				showComment(data);
 			} else {
 				layer.msg("没有更多了");
 			}

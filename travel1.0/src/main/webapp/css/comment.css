@@ -132,3 +132,13 @@
 	width: 10%;
 	height: 45px;
 }
+
+/*²é¿´»Ø¸´*/
+
+.show-reply {
+	text-align: center;
+	background: rgb(222,222,222);
+	margin-top: -10px;
+	margin-left: 65px;
+	cursor: pointer;
+}

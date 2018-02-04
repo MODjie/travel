@@ -137,42 +137,44 @@
 						id="comment-btn">评论</button>
 				</div>
 				</article>
-				<div class="comment-wrapper">	
+				<div class="comment-wrapper">
 					<c:if test="${pageInfo.list==null }">
-						<div class="no-comment" style="text-align: center;font-size: 25px;color: darkgray;">
-							暂无评论信息，快抢沙发
-						</div>
-					</c:if>				
+						<div class="no-comment"
+							style="text-align: center; font-size: 25px; color: darkgray;">
+							暂无评论信息，快抢沙发</div>
+					</c:if>
 					<c:if test="${pageInfo.list!=null }">
 						<c:forEach items="${pageInfo.list }" var="comment">
 							<div class="comment-div">
 								<ul class="commentList">
 									<li class="item cl"><a href="#"><i
 											class="avatar size-L radius"><img alt="头像"
-												class="img-circle" src="${comment.HEADADDRESS }" width="50px"></i></a>
+												class="img-circle" src="${comment.HEADADDRESS }"
+												width="50px"></i></a>
 										<div class="comment-main">
 											<header class="comment-header">
 											<div class="comment-meta">
-												<a class="comment-author" href="#">@<span>${comment.USERANAME }</span></a> 评论于   
+												<a class="comment-author" href="#">@<span>${comment.USERANAME }</span></a>
+												评论于
 												<time title="${comment.COMMENTTIME }"
 													datetime="${comment.COMMENTTIME }">${comment.COMMENTTIME }</time>
-												<input type="hidden" class="commentId-input" value="${comment.COMMENTID }">
-												<a class="reply pull-right">回复</a>
+												<input type="hidden" class="commentId-input"
+													value="${comment.COMMENTID }"> <a
+													class="reply pull-right">回复</a>
 											</div>
 											</header>
 											<div class="comment-body">
-												<p>
-													${comment.COMMENTCONTENRT }
-												</p>
-												<div id="reply-wrapper"></div>
+												<p>${comment.COMMENTCONTENRT }</p>
+												<div class="reply-wrapper"></div>
 											</div>
 										</div></li>
 								</ul>
 							</div>
+							<div class="show-reply">查看回复</div>
 						</c:forEach>
 					</c:if>
-					<input type="hidden" id="commentId-input-alone" value="">
-					<input type="hidden" id="replyUserBName" value="">
+					<input type="hidden" id="commentId-input-alone" value=""> <input
+						type="hidden" id="replyUserBName" value="">
 				</div>
 				<div style="margin-bottom: 65px"></div>
 			</div>
@@ -451,7 +453,7 @@
 			} else {
 				$(".sidebar-weekrank").css("position", "");
 			}
-			
+
 		});
 	</script>
 </body>

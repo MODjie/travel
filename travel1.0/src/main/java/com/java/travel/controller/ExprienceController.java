@@ -1,6 +1,7 @@
 package com.java.travel.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class ExprienceController {
 		MyFileUploadUtil uploadUtil = new MyFileUploadUtil(request);
 		String savePath = uploadUtil.upload("cover", "/images/cover/");
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		// 获取用户名
 		Subject subject = SecurityUtils.getSubject();
@@ -116,8 +117,7 @@ public class ExprienceController {
 		if (commentList.size() == 0) {
 			pageInfo.setList(null);
 		}
-
-		System.out.println(commentList);
+		
 		modelAndView.addObject("exprience", exprience);
 		modelAndView.addObject("author", author);
 		modelAndView.addObject("currentUser", currentUser);
@@ -176,7 +176,7 @@ public class ExprienceController {
 		Session session = subject.getSession();
 		String commentAname = (String) session.getAttribute("nickName");
 		// 获取当前时间
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String commentTime = sdf.format(date);
 
@@ -197,7 +197,7 @@ public class ExprienceController {
 	}
 	
 	/**
-	 * 添加回复并获取前五条
+	 * 添加回复并获取所有回复
 	 * @param commentId
 	 * @param replyContent
 	 * @param replyUserBName
@@ -205,7 +205,7 @@ public class ExprienceController {
 	 */
 	@RequestMapping(value = "reply", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo<ExReplyDetail> reply(Integer commentId, String replyContent,String replyUserBName) {
+	public List<ExReplyDetail> reply(Integer commentId, String replyContent,String replyUserBName) {
 
 		// 获取当前用户，即回复人昵称
 		Subject subject = SecurityUtils.getSubject();
@@ -213,7 +213,7 @@ public class ExprienceController {
 		String replyUserAname = (String) session.getAttribute("nickName");
 
 		// 获取当前时间
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		String replyTime = sdf.format(date);
 
@@ -225,11 +225,23 @@ public class ExprienceController {
 		exReply.setREPLYUSERBNAME(replyUserBName);
 		
 		exReplyService.insert(exReply);
-		// 回复分页
-		PageHelper.startPage(1, 5);
-		List<ExReplyDetail> replyList = exReplyService.selectReplyByCommentId(commentId);
-		PageInfo<ExReplyDetail> pageInfo = new PageInfo<ExReplyDetail>(replyList);
 
-		return pageInfo;
+		List<ExReplyDetail> replyList = exReplyService.selectReplyByCommentId(commentId);
+		
+		return replyList;
+	}
+	
+	/**
+	 * 通过评论ID获取回复
+	 * @param commentId
+	 * @return
+	 */
+	@RequestMapping(value = "reply", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ExReplyDetail> reply(Integer commentId) {
+		
+		List<ExReplyDetail> replyList = exReplyService.selectReplyByCommentId(commentId);
+		
+		return replyList;
 	}
 }
