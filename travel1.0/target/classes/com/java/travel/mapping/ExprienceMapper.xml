@@ -30,6 +30,7 @@
     where EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL}
   </select>
   
+  <!-- 查找全部见闻 -->
   <select id="selectAllExprience" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />

@@ -82,14 +82,12 @@
 						class="badge badge-danger msg-warm">1</span></a></li>
 				<li><a href="#" title="通知"><i class="icon-bell-alt"></i><span
 						class="badge badge-danger msg-warm">1</span></a></li>
-				<li>
-					<shiro:guest>
+				<li><shiro:guest>
 						<li><a class="btn " data-toggle="modal"
 							onclick="openLoginModal();">登录</a></li>
 						<li><a class="btn" data-toggle="modal"
 							onclick="openRegisterModal();">注册</a></li>
-					</shiro:guest> 
-					<shiro:user>
+					</shiro:guest> <shiro:user>
 						<li class="pick-type"><a href="#" class="dropdown-toggle"
 							id="dropdownMenu1" data-toggle="dropdown"
 							title="${currentUser.NICKNAME}"><i class="icon-user"></i><span
@@ -102,8 +100,7 @@
 								<li role="presentation"><a role="menuitem" tabindex="-1"
 									href="logout">退出</a></li>
 							</ul></li>
-					</shiro:user>
-				</li>
+					</shiro:user></li>
 			</ul>
 
 		</div>
@@ -133,79 +130,47 @@
 				</div>
 				<hr />
 				<div class="comment-edit">
-					<input type="hidden" id="commentExId" value="${exprience.EXPRIENCEID }">
+					<input type="hidden" id="commentExId"
+						value="${exprience.EXPRIENCEID }">
 					<textarea placeholder="100字以内"></textarea>
-					<button type="button" class="btn btn-info pull-right" id="comment-btn">评论</button>
+					<button type="button" class="btn btn-info pull-right"
+						id="comment-btn">评论</button>
 				</div>
 				</article>
-				<div class="comment-div">
-					<ul class="commentList">
-						<li class="item cl"><a href="#"><i
-								class="avatar size-L radius"><img alt="头像"
-									class="img-circle" src="images/head/head2.jpg" width="50px"></i></a>
-							<div class="comment-main">
-								<header class="comment-header">
-								<div class="comment-meta">
-									<a class="comment-author" href="#">@辉哥</a> 评论于
-									<time title="2014年8月31日 下午3:20" datetime="2014-08-31T03:54:20">2014-8-31
-									15:20</time>
-									<a class="reply pull-right">回复</a>
-								</div>
-								</header>
-								<div class="comment-body">
-									<p>
-										<a href="#">@某人</a> 你是猴子派来的救兵吗？
-									</p>
-									<div class="reply-content">
-										<ul class="commentList">
-											<li class="item cl"><a href="#"><i
-													class="avatar size-L radius"><img alt="头像"
-														class="img-circle" src="images/head/head2.jpg"
-														width="50px"></i></a>
-												<div class="comment-main">
-													<header class="comment-header">
-													<div class="comment-meta">
-														<a class="comment-author" href="#">@辉哥</a> 回复 <a
-															class="comment-author" href="#">@有梦想的码农</a>于
-														<time title="2014年8月31日 下午3:20"
-															datetime="2014-08-31T03:54:20">2014-8-31 15:20</time>
-														<a class="reply pull-right">回复</a>
-													</div>
-													</header>
-													<div class="comment-body">
-														<p>
-															<a href="#">@某人</a> 你是猴子派来的救兵吗？
-														</p>
-													</div>
-												</div></li>
-										</ul>
-									</div>
-								</div>
-							</div></li>
-					</ul>
+				<div class="comment-wrapper">	
+					<c:if test="${pageInfo.list==null }">
+						<div class="no-comment" style="text-align: center;font-size: 25px;color: darkgray;">
+							暂无评论信息，快抢沙发
+						</div>
+					</c:if>				
+					<c:if test="${pageInfo.list!=null }">
+						<c:forEach items="${pageInfo.list }" var="comment">
+							<div class="comment-div">
+								<ul class="commentList">
+									<li class="item cl"><a href="#"><i
+											class="avatar size-L radius"><img alt="头像"
+												class="img-circle" src="${comment.HEADADDRESS }" width="50px"></i></a>
+										<div class="comment-main">
+											<header class="comment-header">
+											<div class="comment-meta">
+												<a class="comment-author" href="#">@${comment.USERANAME }</a> 评论于   
+												<time title="${comment.COMMENTTIME }"
+													datetime="${comment.COMMENTTIME }">${comment.COMMENTTIME }</time>
+												<a class="reply pull-right">回复</a>
+											</div>
+											</header>
+											<div class="comment-body">
+												<p>
+													${comment.COMMENTCONTENRT }
+												</p>
+											</div>
+										</div></li>
+								</ul>
+							</div>
+						</c:forEach>
+					</c:if>
 				</div>
-				<div class="comment-div">
-					<ul class="commentList">
-						<li class="item cl"><a href="#"><i
-								class="avatar size-L radius"><img alt="头像"
-									class="img-circle" src="images/head/head2.jpg" width="50px"></i></a>
-							<div class="comment-main">
-								<header class="comment-header">
-								<div class="comment-meta">
-									<a class="comment-author" href="#">@辉哥</a> 评论
-									<time title="2014年8月31日 下午3:20" datetime="2014-08-31T03:54:20">2014-8-31
-									15:20</time>
-									<a class="reply pull-right">回复</a>
-								</div>
-								</header>
-								<div class="comment-body">
-									<p>
-										<a href="#">@某人</a> 你是猴子派来的救兵吗？
-									</p>
-								</div>
-							</div></li>
-					</ul>
-				</div>
+				<div style="margin-bottom: 65px"></div>
 			</div>
 			<div class="col-md-4 sidebar-gutter">
 				<aside> <!-- sidebar-widget -->
@@ -294,7 +259,7 @@
 						</div>
 						</article>
 					</div>
-				</div>				
+				</div>
 			</div>
 			</aside>
 		</div>
@@ -457,7 +422,7 @@
 		</div>
 	</div>
 	<!--登录注册模态窗结束-->
-	
+
 	<!-- Bootstrap core JavaScript
 			================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
@@ -468,7 +433,7 @@
 	<script src="js/post.js"></script>
 	<!--layer-->
 	<script type="text/javascript" src="layer/2.4/layer.js"></script>
-	
+
 	<script src="js/login-register.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		var bodyWidth = $(document.body).width();
@@ -484,7 +449,7 @@
 			}
 
 		});
-	</script>	
+	</script>
 </body>
 
 </html>

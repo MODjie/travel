@@ -108,6 +108,7 @@
 				/hasUserByNickName=anon
 				/toPost=anon
 				/getAfterLoadEx=anon
+				/getAfterLoadCommentReply=anon
 				
 				/writeEx=authc
 				/exprienceEdit=authc	

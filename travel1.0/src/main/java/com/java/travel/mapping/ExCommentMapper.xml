@@ -8,8 +8,16 @@
     <result column="COMMENTCONTENRT" jdbcType="VARCHAR" property="COMMENTCONTENRT" />
     <result column="COMMENTTIME" jdbcType="VARCHAR" property="COMMENTTIME" />
   </resultMap>
+  
+  <!-- 评论的集合 -->
+  <resultMap type="com.java.travel.entity.ExCommentDetail" id="ExCommentDetail" extends="BaseResultMap">
+      <result column="HEADADDRESS" jdbcType="VARCHAR" property="HEADADDRESS"/>
+  </resultMap>
   <sql id="Base_Column_List">
     COMMENTID, EXPRIENCEID, USERANAME, COMMENTCONTENRT, COMMENTTIME
+  </sql>
+  <sql id="HeadAddress_Column_List">
+      HEADADDRESS
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -17,11 +25,12 @@
     from EXCOMMENT
     where COMMENTID = #{COMMENTID,jdbcType=DECIMAL}
   </select>
-  <!-- 查找全部评论 -->
-  <select id="selectCommentsByExid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <!-- 通过见闻编号查找全部评论 -->
+  <select id="selectCommentsByExid" parameterType="java.lang.Integer" resultMap="ExCommentDetail">
     select 
-    <include refid="Base_Column_List" />
-    from EXCOMMENT order by COMMENTTIME desc    
+    <include refid="Base_Column_List" />,
+    <include refid="HeadAddress_Column_List" />
+    from EXCOMMENT_VIEW where EXPRIENCEID = #{exprienceId,jdbcType=DECIMAL} order by COMMENTID desc    
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

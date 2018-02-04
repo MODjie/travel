@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.java.travel.entity.ExComment;
+import com.java.travel.entity.ExCommentDetail;
 import com.java.travel.entity.ExUser;
 import com.java.travel.entity.Exprience;
 import com.java.travel.service.ExCommentService;
@@ -103,13 +104,26 @@ public class ExprienceController {
 		if (nickName != null) {
 			currentUser = exUserService.selectByNickName(nickName);
 		}
+		// 评论分页
+		PageHelper.startPage(1, 5);
+		List<ExCommentDetail> commentList = exCommentService.selectCommentsByExid(exprienceId);
+		PageInfo<ExCommentDetail> pageInfo = new PageInfo<ExCommentDetail>(commentList);
+		if (commentList.size() == 0) {
+			pageInfo.setList(null);
+		}
+
+		System.out.println(commentList);
 		modelAndView.addObject("exprience", exprience);
 		modelAndView.addObject("author", author);
 		modelAndView.addObject("currentUser", currentUser);
+		modelAndView.addObject("pageInfo", pageInfo);
+
 		return modelAndView;
 	}
+
 	/**
-	 * 获取动态加载内容
+	 * 获取动态加载见闻内容
+	 * 
 	 * @param exPageNum
 	 * @return
 	 */
@@ -125,30 +139,55 @@ public class ExprienceController {
 		if (exPageNum > pageInfo.getPages()) {
 			pageInfo.setList(null);
 		}
-		return pageInfo;		
+		return pageInfo;
+	}
+
+	@RequestMapping(value = "getAfterLoadCommentReply", method = RequestMethod.GET)
+	@ResponseBody
+	public PageInfo<ExCommentDetail> getAfterLoadCommentReply(Integer exPageNum,int exprienceId) {
+		// 分页
+		PageHelper.startPage(exPageNum, 5);
+		// 去数据库查询
+		List<ExCommentDetail> commentList = exCommentService.selectCommentsByExid(exprienceId);
+		PageInfo<ExCommentDetail> pageInfo = new PageInfo<ExCommentDetail>(commentList);
+		if (exPageNum > pageInfo.getPages()) {
+			pageInfo.setList(null);
+		}
+		return pageInfo;
 	}
 	
+	/**
+	 * 获取评论
+	 * 
+	 * @param exprienceId
+	 * @param commentContent
+	 * @return
+	 */
 	@RequestMapping(value = "comment", method = RequestMethod.POST)
 	@ResponseBody
-	public List<ExComment> comment(int exprienceId,String commentContent){
-		//获取当前用户，即评论人昵称
+	public PageInfo<ExCommentDetail> comment(int exprienceId, String commentContent) {
+		// 获取当前用户，即评论人昵称
 		Subject subject = SecurityUtils.getSubject();
 		Session session = subject.getSession();
 		String commentAname = (String) session.getAttribute("nickName");
-		//获取当前时间
+		// 获取当前时间
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
 		Date date = new Date();
 		String commentTime = sdf.format(date);
-		
+
 		ExComment comment = new ExComment();
 		comment.setEXPRIENCEID(exprienceId);
 		comment.setUSERANAME(commentAname);
 		comment.setCOMMENTCONTENRT(commentContent);
 		comment.setCOMMENTTIME(commentTime);
-		
+
 		exCommentService.insert(comment);
-		List<ExComment> list = exCommentService.selectCommentsByExid(exprienceId);
-//		PageHelper.startPage(pageNum, pageSize);
-		return list;
+
+		// 评论分页
+		PageHelper.startPage(1, 5);
+		List<ExCommentDetail> commentList = exCommentService.selectCommentsByExid(exprienceId);
+		PageInfo<ExCommentDetail> pageInfo = new PageInfo<ExCommentDetail>(commentList);
+		
+		return pageInfo;
 	}
 }

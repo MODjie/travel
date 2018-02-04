@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.java.travel.entity.ExComment;
+import com.java.travel.entity.ExCommentDetail;
 
 public interface ExCommentService {
 	int deleteByPrimaryKey(int COMMENTID);
@@ -16,7 +17,7 @@ public interface ExCommentService {
 	ExComment selectByPrimaryKey(int COMMENTID);
 
 	//根据见闻id查找评论
-	List<ExComment> selectCommentsByExid(int exprienceId);
+	List<ExCommentDetail> selectCommentsByExid(int exprienceId);
 
 	int updateByPrimaryKeySelective(ExComment record);
 

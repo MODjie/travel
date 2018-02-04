@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.java.travel.entity.ExComment;
+import com.java.travel.entity.ExCommentDetail;
 import com.java.travel.mapper.ExCommentMapper;
 import com.java.travel.service.ExCommentService;
 
@@ -46,7 +47,7 @@ public class ExCommentServiceImpl implements ExCommentService {
 		return exCommentMapper.updateByPrimaryKey(record);
 	}
 
-	public List<ExComment> selectCommentsByExid(int exprienceId) {
+	public List<ExCommentDetail> selectCommentsByExid(int exprienceId) {
 		// TODO Auto-generated method stub
 		return exCommentMapper.selectCommentsByExid(exprienceId);
 	}

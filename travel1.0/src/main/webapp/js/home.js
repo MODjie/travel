@@ -49,7 +49,8 @@ $(function() {
 			});
 
 	// 滚动条距底部的距离
-	var BOTTOM_OFFSET = 0;// 请求数据的页码
+	var BOTTOM_OFFSET = 0;
+	// 请求数据的页码
 	var exPageNum = 1;
 	$(window).scroll(function() {
 		var $currentWindow = $(window);
@@ -73,7 +74,7 @@ $(function() {
 	});
 
 });
-
+//发送ajax请求，获得下一页数据
 function createListItems(exPageNum,exContents) {
 	$
 			.ajax({
