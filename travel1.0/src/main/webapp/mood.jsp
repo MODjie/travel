@@ -49,7 +49,7 @@
 	<body>
 		<div class="cl share_weibo_wp" style="">
 			<div class="cl">
-				<span class="r count_txt">还能输入<strong id="currentLength">120</strong>字</span>
+				<span class="r count_txt">还能输入<strong id="currentLength">50</strong>字</span>
 			</div>
 			<textarea onkeyup="checkLength(this);" class="mood-text textarea radius inputstyle"></textarea>
 			<div class="modal-footer">
@@ -64,7 +64,7 @@
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 	<script type="text/javascript">
 		function checkLength(which) {
-			var maxChars = 120;
+			var maxChars = 50;
 			if(which.value.length > maxChars)
 				which.value = which.value.substring(0, maxChars);
 			var curr = maxChars - which.value.length;
@@ -78,9 +78,32 @@
 				var moodText = $(".mood-text").val();
 				if(moodText == "") {
 					parent.layer.msg('内容不能为空哦');
-				} else {
-					parent.$(".mood").text(moodText);
-					parent.layer.close(index);
+				} else {					
+					$.ajax({
+						type : "put",
+						url : "updataMood",
+						data : {
+							moodText : moodText
+						},
+						dataType : "json",
+						async : false, // 不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
+						success : function(data) {
+							// alert(JSON.stringify(data))
+							if (data==1) {
+								parent.layer.msg("修改成功");	
+								parent.$(".mood").text(moodText);
+								parent.layer.close(index);							
+							}else if (condition) {
+								parent.layer.msg("修改失败，请刷新页面");
+							}
+										
+						},
+						error : function() {
+							parent.layer.msg("当前未登录");
+						}
+					});
+					
+					
 				}
 
 			});

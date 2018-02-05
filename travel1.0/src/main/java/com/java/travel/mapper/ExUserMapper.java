@@ -20,4 +20,5 @@ public interface ExUserMapper {
     int updateByPrimaryKeySelective(ExUser record);
 
     int updateByPrimaryKey(ExUser record);
+    
 }

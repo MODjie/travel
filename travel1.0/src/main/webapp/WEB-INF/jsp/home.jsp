@@ -52,7 +52,7 @@
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="showHome">主页</a></li>
-				<li><a href="personal.jsp">个人中心</a></li>
+				<li><a href="personal">个人中心</a></li>
 				<li class="pick-type"><a href="#" class="dropdown-toggle"
 					id="dropdownMenu1" data-toggle="dropdown"> <span>旅游见闻</span>
 				</a>

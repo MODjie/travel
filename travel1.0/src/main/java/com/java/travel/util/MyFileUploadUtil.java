@@ -79,6 +79,17 @@ public class MyFileUploadUtil {
 	}
 	
 	/**
+	 * 获取相对路径，读取图片时如果用绝对路径是读不到的
+	 * @param fileDir
+	 * @param fileName
+	 * @return
+	 */
+	public String getReadPath(String fileDir, String fileName) {
+		String readPath = request.getContextPath()+fileDir+fileName;
+		return readPath;
+	}
+	
+	/**
 	 * 文件存放目标路径（绝对路径）
 	 * 
 	 * @param fileDir 目标文件夹

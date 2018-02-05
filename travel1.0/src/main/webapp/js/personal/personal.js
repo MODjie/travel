@@ -10,5 +10,5 @@ $(function() {
 			content: 'mood.jsp'//弹框显示的url 
 		});
 	});
-	
+		
 });

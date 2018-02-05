@@ -1,132 +1,145 @@
-$(document).ready(function(){
-        $("#up-img-touch").click(function(){
-        		  $("#doc-modal-1").modal({width:'600px'});
-        });
+$(document).ready(function() {
+	$("#up-img-touch").click(function() {
+		$("#doc-modal-1").modal({
+			width : '600px'
+		});
+	});
 });
 $(function() {
-    'use strict';
-    // 初始化
-    var $image = $('#image');
-    $image.cropper({
-        aspectRatio: '1',
-        autoCropArea:0.8,
-        preview: '.up-pre-after',
-        
-    });
+	'use strict';
+	// 初始化
+	var $image = $('#image');
+	$image.cropper({
+		aspectRatio : '1',
+		autoCropArea : 0.8,
+		preview : '.up-pre-after',
 
-    // 事件代理绑定事件
-    $('.docs-buttons').on('click', '[data-method]', function() {
-   
-        var $this = $(this);
-        var data = $this.data();
-        var result = $image.cropper(data.method, data.option, data.secondOption);
-        switch (data.method) {
-            case 'getCroppedCanvas':
-            if (result) {
-                // 显示 Modal
-                $('#cropped-modal').modal().find('.am-modal-bd').html(result);
-                $('#download').attr('href', result.toDataURL('image/jpeg'));
-            }
-            break;
-        }
-    });
-    
-    
+	});
 
-    // 上传图片
-    var $inputImage = $('#inputImage');
-    var URL = window.URL || window.webkitURL;
-    var blobURL;
+	// 事件代理绑定事件
+	$('.docs-buttons').on(
+			'click',
+			'[data-method]',
+			function() {
 
-    if (URL) {
-        $inputImage.change(function () {
-            var files = this.files;
-            var file;
+				var $this = $(this);
+				var data = $this.data();
+				var result = $image.cropper(data.method, data.option,
+						data.secondOption);
+				switch (data.method) {
+				case 'getCroppedCanvas':
+					if (result) {
+						// 显示 Modal
+						$('#cropped-modal').modal().find('.am-modal-bd').html(
+								result);
+						$('#download').attr('href',
+								result.toDataURL('image/jpeg'));
+					}
+					break;
+				}
+			});
 
-            if (files && files.length) {
-               file = files[0];
+	// 上传图片
+	var $inputImage = $('#inputImage');
+	var URL = window.URL || window.webkitURL;
+	var blobURL;
 
-               if (/^image\/\w+$/.test(file.type)) {
-                    blobURL = URL.createObjectURL(file);
-                    $image.one('built.cropper', function () {
-                        // Revoke when load complete
-                       URL.revokeObjectURL(blobURL);
-                    }).cropper('reset').cropper('replace', blobURL);
-                    $inputImage.val('');
-                } else {
-                    window.alert('Please choose an image file.');
-                }
-            }
+	if (URL) {
+		$inputImage.change(function() {
+			var files = this.files;
+			var file;
 
-            // Amazi UI 上传文件显示代码
-            var fileNames = '';
-            $.each(this.files, function() {
-                fileNames += '<span class="am-badge">' + this.name + '</span> ';
-            });
-            $('#file-list').html(fileNames);
-        });
-    } else {
-        $inputImage.prop('disabled', true).parent().addClass('disabled');
-    }
-    
-    //绑定上传事件
-    $('#up-btn-ok').on('click',function(){
-    	var $modal = $('#my-modal-loading');
-    	var $modal_alert = $('#my-alert');
-    	var img_src=$image.attr("src");
-    	if(img_src==""){
-    		set_alert_info("没有选择上传的图片");
-    		$modal_alert.modal();
-    		return false;
-    	}
-    	
-    	$modal.modal();
-    	
-    	var url=$(this).attr("url");
-    	var canvas=$("#image").cropper('getCroppedCanvas');
-    	var data=canvas.toDataURL(); //转成base64
-        $.ajax( {  
-                url:url,  
-                dataType:'json',  
-                type: "POST",  
-                data: {"image":data.toString()},  
-                success: function(data, textStatus){
-                	$modal.modal('close');
-                	set_alert_info(data.result);
-                	$modal_alert.modal();
-                	if(data.result=="ok"){
-                		$("#up-img-touch img").attr("src",data.file);
-                	
-                		var img_name=data.file.split('/')[2];
-                		console.log(img_name);
-                		$("#pic").text(img_name);
-                	}
-                },
-                error: function(){
-                	$modal.modal('close');
-                	set_alert_info("上传文件失败了！");
-                	$modal_alert.modal();
-                	//console.log('Upload error');  
-                }  
-         });  
-    	
-    });
-    
+			if (files && files.length) {
+				file = files[0];
+
+				if (/^image\/\w+$/.test(file.type)) {
+					blobURL = URL.createObjectURL(file);
+					$image.one('built.cropper', function() {
+						// Revoke when load complete
+						URL.revokeObjectURL(blobURL);
+					}).cropper('reset').cropper('replace', blobURL);
+					$inputImage.val('');
+				} else {
+					window.alert('请选择一张图片');
+				}
+			}
+
+			// Amazi UI 上传文件显示代码
+			var fileNames = '';
+			$.each(this.files,
+					function() {
+						fileNames += '<span class="am-badge">' + this.name
+								+ '</span> ';
+					});
+			$('#file-list').html(fileNames);
+		});
+	} else {
+		$inputImage.prop('disabled', true).parent().addClass('disabled');
+	}
+
+	// 绑定上传事件
+	$('#up-btn-ok').on('click', function() {
+		var $modal = $('#my-modal-loading');
+		var $modal_alert = $('#my-alert');
+		var img_src = $image.attr("src");
+		if (img_src == "") {
+			set_alert_info("没有选择上传的图片");
+			$modal_alert.modal();
+			return false;
+		}
+
+		$modal.modal();
+
+		var canvas = $("#image").cropper('getCroppedCanvas');
+		var dataurl = canvas.toDataURL('image/png');
+		var blob = dataURLtoBlob(dataurl);
+		var formData = new FormData();
+		formData.append("myHead", blob, "image.png");
+		$.ajax({
+			url : "uploadHead",
+			data : formData,
+			dataType : 'json',
+			type : "POST",
+			processData : false,
+			contentType : false,
+			success : function(returnData) {
+
+				$modal.modal('close');
+				set_alert_info("更换头像成功");
+				$modal_alert.modal(); // 将头像显示更换
+				$("#up-img-touch img").attr("src", returnData.headaddress);
+
+			},
+			error : function() {
+				$modal.modal('close');
+				set_alert_info("上传文件失败了！");
+				$modal_alert.modal();
+				// console.log('Upload error');
+			}
+		});
+
+	});
 });
 
 function rotateimgright() {
-$("#image").cropper('rotate', 90);
+	$("#image").cropper('rotate', 90);
 }
-
 
 function rotateimgleft() {
-$("#image").cropper('rotate', -90);
+	$("#image").cropper('rotate', -90);
 }
 
-function set_alert_info(content){
+function set_alert_info(content) {
 	$("#alert_content").html(content);
 }
-
-
-
- 
+// 将dataURL转换成Blob
+function dataURLtoBlob(dataurl) {
+	var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1], bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(
+			n);
+	while (n--) {
+		u8arr[n] = bstr.charCodeAt(n);
+	}
+	return new Blob([ u8arr ], {
+		type : mime
+	});
+}

@@ -47,7 +47,7 @@
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li><a href="showHome">主页</a></li>
-				<li><a href="personal.html">个人中心</a></li>
+				<li><a href="personal">个人中心</a></li>
 				<li class="pick-type"><a href="#" class="dropdown-toggle"
 					id="dropdownMenu1" data-toggle="dropdown"> <span>旅游见闻</span>
 				</a>
@@ -76,7 +76,7 @@
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="write_ex.html" title="发布见闻"><i
+				<li><a href="writeEx" title="发布见闻"><i
 						class="icon-edit"></i></a></li>
 				<li><a href="#" title="私信"><i class="icon-envelope"></i><span
 						class="badge badge-danger msg-warm">1</span></a></li>

@@ -33,6 +33,8 @@ public class ExUser {
 
     private String PASSWORD;
 
+    private String REGISTERTIME;
+
     public Integer getUSERID() {
         return USERID;
     }
@@ -161,18 +163,17 @@ public class ExUser {
         this.PASSWORD = PASSWORD == null ? null : PASSWORD.trim();
     }
 
-	@Override
-	public String toString() {
-		return "ExUser [USERID=" + USERID + ", ROLEID=" + ROLEID + ", AGE=" + AGE + ", HEADADDRESS=" + HEADADDRESS
-				+ ", NICKNAME=" + NICKNAME + ", MOOD=" + MOOD + ", TEL=" + TEL + ", EMAIL=" + EMAIL + ", GROWTHVALUE="
-				+ GROWTHVALUE + ", TODAYVALUE=" + TODAYVALUE + ", NORMALLEVEL=" + NORMALLEVEL + ", DAYVALLIMIT="
-				+ DAYVALLIMIT + ", PROVINCE=" + PROVINCE + ", CITY=" + CITY + ", COUNTY=" + COUNTY + ", PASSWORD="
-				+ PASSWORD + "]";
-	}
+    public String getREGISTERTIME() {
+        return REGISTERTIME;
+    }
+
+    public void setREGISTERTIME(String REGISTERTIME) {
+        this.REGISTERTIME = REGISTERTIME == null ? null : REGISTERTIME.trim();
+    }
 
 	public ExUser(Integer uSERID, Integer rOLEID, Integer aGE, String hEADADDRESS, String nICKNAME, String mOOD,
 			String tEL, String eMAIL, Integer gROWTHVALUE, Integer tODAYVALUE, Integer nORMALLEVEL, Integer dAYVALLIMIT,
-			String pROVINCE, String cITY, String cOUNTY, String pASSWORD) {
+			String pROVINCE, String cITY, String cOUNTY, String pASSWORD, String rEGISTERTIME) {
 		super();
 		USERID = uSERID;
 		ROLEID = rOLEID;
@@ -190,6 +191,16 @@ public class ExUser {
 		CITY = cITY;
 		COUNTY = cOUNTY;
 		PASSWORD = pASSWORD;
+		REGISTERTIME = rEGISTERTIME;
+	}
+
+	@Override
+	public String toString() {
+		return "ExUser [USERID=" + USERID + ", ROLEID=" + ROLEID + ", AGE=" + AGE + ", HEADADDRESS=" + HEADADDRESS
+				+ ", NICKNAME=" + NICKNAME + ", MOOD=" + MOOD + ", TEL=" + TEL + ", EMAIL=" + EMAIL + ", GROWTHVALUE="
+				+ GROWTHVALUE + ", TODAYVALUE=" + TODAYVALUE + ", NORMALLEVEL=" + NORMALLEVEL + ", DAYVALLIMIT="
+				+ DAYVALLIMIT + ", PROVINCE=" + PROVINCE + ", CITY=" + CITY + ", COUNTY=" + COUNTY + ", PASSWORD="
+				+ PASSWORD + ", REGISTERTIME=" + REGISTERTIME + "]";
 	}
     public ExUser() {
 		// TODO Auto-generated constructor stub
