@@ -87,6 +87,18 @@ public class PersonalController {
 	}
 	
 	/**
+	 * 跳转到修改信息中心
+	 * @return
+	 */
+	@RequestMapping(value="toUserInfo",method=RequestMethod.GET)
+	public ModelAndView toUserInfo() {
+		ModelAndView modelAndView = new ModelAndView("userinfo");
+		ExUser currentUser = getCurrentUser();
+		modelAndView.addObject("currentUser", currentUser);
+		return modelAndView;
+	}
+	
+	/**
 	 * 获取当前用户
 	 * 
 	 * @return

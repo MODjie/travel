@@ -117,6 +117,7 @@
 				/personal=authc	
 				/uploadHead=authc
 				/updataMood=authc
+				/toUserInfo=authc
 			</value>
 		</property>
 	</bean>

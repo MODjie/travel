@@ -184,9 +184,9 @@
 		<!-- /intro-content -->
 
 		<ul class="intro-social">
-			<li><a href="personal.html" title="我的主页" style="color: #cc005f;"><i
+			<li><a href="personal" title="我的主页" style="color: #cc005f;"><i
 					class="fa icon-home"></i></a></li>
-			<li><a href="userinfo.html" title="个人信息"><i
+			<li><a href="toUserInfo" title="个人信息"><i
 					class="fa icon-user-md"></i></a></li>
 			<li><a href="#" title="关注"><i class="fa icon-heart"></i></a></li>
 			<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
