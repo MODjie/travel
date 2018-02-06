@@ -191,7 +191,7 @@
 			<li><a href="#" title="关注"><i class="fa icon-heart"></i></a></li>
 			<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
 			</li>
-			<li><a href="exprienceList.html" title="文章管理"><i
+			<li><a href="exprienceList" title="见闻管理"><i
 					class="fa icon-book"></i></a></li>
 			<li><a href="exprienceList.html" title="好友圈"><i
 					class="fa Hui-iconfont Hui-iconfont-share-pengyouquan"></i></a></li>

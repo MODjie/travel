@@ -39,6 +39,16 @@
     from EXPRIENCE order by EXPUBLISHTIME desc
   </select>
   
+  <!-- 通过昵称查找见闻 -->
+  <select id="selectExprienceByAuthorName" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from EXPRIENCE where EXPRIENCE.EXAUTHORNAME = #{authorName,jdbcType=DECIMAL}
+     order by EXPUBLISHTIME desc
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from EXPRIENCE
     where EXPRIENCEID = #{EXPRIENCEID,jdbcType=DECIMAL}

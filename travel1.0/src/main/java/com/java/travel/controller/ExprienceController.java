@@ -97,7 +97,7 @@ public class ExprienceController {
 	 * @return
 	 */
 	@RequestMapping(value = "toPost", method = RequestMethod.GET)
-	public ModelAndView toPost(int exprienceId) {
+	public ModelAndView toPost(Integer exprienceId) {
 		ModelAndView modelAndView = new ModelAndView("post");
 		Exprience exprience = exService.selectByPrimaryKey(exprienceId);
 		String authorName = exprience.getEXAUTHORNAME();

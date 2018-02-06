@@ -123,6 +123,9 @@
 				/toUserInfo=authc
 				/updateUserInfo=authc
 				/updatePassword=authc
+				/exprienceList=authc
+				/getMyAfterLoadEx=authc
+				/deleteMyExprience=authc
 			</value>
 		</property>
 	</bean>

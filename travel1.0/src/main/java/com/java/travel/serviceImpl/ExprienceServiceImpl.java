@@ -56,4 +56,9 @@ public class ExprienceServiceImpl implements ExprienceService{
 		return exprienceMapper.selectAllExprience();
 	}
 
+	public List<Exprience> selectExprienceByAuthorName(String authorName) {
+		// TODO Auto-generated method stub
+		return exprienceMapper.selectExprienceByAuthorName(authorName);
+	}
+
 }

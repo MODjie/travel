@@ -15,6 +15,9 @@ public interface ExprienceMapper {
     
     //查询所有的exprience
     List<Exprience> selectAllExprience(); 
+    
+    //根据作者昵称查询exprience
+    List<Exprience> selectExprienceByAuthorName(String authorName); 
 
     int updateByPrimaryKeySelective(Exprience record);
 
