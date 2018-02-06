@@ -3,7 +3,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <html class="no-js" lang="en">
-<!--<![endif]-->
 
 <head>
 
@@ -199,30 +198,48 @@
 			<div class="container userIfno-main">
 				<div class="row clearfix">
 					<div class="col-md-2"></div>
-					<div class="col-md-8 userInfo-body">
-						<div class="age">
-							<label>年龄：</label> <input type="text" />
-						</div>
-						<div class="sex">
-							<label>性别：</label> <label style="margin-left: 50px;">男<input
-								type="radio" name="optionsRadios" id="optionsRadios1"
-								value="option1" checked></label> <label
-								style="margin-left: 30px;">女<input type="radio"
-								name="optionsRadios" id="optionsRadios2" value="option2"></label>
-						</div>
-						<div class="address">
-							<label>所在地：</label> <label id="province"></label>
+					<div class="col-md-8">
+						<!--基本信息修改开始-->
+							<div class="userInfo-body">
+								<div class="age">
+									<label>年龄：</label> <input type="text" value="${currentUser.AGE }"/>
+								</div>
+								<div class="sex">
+									<label>性别：</label> <label style="margin-left: 50px;">男<input
+										type="radio" name="sexOprions" id="man" value="男" checked></label>
+									<label style="margin-left: 30px;">女<input type="radio"
+										name="sexOprions" id="wommen" value="女"></label>
+								</div>
+								<div class="address">
+									<label>所在地：</label> <label id="province"></label>
 
+								</div>
+								<div class="telphone" title="电话不能修改">
+									<label>电话：</label> <input type="tel" disabled="disabled" value="${currentUser.TEL }"/>
+								</div>
+								<div class="Email">
+									<label>邮箱：</label> <input type="email" value="${currentUser.EMAIL }"/>
+								</div>
+								<div class="submit-info ">
+								<button type="button" class="btn btn-info update-info-btn">确认修改</button>
+							</div>
+							</div>
+						<!--基本信息修改结束-->
+						<!--修改密码开始-->
+						<div class="update-password-body">
+							<div class="old-password">
+								<label>旧密码：</label> <input type="password"
+									id="old-password-content" />
+							</div>
+							<div class="new-password">
+								<label>旧密码：</label> <input type="password"
+									id="new-password-content" />
+							</div>
+							<div class="submit-info ">
+								<button type="button" class="btn btn-info update-password-info">确认修改</button>
+							</div>
 						</div>
-						<div class="telphone">
-							<label>电话：</label> <input type="tel" />
-						</div>
-						<div class="Email">
-							<label>邮箱：</label> <input type="email" />
-						</div>
-						<div class="submit-info ">
-							<button type="button" class="btn btn-info">保存修改</button>
-						</div>
+						<!--修改密码结束-->
 					</div>
 					<div class="col-md-2"></div>
 				</div>
@@ -328,6 +345,7 @@
 	<script src="js/uploadHead/amazeui.min.js" charset="utf-8"></script>
 	<script src="js/uploadHead/cropper.min.js" charset="utf-8"></script>
 	<script src="js/uploadHead/custom_up_img.js" charset="utf-8"></script>
+
 	<!--城市级联js-->
 	<script src="js/address/jquery.provincesCity.js" type="text/javascript"
 		charset="utf-8"></script>
@@ -335,9 +353,29 @@
 		charset="utf-8"></script>
 	<script type="text/javascript">
 		$(function() {
+			//初始化城市级联
 			$("#province").ProvinceCity()
+			//给性别赋值			
+			if ("${currentUser.SEX}"=="男") {
+				$("#man").prop("checked", "checked"); 
+				$("#wommen").removeAttr("checked");
+			}else {
+				$("#wommen").prop("checked", "checked"); 
+				$("#man").removeAttr("checked");				
+			}
+			//单纯的给select赋值，会发现城市和县是不显示的，并且省级级联如果还是选择当前的省，也是无效的，
+			//查看H-UI城市级联源码可知，是通过select的change事件来启动级联，因此，给省和市赋值完后
+			//调用下该select的change事件即可正常显示了
+			//给家乡赋值
+			$("#province").find("select").eq(0).val("${currentUser.PROVINCE}");
+			$("#province").find("select").eq(0).change();
+			$("#province").find("select").eq(1).val("${currentUser.CITY}");
+			$("#province").find("select").eq(1).change();
+			$("#province").find("select").eq(2).val("${currentUser.COUNTY}");
 		});
 	</script>
+	<!-- 修改信息js -->
+	<script src="js/userinfo/userinfo.js"></script>
 </body>
 
 </html>

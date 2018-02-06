@@ -1,3 +1,4 @@
+/*修改基本信息*/
 .userIfno-main {
 	width: 100%;
 	margin-top: 170px;
@@ -14,20 +15,16 @@
 	height: 80px;
 	padding-top: 40px;
 }
-.userInfo-body label {
+.userInfo-body label , .update-password-body label{
 	font-family: "lora-regular", serif;
 	font-size: 1.7rem;
 	line-height: 2.4rem;
 	letter-spacing: .2rem;
 	color: #FFFFFF;
 	text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
-	/*vertical-align: middle;*/
 	
 }
 
-/*.age,.sex,.address {
-	margin-left: 35%;
-}*/
 
 .age label{
 	margin-right: 50px;
@@ -52,7 +49,13 @@
 	margin-left: 30px;
 }
 
-.telphone input,.Email input{
+.telphone input{
+	opacity: 0.4;
+	height: 20px;
+	margin-left: 50px;
+}
+
+.Email input{
 	opacity: 0.5;
 	height: 20px;
 	margin-left: 50px;
@@ -62,4 +65,24 @@
 	width: 100px;
 	height: 50px;
 	opacity: 0.8;
+}
+
+
+/*修改密码*/
+.update-password-body {
+	background: rgba(169, 170, 172, 0.6);
+	height: 260px;
+	display: block;
+	margin-top: 50px;
+}
+
+.update-password-body div{
+	height: 80px;
+	padding-top: 40px;
+}
+
+.old-password input,.new-password input{
+	opacity: 0.5;
+	height: 20px;
+	margin-left: 50px;
 }

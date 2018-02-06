@@ -99,6 +99,26 @@ public class PersonalController {
 	}
 	
 	/**
+	 * 修改信息
+	 * @param exUser
+	 * @return
+	 */
+	@RequestMapping(value="updateUserInfo",method=RequestMethod.PUT)
+	@ResponseBody
+	public ExUser updateUserInfo(ExUser exUser) {
+		ExUser currentUser = getCurrentUser();
+		currentUser.setAGE(exUser.getAGE());
+		currentUser.setSEX(exUser.getSEX());
+		currentUser.setPROVINCE(exUser.getPROVINCE());
+		currentUser.setCITY(exUser.getCITY());
+		currentUser.setCOUNTY(exUser.getCOUNTY());
+		currentUser.setEMAIL(exUser.getEMAIL());
+		
+		exUserService.updateByPrimaryKey(currentUser);
+		return currentUser;
+	}
+	
+	/**
 	 * 获取当前用户
 	 * 
 	 * @return

@@ -19,10 +19,11 @@
     <result column="COUNTY" jdbcType="VARCHAR" property="COUNTY" />
     <result column="PASSWORD" jdbcType="VARCHAR" property="PASSWORD" />
     <result column="REGISTERTIME" jdbcType="VARCHAR" property="REGISTERTIME" />
+    <result column="SEX" jdbcType="VARCHAR" property="SEX" />
   </resultMap>
   <sql id="Base_Column_List">
     USERID, ROLEID, AGE, HEADADDRESS, NICKNAME, MOOD, TEL, EMAIL, GROWTHVALUE, TODAYVALUE, 
-    NORMALLEVEL, DAYVALLIMIT, PROVINCE, CITY, COUNTY, PASSWORD, REGISTERTIME
+    NORMALLEVEL, DAYVALLIMIT, PROVINCE, CITY, COUNTY, PASSWORD, REGISTERTIME, SEX
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -47,7 +48,6 @@
     where TEL = #{TEL,jdbcType=VARCHAR}
   </select>
   
-  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from EXUSER
     where USERID = #{USERID,jdbcType=DECIMAL}
@@ -58,13 +58,15 @@
       TEL, EMAIL, GROWTHVALUE, 
       TODAYVALUE, NORMALLEVEL, DAYVALLIMIT, 
       PROVINCE, CITY, COUNTY, 
-      PASSWORD, REGISTERTIME)
+      PASSWORD, REGISTERTIME, SEX
+      )
     values (#{USERID,jdbcType=DECIMAL}, #{ROLEID,jdbcType=DECIMAL}, #{AGE,jdbcType=DECIMAL}, 
       #{HEADADDRESS,jdbcType=VARCHAR}, #{NICKNAME,jdbcType=VARCHAR}, #{MOOD,jdbcType=VARCHAR}, 
       #{TEL,jdbcType=VARCHAR}, #{EMAIL,jdbcType=VARCHAR}, #{GROWTHVALUE,jdbcType=DECIMAL}, 
       #{TODAYVALUE,jdbcType=DECIMAL}, #{NORMALLEVEL,jdbcType=DECIMAL}, #{DAYVALLIMIT,jdbcType=DECIMAL}, 
       #{PROVINCE,jdbcType=VARCHAR}, #{CITY,jdbcType=VARCHAR}, #{COUNTY,jdbcType=VARCHAR}, 
-      #{PASSWORD,jdbcType=VARCHAR}, #{REGISTERTIME,jdbcType=VARCHAR})
+      #{PASSWORD,jdbcType=VARCHAR}, #{REGISTERTIME,jdbcType=VARCHAR}, #{SEX,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.java.travel.entity.ExUser">
     insert into EXUSER
@@ -120,6 +122,9 @@
       <if test="REGISTERTIME != null">
         REGISTERTIME,
       </if>
+      <if test="SEX != null">
+        SEX,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="USERID != null">
@@ -172,6 +177,9 @@
       </if>
       <if test="REGISTERTIME != null">
         #{REGISTERTIME,jdbcType=VARCHAR},
+      </if>
+      <if test="SEX != null">
+        #{SEX,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -226,6 +234,9 @@
       <if test="REGISTERTIME != null">
         REGISTERTIME = #{REGISTERTIME,jdbcType=VARCHAR},
       </if>
+      <if test="SEX != null">
+        SEX = #{SEX,jdbcType=VARCHAR},
+      </if>
     </set>
     where USERID = #{USERID,jdbcType=DECIMAL}
   </update>
@@ -246,7 +257,8 @@
       CITY = #{CITY,jdbcType=VARCHAR},
       COUNTY = #{COUNTY,jdbcType=VARCHAR},
       PASSWORD = #{PASSWORD,jdbcType=VARCHAR},
-      REGISTERTIME = #{REGISTERTIME,jdbcType=VARCHAR}
+      REGISTERTIME = #{REGISTERTIME,jdbcType=VARCHAR},
+      SEX = #{SEX,jdbcType=VARCHAR}
     where USERID = #{USERID,jdbcType=DECIMAL}
   </update>
 </mapper>
