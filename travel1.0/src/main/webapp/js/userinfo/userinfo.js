@@ -34,6 +34,60 @@ $(function() {
 			}
 		});
 	})
+	
+	//修改密码按钮点击事件
+	$(".update-password-info").click(function() {
+		//旧密码验证
+		if (checkOldPassword()==false) {
+			return;
+		}
+		//新密码不能为空
+		if ($("#new-password-content").val()=="") {
+			layer.msg("请输入新密码");
+			$("#new-password-content").focus();
+			return;
+		}
+		//新密码长度验证
+		if ($("#new-password-content").val().length<6) {
+			layer.msg("密码长度为6——16");
+			$("#new-password-content").focus();
+			return;
+		}
+		
+		//确认密码不能为空
+		if ($("#confirm-password-content").val()=="") {
+			layer.msg("请输入确认密码");
+			$("#confirm-password-content").focus();
+			return;
+		}
+		
+		//两次密码是否输入一致
+		if ($("#confirm-password-content").val()!=$("#new-password-content").val()) {
+			layer.msg("两次密码输入不一致");
+			$("#new-password-content").val("");
+			$("#confirm-password-content").val("");
+			return;
+		}
+		var newPassword = $("#confirm-password-content").val();
+		$.ajax({
+			type : "put",
+			url : "updatePassword",
+			data : {
+				PASSWORD : newPassword
+			},
+			dataType : "json",
+			async : false, // 不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
+			success : function(data) {
+				// alert(JSON.stringify(data))
+				layer.msg("修改成功,请重新登录");
+				location.href="logout";
+			},
+			error : function() {
+				layer.msg("修改失败，请刷新页面重试");
+			}
+		});		
+	});
+	
 })
 // 检查信息填写
 function checkInfo() {

@@ -438,7 +438,7 @@ $(function() {
 		var password = $(".newPassword").val();
 		$.ajax({
 			type : "put",
-			url : "updatePassword",
+			url : "forgetPassword",
 			data : {
 				telphoneNum : tel,
 				password : password

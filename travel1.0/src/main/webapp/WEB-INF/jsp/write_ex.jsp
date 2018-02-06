@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 
@@ -49,8 +51,8 @@
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="index.html">主页</a></li>
-				<li><a href="personal.html">个人中心</a></li>
+				<li><a href="showHome">主页</a></li>
+				<li><a href="personal">个人中心</a></li>
 				<li class="pick-type"><a href="#" class="dropdown-toggle"
 					id="dropdownMenu1" data-toggle="dropdown"> <span>旅游见闻</span>
 				</a>
@@ -79,14 +81,32 @@
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="write_ex.html" title="发布见闻"><i
+				<li class="active"><a href="writeEx" title="发布见闻"><i
 						class="icon-edit"></i></a></li>
 				<li><a href="#" title="私信"><i class="icon-envelope"></i><span
 						class="badge badge-danger msg-warm">1</span></a></li>
 				<li><a href="#" title="通知"><i class="icon-bell-alt"></i><span
 						class="badge badge-danger msg-warm">1</span></a></li>
-				<li><a href="#" title="有梦想的码农"><i class="icon-user"></i><span
-						class="userName">有梦想的码农</span></a></li>
+				<shiro:guest>
+					<li><a class="btn " data-toggle="modal"
+						onclick="openLoginModal();">登录</a></li>
+					<li><a class="btn" data-toggle="modal"
+						onclick="openRegisterModal();">注册</a></li>
+				</shiro:guest>
+				<shiro:user>
+					<li class="pick-type"><a href="#" class="dropdown-toggle"
+						id="dropdownMenu1" data-toggle="dropdown"
+						title="${currentUser.NICKNAME}"><i class="icon-user"></i><span
+							class="userName">${currentUser.NICKNAME}</span></a>
+						<ul class="dropdown-menu" role="menu"
+							aria-labelledby="dropdownMenu1" style="width: 50px;">
+							<li role="presentation"><a role="menuitem" tabindex="-1"
+								onclick="openRegisterModal();" style="cursor: pointer">注册</a></li>
+							<li role="presentation" class="divider"></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1"
+								href="logout">退出</a></li>
+						</ul></li>
+				</shiro:user>
 			</ul>
 
 		</div>
@@ -98,10 +118,13 @@
 
 	<div class="container edit-body">
 		<div class="edit-wrap">
-			<form role="form" class="form_form" method="POST" action="exprienceEdit" enctype="multipart/form-data" onsubmit="return checkNull()" >
+			<form role="form" class="form_form" method="POST"
+				action="exprienceEdit" enctype="multipart/form-data"
+				onsubmit="return checkNull()">
 				<div class="ex-title">
 					<h4>标题</h4>
-					<input type="text" id="exTitle" placeholder="20字以内" maxlength="20" name="EXTITLE" />
+					<input type="text" id="exTitle" placeholder="20字以内" maxlength="20"
+						name="EXTITLE" />
 				</div>
 				<div class="ex-type">
 					<h4>类型</h4>
@@ -136,12 +159,12 @@
 					<button type="submit" class="btn btn-primary btn-lg saveDraft"
 						style="margin-left: 20px;">保存草稿</button>
 					<button type="submit" class="btn btn-primary btn-lg publish"
-						style="margin-left: 20px;" >发布</button>
+						style="margin-left: 20px;">发布</button>
 				</div>
 				<!-- 隐藏控件，用来存放内容 -->
-				<input type="hidden" name="EXTYPE" id="exType" >  
-				<input type="hidden" name="EXCONTENT" id="exContent"> 
-				<input type="hidden" name="ISPUBLISH" id="ISPUBLISH" value="no"> 
+				<input type="hidden" name="EXTYPE" id="exType"> <input
+					type="hidden" name="EXCONTENT" id="exContent"> <input
+					type="hidden" name="ISPUBLISH" id="ISPUBLISH" value="no">
 			</form>
 		</div>
 	</div>

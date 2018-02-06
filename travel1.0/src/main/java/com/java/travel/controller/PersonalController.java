@@ -119,6 +119,20 @@ public class PersonalController {
 	}
 	
 	/**
+	 * 修改密码
+	 * @param PASSWORD
+	 * @return
+	 */
+	@RequestMapping(value="updatePassword",method=RequestMethod.PUT)
+	@ResponseBody
+	public int updatePassword(String PASSWORD) {
+		ExUser currentUser = getCurrentUser();
+		currentUser.setPASSWORD(PASSWORD);
+		int succesFlag =exUserService.updateByPrimaryKey(currentUser);
+		return succesFlag;
+	}
+	
+	/**
 	 * 获取当前用户
 	 * 
 	 * @return

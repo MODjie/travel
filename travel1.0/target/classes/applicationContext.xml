@@ -101,11 +101,14 @@
 			<value>
 				/showHome=anon
 				/hasUser=anon
+				/logout=anon
+				/register=anon
+				/login=anon
 				/getIdentifyCode=anon
-				/updatePassword=anon
+				/forgetPassword=anon
 				/getIdentifyCode=anon
 				/hasUserByTel=anon
-				/hasUserByNickName=anon
+				/hasUserByNickName=anon				
 				/toPost=anon
 				/getAfterLoadEx=anon
 				/getAfterLoadCommentReply=anon
@@ -119,6 +122,7 @@
 				/updataMood=authc
 				/toUserInfo=authc
 				/updateUserInfo=authc
+				/updatePassword=authc
 			</value>
 		</property>
 	</bean>

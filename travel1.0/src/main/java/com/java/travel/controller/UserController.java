@@ -99,7 +99,7 @@ public class UserController {
 		exUser.setNORMALLEVEL(1);
 		exUser.setDAYVALLIMIT(1000);
 		exUser.setREGISTERTIME(registerTime);
-
+		
 		exUserService.insert(exUser);
 		return exUser;
 	}
@@ -139,7 +139,7 @@ public class UserController {
 	}
 
 	/**
-	 * 通过手机号码
+	 * 查找手机号是否被使用
 	 * 
 	 * @param telphoneNum
 	 * @return
@@ -233,15 +233,15 @@ public class UserController {
 	}
 
 	/**
-	 * 修改密码
+	 * 忘记密码
 	 * 
 	 * @param telphoneNum
 	 * @param password
 	 * @return
 	 */
-	@RequestMapping(value = "updatePassword", method = RequestMethod.PUT)
+	@RequestMapping(value = "forgetPassword", method = RequestMethod.PUT)
 	@ResponseBody
-	public int updatePassword(String telphoneNum, String password) {
+	public int forgetPassword(String telphoneNum, String password) {
 		ExUser exUser = exUserService.selectByTelphoneNum(telphoneNum);
 		exUser.setPASSWORD(password);
 		int result = exUserService.updateByPrimaryKey(exUser);

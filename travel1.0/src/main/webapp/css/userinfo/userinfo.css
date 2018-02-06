@@ -71,7 +71,7 @@
 /*ĞŞ¸ÄÃÜÂë*/
 .update-password-body {
 	background: rgba(169, 170, 172, 0.6);
-	height: 260px;
+	height: 340px;
 	display: block;
 	margin-top: 50px;
 }
@@ -85,4 +85,10 @@
 	opacity: 0.5;
 	height: 20px;
 	margin-left: 50px;
+}
+
+.new-password-confirm input{
+	opacity: 0.5;
+	height: 20px;
+	margin-left: 30px;
 }
