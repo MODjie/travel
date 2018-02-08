@@ -52,19 +52,20 @@
 	href="Hui-iconfont/1.0.8/iconfont.min.css" />
 </head>
 
-<body>
+<body style="overflow-x: hidden;">
 	<!--我的见闻右侧导航-->
 	<nav class="myex-nav navbar navbar-inverse navbar-fixed-bottom">
 	<!--<div>-->
+	<input type="hidden" value="${currentType }" id="currentType">
 	<ul>
-		<li style="background-color: rgb(8, 8, 8);"><a href="#">全部</a></li>
-		<li><a href="#">见闻</a></li>
-		<li><a href="#">游记</a></li>
-		<li><a href="#">动态</a></li>
-		<li><a href="#">攻略</a></li>
-		<li><a href="#">风景</a></li>
-		<li><a href="#">美食</a></li>
-		<li><a href="#">草稿箱</a></li>
+		<li style="background-color: rgb(8, 8, 8);cursor: pointer;"><a class="select-type">全部</a></li>
+		<li style="cursor: pointer;"><a class="select-type" >见闻</a></li>
+		<li style="cursor: pointer;"><a class="select-type" >游记</a></li>
+		<li style="cursor: pointer;"><a class="select-type" >动态</a></li>
+		<li style="cursor: pointer;"><a class="select-type" >攻略</a></li>
+		<li style="cursor: pointer;"><a class="select-type" >风景</a></li>
+		<li style="cursor: pointer;"><a class="select-type" >美食</a></li>
+		<li style="cursor: pointer;"><a class="select-type" >草稿箱</a></li>			
 	</ul>
 	<!--</div>--> </nav>
 
@@ -204,7 +205,7 @@
 			<li><a href="#" title="关注"><i class="fa icon-heart"></i></a></li>
 			<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
 			</li>
-			<li><a href="exprienceList.html" title="见闻管理"
+			<li><a href="exprienceList?currentType=全部" title="见闻管理"
 				style="color: #cc005f;"><i class="fa icon-book"></i></a></li>
 			<li><a href="#" title="好友圈"><i
 					class="fa Hui-iconfont Hui-iconfont-share-pengyouquan"></i></a></li>
@@ -213,28 +214,37 @@
 	</section>
 	<div class="sub-page">
 		<div class="exlist-title">
-			<h1>我的见闻</h1>
+			<h1>我的全部</h1>
 		</div>
 		<section class="box-content box-1">
 		<div class="container ">
 			<div class="row myExprience">
-				<c:forEach items="${pageInfo.list }" var="exprience">
+				<c:if test="${pageInfo.list!=null }">
+					<c:forEach items="${pageInfo.list }" var="exprience">
 					<div class="col-md-4">
 						<div class="box-item">
 							<img src="${exprience.EXCOVER }" class="img-responsive" />
 							<div class="content">
 								<h3>${exprience.EXTITLE }</h3>
 								<div class="first-p">${exprience.EXCONTENT }</div>
-								<br> <a href="toPost?exprienceId=${exprience.EXPRIENCEID }">更多...</a>
-								<br> <br> <span>${exprience.EXPUBLISHTIME }</span> <a
-									class="glyphicon glyphicon-trash pull-right delete-ex"
-									style="color: rgb(211, 211, 211); cursor: pointer;" title="删除"></a>
+								<br>								
+								<a href="toPost?exprienceId=${exprience.EXPRIENCEID }">更多...</a>									
+								<br> <br> <span>${exprience.EXPUBLISHTIME }</span>
+								 <a class="glyphicon glyphicon-trash pull-right delete-ex"
+									style=" cursor: pointer;" title="删除"></a>
 								<input type="hidden" value="${exprience.EXPRIENCEID }">
 								<br>
 							</div>
 						</div>
 					</div>
 				</c:forEach>
+				</c:if>
+				
+				<c:if test="${pageInfo.list==null }">
+					<div style="height: 500px;margin-bottom: 60px;text-align: center;">
+						<h1 style="padding-top: 200px;color: rgb(49,49,49);">空空如也！您还没发表过此类见闻哦</h1>
+					</div>
+				</c:if>
 			</div>
 		</div>
 		</section>

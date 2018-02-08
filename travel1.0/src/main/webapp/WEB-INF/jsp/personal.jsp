@@ -191,7 +191,7 @@
 			<li><a href="#" title="关注"><i class="fa icon-heart"></i></a></li>
 			<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
 			</li>
-			<li><a href="exprienceList" title="见闻管理"><i
+			<li><a href="exprienceList?currentType=全部" title="见闻管理"><i
 					class="fa icon-book"></i></a></li>
 			<li><a href="exprienceList.html" title="好友圈"><i
 					class="fa Hui-iconfont Hui-iconfont-share-pengyouquan"></i></a></li>
@@ -228,7 +228,7 @@
 				<div class="bgrid folio-item">
 					<div class="item-wrap">
 						<img src="images/portfolio/liberty.jpg" alt="见闻"> <a
-							href="exprienceList.html" class="overlay">
+							href="exprienceList?currentType=见闻" class="overlay">
 							<div class="folio-item-table">
 								<div class="folio-item-cell">
 									<h3 class="folio-title">见闻</h3>
@@ -242,7 +242,7 @@
 				<div class="bgrid folio-item">
 					<div class="item-wrap">
 						<img src="images/portfolio/shutterbug.jpg" alt="游记"> <a
-							href="exprienceList.html" class="overlay">
+							href="exprienceList?currentType=游记" class="overlay">
 							<div class="folio-item-table">
 								<div class="folio-item-cell">
 									<h3 class="folio-title">游记</h3>
@@ -256,7 +256,7 @@
 				<div class="bgrid folio-item">
 					<div class="item-wrap">
 						<img src="images/portfolio/clouds.jpg" alt="风景"> <a
-							href="exprienceList.html" class="overlay">
+							href="exprienceList?currentType=风景" class="overlay">
 							<div class="folio-item-table">
 								<div class="folio-item-cell">
 									<h3 class="folio-title">风景</h3>
@@ -270,7 +270,7 @@
 				<div class="bgrid folio-item">
 					<div class="item-wrap">
 						<img src="images/portfolio/beetle.jpg" alt="攻略"> <a
-							href="exprienceList.html" class="overlay">
+							href="exprienceList?currentType=攻略" class="overlay">
 							<div class="folio-item-table">
 								<div class="folio-item-cell">
 									<h3 class="folio-title">攻略</h3>
@@ -284,7 +284,7 @@
 				<div class="bgrid folio-item">
 					<div class="item-wrap">
 						<img src="images/portfolio/lighthouse.jpg" alt="动态"> <a
-							href="exprienceList.html" class="overlay">
+							href="exprienceList?currentType=动态" class="overlay">
 							<div class="folio-item-table">
 								<div class="folio-item-cell">
 									<h3 class="folio-title">动态</h3>
@@ -298,7 +298,7 @@
 				<div class="bgrid folio-item">
 					<div class="item-wrap">
 						<img src="images/portfolio/salad.jpg" alt="美食"> <a
-							href="exprienceList.html" class="overlay">
+							href="exprienceList?currentType=美食" class="overlay">
 							<div class="folio-item-table">
 								<div class="folio-item-cell">
 									<h3 class="folio-title">美食</h3>

@@ -64,16 +64,7 @@ public class UserController {
 		modelAndView.addObject("weekRankExList", weekRankExList);
 		return modelAndView;
 	}
-
-	/**
-	 * 跳转到编辑界面
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "writeEx", method = RequestMethod.GET)
-	public String writeEx() {
-		return "write_ex";
-	}
+	
 
 	/**
 	 * 注册
@@ -104,6 +95,22 @@ public class UserController {
 		return exUser;
 	}
 
+	/**
+	 * 跳转到编辑界面
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "writeEx", method = RequestMethod.GET)
+	public ModelAndView writeEx() {
+		ModelAndView modelAndView = new ModelAndView("write_ex");
+		Subject subject = SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		String nickName = (String) session.getAttribute("nickName");
+		ExUser currentUser = exUserService.selectByNickName(nickName);
+		modelAndView.addObject("currentUser",currentUser);
+		return modelAndView;
+	}
+	
 	/**
 	 * 判断是否有用户登录
 	 * 

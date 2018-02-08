@@ -16,9 +16,12 @@ public interface ExprienceMapper {
     //查询所有的exprience
     List<Exprience> selectAllExprience(); 
     
-    //根据作者昵称查询exprience
-    List<Exprience> selectExprienceByAuthorName(String authorName); 
+    //根据作者昵称和是否发布查询exprience
+    List<Exprience> selectExprienceByAuthorName(String authorName,String isPublish); 
 
+    //根据作者昵称和类型查询exprience
+    List<Exprience> selectExprienceByType(String authorName,int typeId,String isPublish); 
+    
     int updateByPrimaryKeySelective(Exprience record);
 
     int updateByPrimaryKeyWithBLOBs(Exprience record);

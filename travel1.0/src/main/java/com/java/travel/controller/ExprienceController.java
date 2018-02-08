@@ -54,7 +54,7 @@ public class ExprienceController {
 	 * @return
 	 */
 	@RequestMapping(value = "exprienceEdit", method = RequestMethod.POST)
-	public ModelAndView exprienceEdit(String EXTYPE, Exprience exprience, HttpServletRequest request) {
+	public ModelAndView exprienceEdit(String EXTYPE, Exprience exprience,String draftId, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		// 获取类型编号
 		int exTypeId = exTypeService.selectByName(EXTYPE).getEXTYPEID();
@@ -66,27 +66,34 @@ public class ExprienceController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		// 获取用户名
-		Subject subject = SecurityUtils.getSubject();
-		Session session = subject.getSession();
-		String nickName = (String) session.getAttribute("nickName");
-		exprience.setEXPRIENCEID(1);
+		ExUser currentUser = getCurrentUser();
+		String nickName = currentUser.getNICKNAME();
 		exprience.setEXTYPEID(exTypeId);
 		exprience.setEXAUTHORNAME(nickName);
 		exprience.setEXPUBLISHTIME(sdf.format(date));
 		exprience.setEXCOVER(savePath);
-		exprience.setCOMMENTNUM(0);
-		mav.addObject("exprience", exprience);
+		exprience.setCOMMENTNUM(0);		
+		
 		// 预览、保存草稿、发布执行的是不一样的操作
 		if (exprience.getISPUBLISH().equals("preview")) {
 			mav.setViewName("preview");
-		} else if (exprience.getISPUBLISH().equals("no")) {
-			exService.insert(exprience);
-			mav.setViewName("exprienceList");
-		} else if (exprience.getISPUBLISH().equals("yes")) {
-			exService.insert(exprience);
-			mav.setViewName("post");
-		}
-
+		}else {
+			if (draftId.equals("no")) {
+				exService.insert(exprience);
+			}else {
+				exprience.setEXPRIENCEID(Integer.valueOf(draftId));
+				exService.updateByPrimaryKey(exprience);
+			}
+			if (exprience.getISPUBLISH().equals("no")) {
+				mav.addObject("currentUser", currentUser);
+				mav.setViewName("exprienceList");
+			}else if (exprience.getISPUBLISH().equals("yes")) {
+				ExUser author = exUserService.selectByNickName(nickName);
+				mav.addObject("author", author);
+				mav.setViewName("post");
+			}
+		} 
+		mav.addObject("exprience", exprience);		
 		return mav;
 	}
 
@@ -147,6 +154,12 @@ public class ExprienceController {
 		return pageInfo;
 	}
 
+	/**
+	 * 获取动态加载的评论
+	 * @param exPageNum
+	 * @param exprienceId
+	 * @return
+	 */
 	@RequestMapping(value = "getAfterLoadCommentReply", method = RequestMethod.GET)
 	@ResponseBody
 	public PageInfo<ExCommentDetail> getAfterLoadCommentReply(Integer exPageNum, Integer exprienceId) {
@@ -243,5 +256,18 @@ public class ExprienceController {
 		List<ExReplyDetail> replyList = exReplyService.selectReplyByCommentId(commentId);
 		
 		return replyList;
+	}
+	
+	/**
+	 * 获取当前用户
+	 * 
+	 * @return
+	 */
+	private ExUser getCurrentUser() {
+		Subject subject = SecurityUtils.getSubject();
+		Session session = subject.getSession();
+		String nickName = (String) session.getAttribute("nickName");
+		ExUser currentUser = exUserService.selectByNickName(nickName);
+		return currentUser;
 	}
 }

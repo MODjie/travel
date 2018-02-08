@@ -39,13 +39,25 @@
     from EXPRIENCE order by EXPUBLISHTIME desc
   </select>
   
-  <!-- 通过昵称查找见闻 -->
-  <select id="selectExprienceByAuthorName" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  <!-- 通过昵称和是否发布查找见闻 -->
+  <select id="selectExprienceByAuthorName"   resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from EXPRIENCE where EXPRIENCE.EXAUTHORNAME = #{authorName,jdbcType=DECIMAL}
+    from EXPRIENCE where EXPRIENCE.EXAUTHORNAME = #{arg0}
+    and EXPRIENCE.ISPUBLISH = #{arg1}
+     order by EXPUBLISHTIME desc
+  </select>
+  <!-- 通过昵称类型查找见闻 -->
+  <select id="selectExprienceByType"   resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from EXPRIENCE where EXPRIENCE.EXAUTHORNAME = #{arg0}
+    and EXPRIENCE.EXTYPEID = #{arg1}
+    and EXPRIENCE.ISPUBLISH = #{arg2}
      order by EXPUBLISHTIME desc
   </select>
   

@@ -155,7 +155,7 @@
 							<input type="hidden" class="currentExprience"
 								value="${exprience.EXPRIENCEID}"> <a
 								href="toPost?exprienceId=${exprience.EXPRIENCEID}"><img
-								src="${exprience.EXCOVER}"></a>
+								src="${exprience.EXCOVER}" width="100%"></a>
 						</div>
 						<div class="blog-post-body">
 							<h2>

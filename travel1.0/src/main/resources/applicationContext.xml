@@ -126,6 +126,8 @@
 				/exprienceList=authc
 				/getMyAfterLoadEx=authc
 				/deleteMyExprience=authc
+				/selectMyExByType=authc
+				/editDraft=authc
 			</value>
 		</property>
 	</bean>

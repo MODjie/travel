@@ -19,8 +19,11 @@ public interface ExprienceService {
     List<Exprience> selectAllExprience(); 
     
   //根据作者昵称查询exprience
-    List<Exprience> selectExprienceByAuthorName(String authorName); 
+    List<Exprience> selectExprienceByAuthorName(String authorName,String isPublish); 
 
+  //根据作者昵称和类型查询exprience
+    List<Exprience> selectExprienceByType(String authorName,int typeId,String isPublish);
+    
     int updateByPrimaryKeySelective(Exprience record);
 
     int updateByPrimaryKeyWithBLOBs(Exprience record);

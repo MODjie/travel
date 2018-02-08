@@ -23,6 +23,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.java.travel.entity.ExUser;
 import com.java.travel.entity.Exprience;
+import com.java.travel.entity.Extype;
+import com.java.travel.service.ExTypeService;
 import com.java.travel.service.ExUserService;
 import com.java.travel.service.ExprienceService;
 import com.java.travel.util.MyFileUploadUtil;
@@ -34,6 +36,8 @@ public class PersonalController {
 	private ExUserService exUserService;
 	@Resource
 	private ExprienceService exprienceService;
+	@Resource
+	private ExTypeService exTypeService;
 
 	/**
 	 * 跳转到个人中心主页
@@ -149,38 +153,54 @@ public class PersonalController {
 	 * @return
 	 */
 	@RequestMapping(value = "exprienceList", method = RequestMethod.GET)
-	public ModelAndView exprienceList() {
+	public ModelAndView exprienceList(String currentType) {
 		ModelAndView modelAndView = new ModelAndView("exprienceList");
 		ExUser currentUser = getCurrentUser();
 		modelAndView.addObject("currentUser", currentUser);
 
 		PageHelper.startPage(1, 6);
-		List<Exprience> myExpriences = exprienceService.selectExprienceByAuthorName(currentUser.getNICKNAME());
+		List<Exprience> myExpriences = exprienceService.selectExprienceByAuthorName(currentUser.getNICKNAME(), "yes");
 		PageInfo<Exprience> pageInfo = new PageInfo<Exprience>(myExpriences);
+		
+		if (pageInfo.getSize()==0) {
+			pageInfo.setList(null);
+		}
+		
 		modelAndView.addObject("pageInfo", pageInfo);
+		modelAndView.addObject("currentType", currentType);
 		return modelAndView;
 	}
+
 	/**
 	 * 动态加载我的全部见闻
+	 * 
 	 * @param pageNum
 	 * @return
 	 */
 	@RequestMapping(value = "getMyAfterLoadEx", method = RequestMethod.GET)
 	@ResponseBody
-	public PageInfo<Exprience> getMyAfterLoadEx(Integer exPageNum) {
+	public PageInfo<Exprience> getMyAfterLoadEx(Integer exPageNum,String selectType) {
 		ExUser currentUser = getCurrentUser();
-		PageHelper.startPage(exPageNum, 6);
-		List<Exprience> myExpriences = exprienceService.selectExprienceByAuthorName(currentUser.getNICKNAME());
+		List<Exprience> myExpriences = null;			
+		PageHelper.startPage(exPageNum, 6);	
+		if (selectType.equals("全部")) {			
+			myExpriences = exprienceService.selectExprienceByAuthorName(currentUser.getNICKNAME(), "yes");
+		} else if (selectType.equals("草稿箱")) {
+			myExpriences = exprienceService.selectExprienceByAuthorName(currentUser.getNICKNAME(), "no");
+		} else {
+		}
+		
 		PageInfo<Exprience> pageInfo = new PageInfo<Exprience>(myExpriences);
-		//如果没有数据了，则返回null
+		// 如果没有数据了，则返回null
 		if (exPageNum > pageInfo.getPages()) {
 			pageInfo.setList(null);
 		}
 		return pageInfo;
 	}
-	
+
 	/**
 	 * 通过exprienceid删除见闻
+	 * 
 	 * @param exprienceId
 	 * @param exPageNum
 	 * @return
@@ -192,6 +212,53 @@ public class PersonalController {
 		return successFlag;
 	}
 	
+	/**
+	 * 跳转到编辑界面
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "editDraft", method = RequestMethod.GET)
+	public ModelAndView editDraft(Integer exprienceId) {
+		ModelAndView modelAndView = new ModelAndView("write_ex");
+		Exprience draft = exprienceService.selectByPrimaryKey(exprienceId);
+		ExUser currentUser = getCurrentUser();
+		modelAndView.addObject("currentUser",currentUser);
+		modelAndView.addObject("draft",draft);
+		
+		Extype extype =exTypeService.selectByPrimaryKey(draft.getEXTYPEID());
+		String typeName =extype.getTYPENAME();
+		modelAndView.addObject("typeName",typeName);
+		return modelAndView;
+	}
+	
+	/**
+	 * 分类我的见闻
+	 * @param selectType
+	 * @return
+	 */
+	@RequestMapping(value = "selectMyExByType", method = RequestMethod.GET)
+	@ResponseBody
+	public PageInfo<Exprience> selectMyExByType(String selectType) {
+		List<Exprience> exprienceList = null;
+		ExUser currentUser = getCurrentUser();
+		PageHelper.startPage(1, 6);				
+		if (selectType.equals("全部")) {
+			exprienceList = exprienceService.selectExprienceByAuthorName(currentUser.getNICKNAME(), "yes");
+		} else if (selectType.equals("草稿箱")) {
+			exprienceList = exprienceService.selectExprienceByAuthorName(currentUser.getNICKNAME(), "no");
+		} else {
+			Extype type  = exTypeService.selectByName(selectType);
+			exprienceList = exprienceService.selectExprienceByType(currentUser.getNICKNAME(), type.getEXTYPEID(),"yes");
+		}
+		PageInfo<Exprience> pageInfo = new PageInfo<Exprience>(exprienceList);
+
+		if (pageInfo.getSize()==0) {
+			pageInfo.setList(null);
+		}
+		
+		return pageInfo;
+	}
+
 	/**
 	 * 获取当前用户
 	 * 

@@ -162,9 +162,10 @@
 						style="margin-left: 20px;">发布</button>
 				</div>
 				<!-- 隐藏控件，用来存放内容 -->
-				<input type="hidden" name="EXTYPE" id="exType"> <input
+				<input type="hidden" name="EXTYPE" id="exType" value=""> <input
 					type="hidden" name="EXCONTENT" id="exContent"> <input
 					type="hidden" name="ISPUBLISH" id="ISPUBLISH" value="no">
+				<input type="hidden" id="draftId" name="draftId" value="no">
 			</form>
 		</div>
 	</div>
@@ -203,7 +204,20 @@
 	<!--fileinput-->
 	<script type="text/javascript" src="fileinput/fileinput.min.js"></script>
 	<script type="text/javascript" src="fileinput/zh.js"></script>
-	<!-- 编辑界面JS -->
+	<!-- 编辑界面JS -->	
+	<script type="text/javascript">
+		$(function () {
+			var draftId = "${draft.EXPRIENCEID}";
+			var typeName = "${typeName}";
+			if (draftId!="") {
+				$("#draftId").val(draftId);
+				$("#exTitle").val("${draft.EXTITLE}");
+				$(".type-content").text(typeName);
+				$("#exType").val(typeName);
+				UM.getEditor('myEditor').setContent('${draft.EXCONTENT}');
+			}
+		})
+	</script>
 	<script type="text/javascript" src="js/exprience/exprienceEdit.js"></script>
 </body>
 

@@ -1,16 +1,19 @@
 $(function() {
 	// 实例化编辑器
 	var um = UM.getEditor('myEditor');
-
+	var exType="";
+	UM.getEditor('myEditor').setWidth(1139);
+	UM.getEditor('myEditor').setHeight(400);
 	// fileinput初始化
 	initFileInput("cover", $("#cover").val());
-
-	var exType = "";
+	
 	// 分类下拉菜单点击事件
 	$(".type-btn").find("a").click(function() {
 		exType = $(this).text();
 		$(".type-content").text(exType);
 	});
+	
+	exType = $(".type-content").text();
 	
 	//预览按钮点击事件
 	$(".preview").click(function() {
