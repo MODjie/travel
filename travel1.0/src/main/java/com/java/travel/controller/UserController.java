@@ -1,6 +1,7 @@
 package com.java.travel.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import com.java.travel.entity.Exprience;
 import com.java.travel.service.ExUserService;
 import com.java.travel.service.ExprienceService;
 import com.java.travel.service.RegisterService;
+import com.java.travel.util.DateUtil;
 
 @Controller
 public class UserController {
@@ -50,7 +52,6 @@ public class UserController {
 		List<Exprience> currentExList = exprienceService.selectAllExprience();
 		// 将查询的信息封装到pageinfo中
 		PageInfo<Exprience> pageInfo = new PageInfo<Exprience>(currentExList);
-		List<Exprience> weekRankExList = null;
 		ExUser currentUser = null;
 
 		Subject subject = SecurityUtils.getSubject();
@@ -59,9 +60,18 @@ public class UserController {
 		if (nickName != null) {
 			currentUser = exUserService.selectByNickName(nickName);
 		}
+		
+		//周排行数据
+		List<Exprience> rankList = new ArrayList<Exprience>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		String lastWeekMonday = sdf.format(DateUtil.getLastWeekMonday(date))+" 08:00:00";
+		String thisWeekMonday = sdf.format(DateUtil.getThisWeekMonday(date))+" 08:00:00";
+		rankList = exprienceService.weekRankExprience(thisWeekMonday, lastWeekMonday);
+		
 		modelAndView.addObject("currentUser", currentUser);
 		modelAndView.addObject("pageInfo", pageInfo);
-		modelAndView.addObject("weekRankExList", weekRankExList);
+		modelAndView.addObject("rankList", rankList);
 		return modelAndView;
 	}
 	

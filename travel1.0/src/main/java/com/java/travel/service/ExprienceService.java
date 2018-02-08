@@ -23,6 +23,9 @@ public interface ExprienceService {
 
   //根据作者昵称和类型查询exprience
     List<Exprience> selectExprienceByType(String authorName,int typeId,String isPublish);
+   
+  //根据作者昵称和类型查询exprience
+    List<Exprience> weekRankExprience(String thisWeekMonday,String lastWeekMonday);
     
     int updateByPrimaryKeySelective(Exprience record);
 

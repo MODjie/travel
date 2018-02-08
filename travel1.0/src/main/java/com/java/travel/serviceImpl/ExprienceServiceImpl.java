@@ -66,4 +66,9 @@ public class ExprienceServiceImpl implements ExprienceService{
 		return exprienceMapper.selectExprienceByType(authorName, typeId,isPublish);
 	}
 
+	public List<Exprience> weekRankExprience(String thisWeekMonday, String lastWeekMonday) {
+		// TODO Auto-generated method stub
+		return exprienceMapper.weekRankExprience(thisWeekMonday, lastWeekMonday);
+	}
+
 }

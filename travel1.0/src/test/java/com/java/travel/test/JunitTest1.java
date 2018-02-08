@@ -3,6 +3,7 @@
 //import java.text.ParseException;
 //import java.text.SimpleDateFormat;
 //import java.util.Date;
+//import java.util.List;
 //
 //import javax.annotation.Resource;
 //
@@ -11,6 +12,7 @@
 //import org.springframework.test.context.ContextConfiguration;
 //import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 //
+//import com.java.travel.entity.Exprience;
 //import com.java.travel.entity.Register;
 //import com.java.travel.mapper.ExtypeMapper;
 //import com.java.travel.service.ExTypeService;
@@ -18,6 +20,7 @@
 //import com.java.travel.service.ExprienceService;
 //import com.java.travel.service.RegisterService;
 //import com.java.travel.serviceImpl.ExTypeServiceImpl;
+//import com.java.travel.util.DateUtil;
 //
 //@RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration(locations = "classpath:applicationContext.xml")
@@ -89,5 +92,14 @@
 //		long intervalMilli = time1.getTime() - time2.getTime();
 //		int totalDay = (int) (intervalMilli / (24 * 60 * 60 * 1000));
 //		System.out.println(totalDay);
+//	}
+//	@Test
+//	public void test7() {
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		Date date = new Date();
+//		String lastWeekMonday = sdf.format(DateUtil.getLastWeekMonday(date))+" 08:00:00";
+//		String thisWeekMonday = sdf.format(DateUtil.getThisWeekMonday(date))+" 08:00:00";
+//		List<Exprience> rankList = exprienceService.weekRankExprience(thisWeekMonday, lastWeekMonday);
+//		System.out.println(rankList);
 //	}
 //}

@@ -128,6 +128,7 @@
 				/deleteMyExprience=authc
 				/selectMyExByType=authc
 				/editDraft=authc
+				/weekRankExprience=authc
 			</value>
 		</property>
 	</bean>

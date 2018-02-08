@@ -30,6 +30,7 @@ import com.java.travel.service.ExReplyService;
 import com.java.travel.service.ExTypeService;
 import com.java.travel.service.ExUserService;
 import com.java.travel.service.ExprienceService;
+import com.java.travel.util.DateUtil;
 import com.java.travel.util.MyFileUploadUtil;
 
 @Controller
@@ -258,6 +259,16 @@ public class ExprienceController {
 		return replyList;
 	}
 	
+	/**
+	 * 获取上周一到本周一评论数前5的exprience
+	 * @return
+	 */
+	/*@RequestMapping(value = "weekRankExprience", method = RequestMethod.GET)
+	public List<Exprience> weekRankExprience() {
+		
+		return rankList;
+	}
+	*/
 	/**
 	 * 获取当前用户
 	 * 

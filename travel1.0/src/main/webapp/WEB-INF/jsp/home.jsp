@@ -171,8 +171,8 @@
 
 							<!-- 文章内容结束 -->
 							<div class="read-more">
-								<input type="hidden" value="1">
-								<a style="cursor: pointer;">继续阅读</a>
+								<input type="hidden" value="1"> <a
+									style="cursor: pointer;">继续阅读</a>
 							</div>
 						</div>
 						</article>
@@ -190,8 +190,10 @@
 								class="img-circle img-responsive center-block"></a>
 							<h4>亲爱的旅行者</h4>
 							<p>
-								当前是游客身份，请前往 <a data-toggle="modal" onclick="openLoginModal();" style="cursor: pointer; color: rgb(91,192,222);">登录</a>/<a
-									data-toggle="modal" onclick="openRegisterModal();" style="cursor: pointer; color: rgb(91,192,222); ">注册</a>
+								当前是游客身份，请前往 <a data-toggle="modal" onclick="openLoginModal();"
+									style="cursor: pointer; color: rgb(91, 192, 222);">登录</a>/<a
+									data-toggle="modal" onclick="openRegisterModal();"
+									style="cursor: pointer; color: rgb(91, 192, 222);">注册</a>
 							</p>
 						</div>
 					</shiro:guest>
@@ -211,76 +213,22 @@
 				<div class="sidebar-widget sidebar-weekrank">
 					<h3 class="sidebar-title ">码游周排行</h3>
 					<div class="widget-container">
-						<article class="widget-post">
-						<div class="post-image">
-							<a href="post.html"><img src="images/90x60-1.jpg" alt=""></a>
-						</div>
-						<div class="post-body">
-							<h2>
-								<a href="post.html">旅行路上的人生</a>
-							</h2>
-							<div class="post-meta">
-								<span><i class="fa fa-clock-o"></i> 2018年1月5日</span> <span><a
-									href="post.html"><i class="fa fa-comment-o"></i> 23</a></span>
+						<c:forEach items="${rankList }" var="rankExprience">
+							<article class="widget-post">
+							<div class="post-image">
+								<a href="toPost?exprienceId=${rankExprience.EXPRIENCEID }"><img src="${rankExprience.EXCOVER }" alt="图片加载失败"></a>
 							</div>
-						</div>
-						</article>
-						<article class="widget-post">
-						<div class="post-image">
-							<a href="post.html"><img src="images/90x60-2.jpg" alt=""></a>
-						</div>
-						<div class="post-body">
-							<h2>
-								<a href="post.html">欠自己的旅行，要还给自己</a>
-							</h2>
-							<div class="post-meta">
-								<span><i class="fa fa-clock-o"></i> 2018年1月1日</span> <span><a
-									href="post.html"><i class="fa fa-comment-o"></i> 23</a></span>
+							<div class="post-body">
+								<h2>
+									<a href="toPost?exprienceId=${rankExprience.EXPRIENCEID }">${rankExprience.EXTITLE }</a>
+								</h2>
+								<div class="post-meta">
+									<span><i class="fa fa-clock-o"></i> ${rankExprience.EXPUBLISHTIME }</span> <span><a
+										href="toPost?exprienceId=${rankExprience.EXPRIENCEID }"><i class="fa fa-comment-o"></i> ${rankExprience.COMMENTNUM }</a></span>
+								</div>
 							</div>
-						</div>
-						</article>
-						<article class="widget-post">
-						<div class="post-image">
-							<a href="post.html"><img src="images/90x60-3.jpg" alt=""></a>
-						</div>
-						<div class="post-body">
-							<h2>
-								<a href="post.html">得不到的永远在怀念</a>
-							</h2>
-							<div class="post-meta">
-								<span><i class="fa fa-clock-o"></i> 2018年1月2日</span> <span><a
-									href="post.html"><i class="fa fa-comment-o"></i> 23</a></span>
-							</div>
-						</div>
-						</article>
-						<article class="widget-post">
-						<div class="post-image">
-							<a href="post.html"><img src="images/90x60-4.jpg" alt=""></a>
-						</div>
-						<div class="post-body">
-							<h2>
-								<a href="post.html">生命不留遗憾</a>
-							</h2>
-							<div class="post-meta">
-								<span><i class="fa fa-clock-o"></i> 2018年1月2日</span> <span><a
-									href="post.html"><i class="fa fa-comment-o"></i> 23</a></span>
-							</div>
-						</div>
-						</article>
-						<article class="widget-post">
-						<div class="post-image">
-							<a href="post.html"><img src="images/90x60-5.jpg" alt=""></a>
-						</div>
-						<div class="post-body">
-							<h2>
-								<a href="post.html">你需要的是信仰， 不是西藏</a>
-							</h2>
-							<div class="post-meta">
-								<span><i class="fa fa-clock-o"></i> 2018年1月2日</span> <span><a
-									href="post.html"><i class="fa fa-comment-o"></i> 23</a></span>
-							</div>
-						</div>
-						</article>
+							</article>
+						</c:forEach>
 					</div>
 				</div>
 			</div>
