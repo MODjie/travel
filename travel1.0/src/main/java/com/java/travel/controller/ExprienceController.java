@@ -45,7 +45,6 @@ public class ExprienceController {
 	private ExCommentService exCommentService;
 	@Resource
 	private ExReplyService exReplyService;
-
 	/**
 	 * 新增文章
 	 * 
@@ -81,6 +80,30 @@ public class ExprienceController {
 		} else {
 			if (draftId.equals("no")) {
 				exService.insert(exprience);
+				//发布成功后增加经验值
+				int todayValue = currentUser.getTODAYVALUE();
+				int dayLimt = currentUser.getDAYVALLIMIT();
+				int growthValue = currentUser.getGROWTHVALUE();
+				int normalLevel = currentUser.getNORMALLEVEL();
+				int levelValue = 400 * normalLevel;
+				if (todayValue<dayLimt) {
+					currentUser.setGROWTHVALUE(growthValue+200);
+					currentUser.setTODAYVALUE(todayValue+200);
+					//重置当前成长值
+					growthValue = currentUser.getGROWTHVALUE();
+					//发送增加经验成功变量到post页面
+					mav.addObject("levelUp","add");
+					//如果当前成长值大于等于当前等级成长值上限，就升级
+					if (growthValue>=levelValue) {
+						currentUser.setNORMALLEVEL(normalLevel+1);
+						//当前成长值清零
+						currentUser.setGROWTHVALUE(0);
+						//每日成长值上限提升当前等级成长值上限的20%
+						currentUser.setDAYVALLIMIT(dayLimt+(int)(levelValue*0.2/200)*200);
+						mav.addObject("levelUp","yes");
+					}
+					exUserService.updateByPrimaryKey(currentUser);					
+				}				
 			} else {
 				exprience.setEXPRIENCEID(Integer.valueOf(draftId));
 				exService.updateByPrimaryKey(exprience);

@@ -404,6 +404,14 @@
 			}
 
 		});
+		$(function () {
+			//如果增加经验成功就提示
+			if ("${levelUp}"=="add") {
+				layer.msg("+200成长值");
+			}else if ("${levelUp}"=="yes") {
+				layer.msg("恭喜您升到"+"${author.NORMALLEVEL}"+"级");
+			}
+		})
 	</script>
 </body>
 

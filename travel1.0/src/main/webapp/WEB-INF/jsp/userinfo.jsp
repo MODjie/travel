@@ -168,12 +168,14 @@
 												role="progressbar" aria-valuenow="60" aria-valuemin="0"
 												aria-valuemax="100" style="width: 40%;"></div>
 										</div>
-										<input type="hidden" id="level"
-											value="${currentUser.NORMALLEVEL }"> <input
+										<input type="hidden" id="dayLimit"
+											value="${currentUser.DAYVALLIMIT  }"> <input
 											type="hidden" id="grouthValue"
-											value="${currentUser.NORMALLEVEL }"> <input
+											value="${currentUser.GROWTHVALUE }"> <input
 											type="hidden" id="todayValue"
-											value="${currentUser.NORMALLEVEL }">
+											value="${currentUser.TODAYVALUE }"> <input
+											type="hidden" id="normalLevel"
+											value="${currentUser.NORMALLEVEL  }">
 									</div>
 								</div>
 							</div>
@@ -209,9 +211,12 @@
 												aria-valuemax="100" style="width: 40%;"></div>
 										</div>
 										<input type="hidden" id="level" value="${author.NORMALLEVEL }">
-										<input type="hidden" id="grouthValue"
-											value="${author.NORMALLEVEL }"> <input type="hidden"
-											id="todayValue" value="${author.NORMALLEVEL }">
+										<input type="hidden" id="dayLimit"
+											value="${author.DAYVALLIMIT  }"> <input type="hidden"
+											id="grouthValue" value="${author.GROWTHVALUE }"> <input
+											type="hidden" id="todayValue" value="${author.TODAYVALUE }">
+										<input type="hidden" id="normalLevel"
+											value="${author.NORMALLEVEL  }">
 									</div>
 								</div>
 							</div>
@@ -246,8 +251,9 @@
 					<li><a href="#" title="他的关注"><i class="fa icon-heart"></i></a></li>
 					<li><a href="#" title="他的粉丝"><i class="fa icon-eye-open"></i></a>
 					</li>
-					<li><a href="exprienceList?currentType=全部&nickName=${author.NICKNAME }"
-						title="他的见闻" ><i class="fa icon-book"></i></a></li>
+					<li><a
+						href="exprienceList?currentType=全部&nickName=${author.NICKNAME }"
+						title="他的见闻"><i class="fa icon-book"></i></a></li>
 				</ul>
 			</c:if>
 			<!-- /intro-social -->
@@ -257,7 +263,7 @@
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
 						<!-- 用户访问自己 -->
-						 <c:if test="${author==null }">
+						<c:if test="${author==null }">
 							<!--基本信息修改开始-->
 							<div class="userInfo-body">
 								<div class="age">
@@ -314,7 +320,7 @@
 							</div>
 							<!--基本信息修改结束-->
 						</c:if>
-						
+
 						<!-- 只有用户自己访问才能修改密码 -->
 						<c:if test="${author==null }">
 							<!--修改密码开始-->
@@ -453,7 +459,7 @@
 			//初始化城市级联
 			$("#province").ProvinceCity()
 			//给性别赋值			
-			if ("${currentUser.SEX}" == "男" && "${author}"!="") {
+			if ("${currentUser.SEX}" == "男" && "${author}" != "") {
 				$("#man").prop("checked", "checked");
 				$("#wommen").removeAttr("checked");
 			} else {
@@ -464,7 +470,7 @@
 			//查看H-UI城市级联源码可知，是通过select的change事件来启动级联，因此，给省和市赋值完后
 			//调用下该select的change事件即可正常显示了
 			//给家乡赋值						
-			if ("${currentUser.PROVINCE}" != "" && "${author}"!="") {
+			if ("${currentUser.PROVINCE}" != "" && "${author}" != "") {
 				$("#province").find("select").eq(0).val(
 						"${currentUser.PROVINCE}");
 				$("#province").find("select").eq(0).change();
@@ -473,12 +479,11 @@
 				$("#province").find("select").eq(2)
 						.val("${currentUser.COUNTY}");
 			}
-			
+
 			//如果是访客，则不可选择家乡地址
-			if ("${author}"!="") {
-				$("#province").find("select").attr("disabled","disabled");
+			if ("${author}" != "") {
+				$("#province").find("select").attr("disabled", "disabled");
 			}
-			
 
 		});
 		//验证密码是否正确

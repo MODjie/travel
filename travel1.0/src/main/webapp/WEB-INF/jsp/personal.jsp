@@ -167,14 +167,16 @@
 								<div class="progress progress-striped active level">
 									<div class="progress-bar progress-bar-success"
 										role="progressbar" aria-valuenow="60" aria-valuemin="0"
-										aria-valuemax="100" style="width: 40%;"></div>
+										aria-valuemax="100" style="width: 10%;"></div>
 								</div>
-								<input type="hidden" id="level"
-									value="${currentUser.NORMALLEVEL }"> <input
+								<input type="hidden" id="dayLimit"
+									value="${currentUser.DAYVALLIMIT  }"> <input
 									type="hidden" id="grouthValue"
-									value="${currentUser.NORMALLEVEL }"> <input
+									value="${currentUser.GROWTHVALUE }"> <input
 									type="hidden" id="todayValue"
-									value="${currentUser.NORMALLEVEL }">
+									value="${currentUser.TODAYVALUE }">
+								<input type="hidden" id="normalLevel"
+									value="${currentUser.NORMALLEVEL  }">
 							</div>
 						</div>
 					</div>

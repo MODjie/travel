@@ -1,5 +1,6 @@
 package com.java.travel.test;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,7 +57,7 @@ public class DateTest {
 
 	public static void main(String[] args) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		try {
+		/*try {
 			Date date = sdf.parse("2018-02-08");
 			System.out.println("今天是" + sdf.format(date));
 			System.out.println("上周一" + sdf.format(geLastWeekMonday(date)));
@@ -64,6 +65,23 @@ public class DateTest {
 			System.out.println("下周一" + sdf.format(getNextWeekMonday(date)));
 		} catch (Exception e) {
 			e.printStackTrace();
+		}*/
+		Date yestoday = null;						
+		try {
+			yestoday = sdf.parse("2018-02-08");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		long lastms=yestoday.getTime();
+		
+		Date today = new Date();
+		long todayms = today.getTime();
+		System.out.println("昨天日期："+yestoday);
+		System.out.println("今天日期："+today);
+		System.out.println("昨天的毫秒数："+lastms);
+		System.out.println("今天的毫秒数："+todayms);
+		System.out.println(todayms-lastms);
+		
 	}
 }
