@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.travel.mapper.FansMapper">
+  <resultMap id="BaseResultMap" type="com.java.travel.entity.Fans">
+    <id column="FANSID" jdbcType="DECIMAL" property="FANSID" />
+    <result column="MYNAME" jdbcType="VARCHAR" property="MYNAME" />
+    <result column="MYFANSNAME" jdbcType="VARCHAR" property="MYFANSNAME" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    FANSID, MYNAME, MYFANSNAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from FANS
+    where FANSID = #{FANSID,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from FANS
+    where FANSID = #{FANSID,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.java.travel.entity.Fans">
+    insert into FANS (FANSID, MYNAME, MYFANSNAME
+      )
+    values (#{FANSID,jdbcType=DECIMAL}, #{MYNAME,jdbcType=VARCHAR}, #{MYFANSNAME,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.java.travel.entity.Fans">
+    insert into FANS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="FANSID != null">
+        FANSID,
+      </if>
+      <if test="MYNAME != null">
+        MYNAME,
+      </if>
+      <if test="MYFANSNAME != null">
+        MYFANSNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="FANSID != null">
+        #{FANSID,jdbcType=DECIMAL},
+      </if>
+      <if test="MYNAME != null">
+        #{MYNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="MYFANSNAME != null">
+        #{MYFANSNAME,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.java.travel.entity.Fans">
+    update FANS
+    <set>
+      <if test="MYNAME != null">
+        MYNAME = #{MYNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="MYFANSNAME != null">
+        MYFANSNAME = #{MYFANSNAME,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FANSID = #{FANSID,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.java.travel.entity.Fans">
+    update FANS
+    set MYNAME = #{MYNAME,jdbcType=VARCHAR},
+      MYFANSNAME = #{MYFANSNAME,jdbcType=VARCHAR}
+    where FANSID = #{FANSID,jdbcType=DECIMAL}
+  </update>
+</mapper>

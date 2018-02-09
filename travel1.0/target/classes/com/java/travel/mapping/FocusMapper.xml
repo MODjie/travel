@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.travel.mapper.FocusMapper">
+  <resultMap id="BaseResultMap" type="com.java.travel.entity.Focus">
+    <id column="FOCUSID" jdbcType="DECIMAL" property="FOCUSID" />
+    <result column="MYFFOCUS" jdbcType="VARCHAR" property="MYFFOCUS" />
+    <result column="MYNAME" jdbcType="VARCHAR" property="MYNAME" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    FOCUSID, MYFFOCUS, MYNAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from FOCUS
+    where FOCUSID = #{FOCUSID,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from FOCUS
+    where FOCUSID = #{FOCUSID,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.java.travel.entity.Focus">
+    insert into FOCUS (FOCUSID, MYFFOCUS, MYNAME
+      )
+    values (#{FOCUSID,jdbcType=DECIMAL}, #{MYFFOCUS,jdbcType=VARCHAR}, #{MYNAME,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.java.travel.entity.Focus">
+    insert into FOCUS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="FOCUSID != null">
+        FOCUSID,
+      </if>
+      <if test="MYFFOCUS != null">
+        MYFFOCUS,
+      </if>
+      <if test="MYNAME != null">
+        MYNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="FOCUSID != null">
+        #{FOCUSID,jdbcType=DECIMAL},
+      </if>
+      <if test="MYFFOCUS != null">
+        #{MYFFOCUS,jdbcType=VARCHAR},
+      </if>
+      <if test="MYNAME != null">
+        #{MYNAME,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.java.travel.entity.Focus">
+    update FOCUS
+    <set>
+      <if test="MYFFOCUS != null">
+        MYFFOCUS = #{MYFFOCUS,jdbcType=VARCHAR},
+      </if>
+      <if test="MYNAME != null">
+        MYNAME = #{MYNAME,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FOCUSID = #{FOCUSID,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.java.travel.entity.Focus">
+    update FOCUS
+    set MYFFOCUS = #{MYFFOCUS,jdbcType=VARCHAR},
+      MYNAME = #{MYNAME,jdbcType=VARCHAR}
+    where FOCUSID = #{FOCUSID,jdbcType=DECIMAL}
+  </update>
+</mapper>
