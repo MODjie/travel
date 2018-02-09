@@ -129,6 +129,7 @@
 				/selectMyExByType=authc
 				/editDraft=authc
 				/weekRankExprience=authc
+				/toFocus=authc
 			</value>
 		</property>
 	</bean>

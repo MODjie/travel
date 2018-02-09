@@ -279,6 +279,25 @@ public class PersonalController {
 	}
 
 	/**
+	 * 跳转到关注页面
+	 * @param authorName
+	 * @return
+	 */
+	@RequestMapping(value="toFocus",method=RequestMethod.GET)
+	public ModelAndView toFocus(String authorName) {
+		ModelAndView modelAndView = new ModelAndView("focus");
+		ExUser currentUser = getCurrentUser();
+		
+		if (authorName!=null) {
+			ExUser author = exUserService.selectByNickName(authorName);
+			modelAndView.addObject("author", author);
+		}
+		
+		modelAndView.addObject("currentUser",currentUser);		
+		return modelAndView;
+	}
+	
+	/**
 	 * 获取当前用户
 	 * 
 	 * @return

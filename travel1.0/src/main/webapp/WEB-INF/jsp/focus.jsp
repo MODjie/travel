@@ -11,7 +11,7 @@
 <!--- basic page needs
    ================================================== -->
 <meta charset="utf-8">
-<title>个人中心</title>
+<title>关注</title>
 <meta name="description" content="">
 <meta name="author" content="">
 
@@ -48,8 +48,6 @@
 <!--hui字体图标-->
 <link rel="stylesheet" type="text/css"
 	href="Hui-iconfont/1.0.8/iconfont.min.css" />
-<link rel="stylesheet" type="text/css"
-	href="Hui-iconfont/1.0.8/iconfont.css" />
 </head>
 
 <body id="top">
@@ -68,8 +66,8 @@
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="showHome">主页</a></li>
-				<li class="active"><a href="personal">个人中心</a></li>
+				<li><a href="index.html">主页</a></li>
+				<li class="active"><a href="personal.html">个人中心</a></li>
 				<li class="pick-type"><a href="#" class="dropdown-toggle"
 					id="dropdownMenu1" data-toggle="dropdown"> <span>旅游见闻</span>
 				</a>
@@ -98,7 +96,7 @@
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="writeEx" title="发布见闻"><i
+				<li><a href="write_ex.html" title="发布见闻"><i
 						class="icon-edit"></i></a></li>
 				<li><a href="#" title="私信"><i class="icon-envelope"></i><span
 						class="badge badge-danger msg-warm">1</span></a></li>
@@ -142,61 +140,111 @@
 
 			<div class="col-twelve">
 
-				<a href="#" id="up-img-touch"><img alt="140x140"
-					src="${currentUser.HEADADDRESS }" class="img-circle head"
-					height="200px" width="200px" /></a>
+				<input type="hidden" id="authorName" value="${author.NICKNAME }">
+				<!-- 如果用户自己访问 -->
+				<c:if test="${author==null }">
+					<div class="col-twelve">
 
-				<div id="testimonials" class="clearfix">
-					<div id="owl-testi" class="owl-carousel owl-theme">
-						<div class="item">
-							<div class="quote">
-								<div class="personal_nickName">
-									<h5 id="nickName">${currentUser.NICKNAME }</h5>
-									<div class="intro-position">
-										<span class="mood">${currentUser.MOOD }</span> <a
-											class="glyphicon glyphicon-edit mood-edit"></a>
+						<a href="#" id="up-img-touch"><img alt="140x140"
+							src="${currentUser.HEADADDRESS }" class="img-circle head"
+							height="200px" width="200px" /></a>
+
+						<div id="testimonials" class="clearfix">
+							<div id="owl-testi" class="owl-carousel owl-theme">
+								<div class="item">
+									<div class="quote">
+										<div class="personal_nickName">
+											<h5 id="nickName">${currentUser.NICKNAME }</h5>
+											<div class="intro-position">
+												<span class="mood">${currentUser.MOOD }</span> <a
+													class="glyphicon glyphicon-edit mood-edit"></a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="quote">
+										<h5 style="margin-top: 20px;">
+											<span>${currentUser.NORMALLEVEL }</span>级
+										</h5>
+										<div class="progress progress-striped active level">
+											<div class="progress-bar progress-bar-success"
+												role="progressbar" aria-valuenow="60" aria-valuemin="0"
+												aria-valuemax="100" style="width: 40%;"></div>
+										</div>
+										<input type="hidden" id="dayLimit"
+											value="${currentUser.DAYVALLIMIT  }"> <input
+											type="hidden" id="grouthValue"
+											value="${currentUser.GROWTHVALUE }"> <input
+											type="hidden" id="todayValue"
+											value="${currentUser.TODAYVALUE }"> <input
+											type="hidden" id="normalLevel"
+											value="${currentUser.NORMALLEVEL  }">
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="item">
-							<div class="quote">
-								<h5 style="margin-top: 20px;">
-									<span>${currentUser.NORMALLEVEL }</span>级
-								</h5>
-								<div class="progress progress-striped active level">
-									<div class="progress-bar progress-bar-success"
-										role="progressbar" aria-valuenow="60" aria-valuemin="0"
-										aria-valuemax="100" style="width: 10%;"></div>
+					</div>
+				</c:if>
+				<!-- 如果访客访问 -->
+				<c:if test="${author!=null }">
+					<div class="col-twelve">
+						<a><img alt="140x140" src="${author.HEADADDRESS }"
+							class="img-circle head" height="200px" width="200px" /></a>
+
+						<div id="testimonials" class="clearfix">
+							<div id="owl-testi" class="owl-carousel owl-theme">
+								<div class="item">
+									<div class="quote">
+										<div class="personal_nickName">
+											<h5 id="nickName">${author.NICKNAME }</h5>
+											<div class="intro-position">
+												<span class="mood">${author.MOOD }</span>
+											</div>
+										</div>
+									</div>
 								</div>
-								<input type="hidden" id="dayLimit"
-									value="${currentUser.DAYVALLIMIT  }"> <input
-									type="hidden" id="grouthValue"
-									value="${currentUser.GROWTHVALUE }"> <input
-									type="hidden" id="todayValue"
-									value="${currentUser.TODAYVALUE }">
-								<input type="hidden" id="normalLevel"
-									value="${currentUser.NORMALLEVEL  }">
+								<div class="item">
+									<div class="quote">
+										<h5 style="margin-top: 20px;">
+											<span>${author.NORMALLEVEL }</span>级
+										</h5>
+										<div class="progress progress-striped active level">
+											<div class="progress-bar progress-bar-success"
+												role="progressbar" aria-valuenow="60" aria-valuemin="0"
+												aria-valuemax="100" style="width: 40%;"></div>
+										</div>
+										<input type="hidden" id="level" value="${author.NORMALLEVEL }">
+										<input type="hidden" id="dayLimit"
+											value="${author.DAYVALLIMIT  }"> <input type="hidden"
+											id="grouthValue" value="${author.GROWTHVALUE }"> <input
+											type="hidden" id="todayValue" value="${author.TODAYVALUE }">
+										<input type="hidden" id="normalLevel"
+											value="${author.NORMALLEVEL  }">
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</c:if>
 			</div>
 		</div>
 		<!-- /intro-content -->
 
 		<ul class="intro-social">
-			<li><a href="personal" title="我的主页" style="color: #cc005f;"><i
+			<li><a href="personal.html" title="我的主页"><i
 					class="fa icon-home"></i></a></li>
-			<li><a href="toUserInfo" title="个人信息"><i
+			<li><a href="userinfo.html" title="个人信息"><i
 					class="fa icon-user-md"></i></a></li>
-			<li><a href="toFocus" title="关注"><i class="fa icon-heart"></i></a></li>
+			<li><a href="#" title="关注" style="color: #cc005f;"><i
+					class="fa icon-heart"></i></a></li>
 			<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
 			</li>
-			<li><a href="exprienceList?currentType=全部" title="见闻管理"><i
+			<li><a href="exprienceList.html" title="文章管理"><i
 					class="fa icon-book"></i></a></li>
-			<li><a href="exprienceList.html" title="好友圈"><i
+			<li><a href="#" title="好友圈"><i
 					class="fa Hui-iconfont Hui-iconfont-share-pengyouquan"></i></a></li>
+
 		</ul>
 		<!-- /intro-social -->
 	</section>
@@ -205,115 +253,23 @@
 	<!-- Portfolio Section
    ================================================== -->
 	<section id="portfolio">
-
 	<div class="row section-intro">
-		<div class="col-twelve">
-
-			<h5>${currentTime }</h5>
-			<h1>
-				亲爱的<span>${currentUser.NICKNAME }</span>
-			</h1>
-
-			<p class="lead">您于${currentUser.REGISTERTIME }与“小码游”结下了深厚的友谊，${totalDay }天的风风雨雨，我们一起携手走过。我们感受您的喜怒哀乐，陪您走过大江南北，见识过各种各样的风土人情。在未来的日子里，我们会永远陪伴在您的身旁。</p>
-
+		<h1 style="margin-top: -70px; margin-bottom: 70px;">我的关注</h1>
+		<div class="focus-body row">
+			<div class="col-md-3 focus-users" style="height: 300px;">
+				<img src="images/head/head1.jpg" width="150px" height="150px"
+					class="img-circle" style="margin-top: 18px;" />
+				<h5 style="font-size: 18px;">有梦想的码农</h5>
+				<a class="glyphicon glyphicon-plus"
+					style="color: #cc005f; font-size: 18px;">已关注</a>
+			</div>
 		</div>
 	</div>
 	<!-- /section-intro-->
 
 	<div class="row portfolio-content">
 
-		<div class="col-twelve">
-
-			<!-- portfolio-wrapper -->
-			<div id="folio-wrapper" class="block-1-2 block-mob-full stack">
-
-				<div class="bgrid folio-item">
-					<div class="item-wrap">
-						<img src="images/portfolio/liberty.jpg" alt="见闻"> <a
-							href="exprienceList?currentType=见闻" class="overlay">
-							<div class="folio-item-table">
-								<div class="folio-item-cell">
-									<h3 class="folio-title">见闻</h3>
-								</div>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- /folio-item -->
-
-				<div class="bgrid folio-item">
-					<div class="item-wrap">
-						<img src="images/portfolio/shutterbug.jpg" alt="游记"> <a
-							href="exprienceList?currentType=游记" class="overlay">
-							<div class="folio-item-table">
-								<div class="folio-item-cell">
-									<h3 class="folio-title">游记</h3>
-								</div>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- /folio-item -->
-
-				<div class="bgrid folio-item">
-					<div class="item-wrap">
-						<img src="images/portfolio/clouds.jpg" alt="风景"> <a
-							href="exprienceList?currentType=风景" class="overlay">
-							<div class="folio-item-table">
-								<div class="folio-item-cell">
-									<h3 class="folio-title">风景</h3>
-								</div>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- /folio-item -->
-
-				<div class="bgrid folio-item">
-					<div class="item-wrap">
-						<img src="images/portfolio/beetle.jpg" alt="攻略"> <a
-							href="exprienceList?currentType=攻略" class="overlay">
-							<div class="folio-item-table">
-								<div class="folio-item-cell">
-									<h3 class="folio-title">攻略</h3>
-								</div>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- /folio-item -->
-
-				<div class="bgrid folio-item">
-					<div class="item-wrap">
-						<img src="images/portfolio/lighthouse.jpg" alt="动态"> <a
-							href="exprienceList?currentType=动态" class="overlay">
-							<div class="folio-item-table">
-								<div class="folio-item-cell">
-									<h3 class="folio-title">动态</h3>
-								</div>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- /folio-item -->
-
-				<div class="bgrid folio-item">
-					<div class="item-wrap">
-						<img src="images/portfolio/salad.jpg" alt="美食"> <a
-							href="exprienceList?currentType=美食" class="overlay">
-							<div class="folio-item-table">
-								<div class="folio-item-cell">
-									<h3 class="folio-title">美食</h3>
-								</div>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- /folio-item -->
-			</div>
-			<!-- /portfolio-wrapper -->
-
-		</div>
+		<div class="col-twelve"></div>
 		<!-- /twelve -->
 
 	</div>
@@ -337,7 +293,6 @@
 
 	<!--上传头像开始-->
 	<!--图片上传框-->
-
 	<div class="am-modal am-modal-no-btn up-frame-bj " tabindex="-1"
 		id="doc-modal-1">
 		<div class="am-modal-dialog up-frame-parent up-frame-radius">
@@ -353,10 +308,9 @@
 								<i class="am-icon-cloud-upload"></i> 选择要上传的文件
 							</button>
 						</div>
-							<input type="file" id="inputImage" name="myHead">
+						<input type="file" id="inputImage">
 					</div>
 				</div>
-
 				<div class="am-g am-fl">
 					<div class="up-pre-before up-frame-radius">
 						<img alt="" src="" id="image">
@@ -369,7 +323,8 @@
 					<div class="up-control-btns">
 						<span class="am-icon-rotate-left" onclick="rotateimgleft()"></span>
 						<span class="am-icon-rotate-right" onclick="rotateimgright()"></span>
-						<span class="am-icon-check" id="up-btn-ok" form="uploadHeadForm"></span>						
+						<span class="am-icon-check" id="up-btn-ok"
+							url="admin/user/upload.action"></span>
 					</div>
 				</div>
 
@@ -414,10 +369,12 @@
 	<script type="text/javascript" src="layer/2.4/layer.js"></script>
 	<!--个人中心JS-->
 	<script src="js/personal/personal.js"></script>
+
 	<!--上传头像JS-->
 	<script src="js/uploadHead/amazeui.min.js" charset="utf-8"></script>
 	<script src="js/uploadHead/cropper.min.js" charset="utf-8"></script>
 	<script src="js/uploadHead/custom_up_img.js" charset="utf-8"></script>
+
 </body>
 
 </html>
