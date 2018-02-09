@@ -437,9 +437,10 @@ $(function() {
 		var tel = $(".telphone3").val();
 		var password = $(".newPassword").val();
 		$.ajax({
-			type : "put",
+			type : "post",
 			url : "forgetPassword",
 			data : {
+				_method : "put",
 				telphoneNum : tel,
 				password : password
 			},
@@ -453,6 +454,9 @@ $(function() {
 					$(".identifyCode3").val("");
 					$(".newPassword").val("");
 				}
+			},
+			error :function(){
+				layer.msg("修改失败");
 			}
 		});
 	});	

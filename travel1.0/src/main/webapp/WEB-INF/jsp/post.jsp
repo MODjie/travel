@@ -76,8 +76,7 @@
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="writeEx" title="发布见闻"><i
-						class="icon-edit"></i></a></li>
+				<li><a href="writeEx" title="发布见闻"><i class="icon-edit"></i></a></li>
 				<li><a href="#" title="私信"><i class="icon-envelope"></i><span
 						class="badge badge-danger msg-warm">1</span></a></li>
 				<li><a href="#" title="通知"><i class="icon-bell-alt"></i><span
@@ -183,7 +182,7 @@
 				<div class="sidebar-widget">
 					<h3 class="sidebar-title">关于作者</h3>
 					<div class="widget-container widget-about">
-						<a href="personal.html"><img src="${author.HEADADDRESS }"
+						<a href="exprienceList?currentType=全部&nickName=${author.NICKNAME }"><img src="${author.HEADADDRESS }"
 							alt="140x140" class="img-circle img-responsive center-block"></a>
 						<h4>${author.NICKNAME }</h4>
 						<!--<div class="author-title">Designer</div>-->
@@ -194,76 +193,26 @@
 				<div class="sidebar-widget sidebar-weekrank">
 					<h3 class="sidebar-title ">热门作品</h3>
 					<div class="widget-container">
-						<article class="widget-post">
-						<div class="post-image">
-							<a href="post.html"><img src="images/90x60-1.jpg" alt=""></a>
-						</div>
-						<div class="post-body">
-							<h2>
-								<a href="post.html">旅行路上的人生</a>
-							</h2>
-							<div class="post-meta">
-								<span><i class="fa fa-clock-o"></i> 2018年1月5日</span> <span><a
-									href="post.html"><i class="fa fa-comment-o"></i> 23</a></span>
+						<c:forEach items="${authroRankList }" var="authroRankExprience">
+							<article class="widget-post">
+							<div class="post-image">
+								<a href="toPost?exprienceId=${authroRankExprience.EXPRIENCEID }"><img
+									src="${authroRankExprience.EXCOVER }" alt="图片加载失败"></a>
 							</div>
-						</div>
-						</article>
-						<article class="widget-post">
-						<div class="post-image">
-							<a href="post.html"><img src="images/90x60-2.jpg" alt=""></a>
-						</div>
-						<div class="post-body">
-							<h2>
-								<a href="post.html">欠自己的旅行，要还给自己</a>
-							</h2>
-							<div class="post-meta">
-								<span><i class="fa fa-clock-o"></i> 2018年1月1日</span> <span><a
-									href="post.html"><i class="fa fa-comment-o"></i> 23</a></span>
+							<div class="post-body">
+								<h2>
+									<a
+										href="toPost?exprienceId=${authroRankExprience.EXPRIENCEID }">${authroRankExprience.EXTITLE }</a>
+								</h2>
+								<div class="post-meta">
+									<span><i class="fa fa-clock-o"></i>
+										${authroRankExprience.EXPUBLISHTIME }</span> <span><a
+										href="toPost?exprienceId=${authroRankExprience.EXPRIENCEID }"><i
+											class="fa fa-comment-o"></i> ${authroRankExprience.COMMENTNUM }</a></span>
+								</div>
 							</div>
-						</div>
-						</article>
-						<article class="widget-post">
-						<div class="post-image">
-							<a href="post.html"><img src="images/90x60-3.jpg" alt=""></a>
-						</div>
-						<div class="post-body">
-							<h2>
-								<a href="post.html">得不到的永远在怀念</a>
-							</h2>
-							<div class="post-meta">
-								<span><i class="fa fa-clock-o"></i> 2018年1月2日</span> <span><a
-									href="post.html"><i class="fa fa-comment-o"></i> 23</a></span>
-							</div>
-						</div>
-						</article>
-						<article class="widget-post">
-						<div class="post-image">
-							<a href="post.html"><img src="images/90x60-4.jpg" alt=""></a>
-						</div>
-						<div class="post-body">
-							<h2>
-								<a href="post.html">生命不留遗憾</a>
-							</h2>
-							<div class="post-meta">
-								<span><i class="fa fa-clock-o"></i> 2018年1月2日</span> <span><a
-									href="post.html"><i class="fa fa-comment-o"></i> 23</a></span>
-							</div>
-						</div>
-						</article>
-						<article class="widget-post">
-						<div class="post-image">
-							<a href="post.html"><img src="images/90x60-5.jpg" alt=""></a>
-						</div>
-						<div class="post-body">
-							<h2>
-								<a href="post.html">你需要的是信仰， 不是西藏</a>
-							</h2>
-							<div class="post-meta">
-								<span><i class="fa fa-clock-o"></i> 2018年1月2日</span> <span><a
-									href="post.html"><i class="fa fa-comment-o"></i> 23</a></span>
-							</div>
-						</div>
-						</article>
+							</article>
+						</c:forEach>
 					</div>
 				</div>
 			</div>

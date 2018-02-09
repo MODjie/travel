@@ -1,5 +1,7 @@
 $(function() {
 	var selectType = "全部";
+	var authorName = $("#authorName").val();	
+	
 	showFirstP();
 	// 滚动条距底部的距离
 	var BOTTOM_OFFSET = 0;
@@ -21,7 +23,7 @@ $(function() {
 		// 换句话说：（滚动条滚动的距离 + 窗口的高度 = 文档的高度） 这个是基本的公式
 		if ((BOTTOM_OFFSET + scrollTop) >= docHeight - windowHeight) {
 			exPageNum = exPageNum + 1;
-			createListItems(exPageNum, selectType);
+			createListItems(exPageNum, selectType,authorName);
 		}
 
 	});
@@ -67,7 +69,7 @@ $(function() {
 		selectType = $(this).text();
 		$(this).parent().css("background", "rgb(8, 8, 8)");
 		$(this).parent().siblings("li").css("background", "rgb(34,34,34)");
-		selectTypeRequest(selectType);
+		selectTypeRequest(selectType,authorName);
 	})
 		
 	//从个人中心主页进入到见闻管理中心
@@ -79,25 +81,26 @@ $(function() {
 				$(this).parent().siblings("li").css("background", "rgb(34,34,34)");
 			}
 		});
-		selectTypeRequest(selectType);
+		selectTypeRequest(selectType,authorName);
 		
 	}
 })
 
 // 发送ajax请求，获得下一页数据
-function createListItems(exPageNum, selectType) {
+function createListItems(exPageNum, selectType,authorName) {
 	$.ajax({
 		type : "get",
 		url : "getMyAfterLoadEx",
 		data : {
 			exPageNum : exPageNum,
-			selectType : selectType
+			selectType : selectType,
+			authorName : authorName
 		},
 		dataType : "json",
 		async : false, // 不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
 		success : function(data) {
 			// alert(JSON.stringify(data));
-			showMore(data);
+			showMore(data,authorName);
 			showFirstP();
 		},
 		error : function() {
@@ -107,7 +110,7 @@ function createListItems(exPageNum, selectType) {
 	});
 }
 
-function showMore(data) {
+function showMore(data,authorName) {
 	if (data.list != null) {
 		$
 				.each(
@@ -146,7 +149,10 @@ function showMore(data) {
 														+ exprience.exprienceid
 														+ "'><br> </div> </div> </div>");
 							}
-
+							if (authorName!="") {
+								$(".delete-ex").remove();
+								$(".draft-edit").remove();
+							}
 						});
 
 	} else {
@@ -166,18 +172,23 @@ function showFirstP() {
 }
 
 // 分类请求
-function selectTypeRequest(selectType) {
+function selectTypeRequest(selectType,authorName) {
 	// 页数重置
 	exPageNum = 1;	
 	// 改变页面的标题
-
-	$(".exlist-title h1").text("我的" + selectType);	
+	if (authorName!="") {
+		$(".exlist-title h1").text("他的" + selectType);
+	}else {
+		$(".exlist-title h1").text("我的" + selectType);
+	}
+		
 	$
 			.ajax({
 				type : "get",
 				url : "selectMyExByType",
 				data : {
-					selectType : selectType
+					selectType : selectType,
+					authorName : authorName					
 				},
 				dataType : "json",
 				async : false, // 不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
@@ -185,7 +196,7 @@ function selectTypeRequest(selectType) {
 					// alert(JSON.stringify(data));
 					$(".myExprience").empty();
 					if (data.list != null) {
-						showMore(data);
+						showMore(data,authorName);
 						showFirstP();
 					} else {
 						$(".myExprience")

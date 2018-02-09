@@ -13,9 +13,10 @@ $(function() {
 		}
 
 		$.ajax({
-			type : "put",
+			type : "post",
 			url : "updateUserInfo",
 			data : {
+				_method : "put",
 				AGE : age,
 				SEX : sex,
 				PROVINCE : province,
@@ -68,12 +69,13 @@ $(function() {
 			$("#confirm-password-content").val("");
 			return;
 		}
-		var newPassword = $("#confirm-password-content").val();
+		var PASSWORD = $("#confirm-password-content").val();
 		$.ajax({
-			type : "put",
+			type : "post",
 			url : "updatePassword",
 			data : {
-				PASSWORD : newPassword
+				_method : "put",
+				PASSWORD : PASSWORD
 			},
 			dataType : "json",
 			async : false, // 不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值

@@ -55,7 +55,7 @@ public class ExprienceController {
 	 * @return
 	 */
 	@RequestMapping(value = "exprienceEdit", method = RequestMethod.POST)
-	public ModelAndView exprienceEdit(String EXTYPE, Exprience exprience,String draftId, HttpServletRequest request) {
+	public ModelAndView exprienceEdit(String EXTYPE, Exprience exprience, String draftId, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		// 获取类型编号
 		int exTypeId = exTypeService.selectByName(EXTYPE).getEXTYPEID();
@@ -73,28 +73,29 @@ public class ExprienceController {
 		exprience.setEXAUTHORNAME(nickName);
 		exprience.setEXPUBLISHTIME(sdf.format(date));
 		exprience.setEXCOVER(savePath);
-		exprience.setCOMMENTNUM(0);		
-		
+		exprience.setCOMMENTNUM(0);
+
 		// 预览、保存草稿、发布执行的是不一样的操作
 		if (exprience.getISPUBLISH().equals("preview")) {
 			mav.setViewName("preview");
-		}else {
+		} else {
 			if (draftId.equals("no")) {
 				exService.insert(exprience);
-			}else {
+			} else {
 				exprience.setEXPRIENCEID(Integer.valueOf(draftId));
 				exService.updateByPrimaryKey(exprience);
 			}
 			if (exprience.getISPUBLISH().equals("no")) {
 				mav.addObject("currentUser", currentUser);
+				mav.addObject("currentType", "草稿箱");
 				mav.setViewName("exprienceList");
-			}else if (exprience.getISPUBLISH().equals("yes")) {
+			} else if (exprience.getISPUBLISH().equals("yes")) {
 				ExUser author = exUserService.selectByNickName(nickName);
 				mav.addObject("author", author);
 				mav.setViewName("post");
 			}
-		} 
-		mav.addObject("exprience", exprience);		
+		}
+		mav.addObject("exprience", exprience);
 		return mav;
 	}
 
@@ -118,6 +119,11 @@ public class ExprienceController {
 		if (nickName != null) {
 			currentUser = exUserService.selectByNickName(nickName);
 		}
+		// 获取作者的热门作品
+		// 周排行数据
+		List<Exprience> authroRankList = new ArrayList<Exprience>();		
+		authroRankList = exService.authorRankExprience(authorName);
+
 		// 评论分页
 		PageHelper.startPage(1, 5);
 		List<ExCommentDetail> commentList = exCommentService.selectCommentsByExid(exprienceId);
@@ -125,12 +131,13 @@ public class ExprienceController {
 		if (commentList.size() == 0) {
 			pageInfo.setList(null);
 		}
-		
+
 		modelAndView.addObject("exprience", exprience);
 		modelAndView.addObject("author", author);
 		modelAndView.addObject("currentUser", currentUser);
 		modelAndView.addObject("pageInfo", pageInfo);
-
+		modelAndView.addObject("authroRankList", authroRankList);
+		
 		return modelAndView;
 	}
 
@@ -157,6 +164,7 @@ public class ExprienceController {
 
 	/**
 	 * 获取动态加载的评论
+	 * 
 	 * @param exPageNum
 	 * @param exprienceId
 	 * @return
@@ -200,7 +208,14 @@ public class ExprienceController {
 		comment.setCOMMENTCONTENRT(commentContent);
 		comment.setCOMMENTTIME(commentTime);
 
-		exCommentService.insert(comment);
+		int succesFlag = exCommentService.insert(comment);
+
+		// 更新见闻的评论数
+		if (succesFlag == 1) {
+			Exprience exprience = exService.selectByPrimaryKey(exprienceId);
+			exprience.setCOMMENTNUM(exprience.getCOMMENTNUM() + 1);
+			exService.updateByPrimaryKey(exprience);
+		}
 
 		// 评论分页
 		PageHelper.startPage(1, 5);
@@ -209,9 +224,10 @@ public class ExprienceController {
 
 		return pageInfo;
 	}
-	
+
 	/**
 	 * 添加回复并获取所有回复
+	 * 
 	 * @param commentId
 	 * @param replyContent
 	 * @param replyUserBName
@@ -219,7 +235,7 @@ public class ExprienceController {
 	 */
 	@RequestMapping(value = "reply", method = RequestMethod.POST)
 	@ResponseBody
-	public List<ExReplyDetail> reply(Integer commentId, String replyContent,String replyUserBName) {
+	public List<ExReplyDetail> reply(Integer commentId, String replyContent, String replyUserBName) {
 
 		// 获取当前用户，即回复人昵称
 		Subject subject = SecurityUtils.getSubject();
@@ -237,38 +253,40 @@ public class ExprienceController {
 		exReply.setREPLYTIME(replyTime);
 		exReply.setREPLYUSERANAME(replyUserAname);
 		exReply.setREPLYUSERBNAME(replyUserBName);
-		
+
 		exReplyService.insert(exReply);
 
 		List<ExReplyDetail> replyList = exReplyService.selectReplyByCommentId(commentId);
-		
+
 		return replyList;
 	}
-	
+
 	/**
 	 * 通过评论ID获取回复
+	 * 
 	 * @param commentId
 	 * @return
 	 */
 	@RequestMapping(value = "reply", method = RequestMethod.GET)
 	@ResponseBody
 	public List<ExReplyDetail> reply(Integer commentId) {
-		
+
 		List<ExReplyDetail> replyList = exReplyService.selectReplyByCommentId(commentId);
-		
+
 		return replyList;
 	}
-	
+
 	/**
 	 * 获取上周一到本周一评论数前5的exprience
+	 * 
 	 * @return
 	 */
-	/*@RequestMapping(value = "weekRankExprience", method = RequestMethod.GET)
-	public List<Exprience> weekRankExprience() {
-		
-		return rankList;
-	}
-	*/
+	/*
+	 * @RequestMapping(value = "weekRankExprience", method = RequestMethod.GET)
+	 * public List<Exprience> weekRankExprience() {
+	 * 
+	 * return rankList; }
+	 */
 	/**
 	 * 获取当前用户
 	 * 

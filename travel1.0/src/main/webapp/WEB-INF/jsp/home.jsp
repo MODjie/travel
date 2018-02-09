@@ -185,7 +185,7 @@
 					<h3 class="sidebar-title">关于我</h3>
 					<shiro:guest>
 						<div class="widget-container widget-about">
-							<a href="personal.html"><img
+							<a href="personal"><img
 								src="images/head/defaultHead.png" alt="140x140"
 								class="img-circle img-responsive center-block"></a>
 							<h4>亲爱的旅行者</h4>

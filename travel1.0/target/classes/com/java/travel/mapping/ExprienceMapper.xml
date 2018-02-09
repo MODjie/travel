@@ -61,7 +61,7 @@
      order by EXPUBLISHTIME desc
   </select>
   
-  <!-- 通过昵称类型查找见闻 -->
+  <!-- 查询周排行 -->
   <select id="weekRankExprience"   resultMap="ResultMapWithBLOBs">    
      select 
     <include refid="Base_Column_List" />
@@ -74,6 +74,21 @@
     from EXPRIENCE where EXPRIENCE.EXPUBLISHTIME &lt;= #{arg0} 
     and EXPRIENCE.EXPUBLISHTIME &gt;= #{arg1}
       order by COMMENTNUM desc) 
+    where ROWNUM &lt;= 5
+  </select>
+  
+  <!-- 查询作者热门作品 -->
+  <select id="authorRankExprience" parameterType="java.lang.String"   resultMap="ResultMapWithBLOBs">    
+     select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from (select 
+    <include refid="Base_Column_List" /> 
+    , 
+    <include refid="Blob_Column_List" />  
+    from EXPRIENCE where EXPRIENCE.EXAUTHORNAME = #{authorName,jdbcType=VARCHAR}  
+      order by COMMENTNUM desc)     
     where ROWNUM &lt;= 5
   </select>
   

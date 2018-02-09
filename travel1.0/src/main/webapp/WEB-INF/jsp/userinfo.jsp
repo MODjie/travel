@@ -136,117 +136,207 @@
 
 		<div class="intro-content">
 			<div class="row">
+				<input type="hidden" id="authorName" value="${author.NICKNAME }">
+				<!-- 如果用户自己访问 -->
+				<c:if test="${author==null }">
+					<div class="col-twelve">
 
-				<div class="col-twelve">
+						<a href="#" id="up-img-touch"><img alt="140x140"
+							src="${currentUser.HEADADDRESS }" class="img-circle head"
+							height="200px" width="200px" /></a>
 
-					<a href="#" id="up-img-touch"><img alt="140x140"
-						src="${currentUser.HEADADDRESS }" class="img-circle head"
-						height="200px" width="200px" /></a>
-
-					<div id="testimonials" class="clearfix">
-						<div id="owl-testi" class="owl-carousel owl-theme">
-							<div class="item">
-								<div class="quote">
-									<div class="personal_nickName">
-										<h5 id="nickName">${currentUser.NICKNAME }</h5>
-										<div class="intro-position">
-											<span class="mood">${currentUser.MOOD }</span> <a
-												class="glyphicon glyphicon-edit mood-edit"></a>
+						<div id="testimonials" class="clearfix">
+							<div id="owl-testi" class="owl-carousel owl-theme">
+								<div class="item">
+									<div class="quote">
+										<div class="personal_nickName">
+											<h5 id="nickName">${currentUser.NICKNAME }</h5>
+											<div class="intro-position">
+												<span class="mood">${currentUser.MOOD }</span> <a
+													class="glyphicon glyphicon-edit mood-edit"></a>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="item">
-								<div class="quote">
-									<h5 style="margin-top: 20px;">
-										<span>${currentUser.NORMALLEVEL }</span>级
-									</h5>
-									<div class="progress progress-striped active level">
-										<div class="progress-bar progress-bar-success"
-											role="progressbar" aria-valuenow="60" aria-valuemin="0"
-											aria-valuemax="100" style="width: 40%;"></div>
+								<div class="item">
+									<div class="quote">
+										<h5 style="margin-top: 20px;">
+											<span>${currentUser.NORMALLEVEL }</span>级
+										</h5>
+										<div class="progress progress-striped active level">
+											<div class="progress-bar progress-bar-success"
+												role="progressbar" aria-valuenow="60" aria-valuemin="0"
+												aria-valuemax="100" style="width: 40%;"></div>
+										</div>
+										<input type="hidden" id="level"
+											value="${currentUser.NORMALLEVEL }"> <input
+											type="hidden" id="grouthValue"
+											value="${currentUser.NORMALLEVEL }"> <input
+											type="hidden" id="todayValue"
+											value="${currentUser.NORMALLEVEL }">
 									</div>
-									<input type="hidden" id="level"
-										value="${currentUser.NORMALLEVEL }"> <input
-										type="hidden" id="grouthValue"
-										value="${currentUser.NORMALLEVEL }"> <input
-										type="hidden" id="todayValue"
-										value="${currentUser.NORMALLEVEL }">
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</c:if>
+				<!-- 如果访客访问 -->
+				<c:if test="${author!=null }">
+					<div class="col-twelve">
+						<a><img alt="140x140" src="${author.HEADADDRESS }"
+							class="img-circle head" height="200px" width="200px" /></a>
+
+						<div id="testimonials" class="clearfix">
+							<div id="owl-testi" class="owl-carousel owl-theme">
+								<div class="item">
+									<div class="quote">
+										<div class="personal_nickName">
+											<h5 id="nickName">${author.NICKNAME }</h5>
+											<div class="intro-position">
+												<span class="mood">${author.MOOD }</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="quote">
+										<h5 style="margin-top: 20px;">
+											<span>${author.NORMALLEVEL }</span>级
+										</h5>
+										<div class="progress progress-striped active level">
+											<div class="progress-bar progress-bar-success"
+												role="progressbar" aria-valuenow="60" aria-valuemin="0"
+												aria-valuemax="100" style="width: 40%;"></div>
+										</div>
+										<input type="hidden" id="level" value="${author.NORMALLEVEL }">
+										<input type="hidden" id="grouthValue"
+											value="${author.NORMALLEVEL }"> <input type="hidden"
+											id="todayValue" value="${author.NORMALLEVEL }">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</c:if>
 			</div>
 			<!-- /intro-content -->
 
-			<ul class="intro-social">
-				<li><a href="personal" title="我的主页"><i class="fa icon-home"></i></a>
-				</li>
-				<li><a href="toUserInfo" title="个人信息" style="color: #cc005f;"><i
-						class="fa icon-user-md"></i></a></li>
-				<li><a href="#" title="关注"><i class="fa icon-heart"></i></a></li>
-				<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
-				</li>
-				<li><a href="exprienceList?currentType=全部" title="见闻管理"><i
-						class="fa icon-book"></i></a></li>
-				<li><a href="exprienceList.html" title="好友圈"><i
-						class="fa Hui-iconfont Hui-iconfont-share-pengyouquan"></i></a></li>
-			</ul>
+			<!-- 如果用户自己访问 -->
+			<c:if test="${author==null }">
+				<ul class="intro-social">
+					<li><a href="personal" title="我的主页"><i
+							class="fa icon-home"></i></a></li>
+					<li><a href="toUserInfo" title="个人信息" style="color: #cc005f;"><i
+							class="fa icon-user-md"></i></a></li>
+					<li><a href="#" title="关注"><i class="fa icon-heart"></i></a></li>
+					<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
+					</li>
+					<li><a href="exprienceList?currentType=全部" title="见闻管理"><i
+							class="fa icon-book"></i></a></li>
+					<li><a href="exprienceList.html" title="好友圈"><i
+							class="fa Hui-iconfont Hui-iconfont-share-pengyouquan"></i></a></li>
+				</ul>
+			</c:if>
+			<!-- 如果访客访问 -->
+			<c:if test="${author!=null }">
+				<ul class="intro-social">
+					<li><a href="toUserInfo?authorName=${author.NICKNAME }"
+						title="他的个人信息" style="color: #cc005f;"><i
+							class="fa icon-user-md"></i></a></li>
+					<li><a href="#" title="他的关注"><i class="fa icon-heart"></i></a></li>
+					<li><a href="#" title="他的粉丝"><i class="fa icon-eye-open"></i></a>
+					</li>
+					<li><a href="exprienceList?currentType=全部&nickName=${author.NICKNAME }"
+						title="他的见闻" ><i class="fa icon-book"></i></a></li>
+				</ul>
+			</c:if>
 			<!-- /intro-social -->
 			<!--编辑个人信息开始-->
 			<div class="container userIfno-main">
 				<div class="row clearfix">
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
-						<!--基本信息修改开始-->
-						<div class="userInfo-body">
-							<div class="age">
-								<label>年龄：</label> <input type="text"
-									value="${currentUser.AGE }" />
-							</div>
-							<div class="sex">
-								<label>性别：</label> <label style="margin-left: 50px;">男<input
-									type="radio" name="sexOprions" id="man" value="男" checked></label>
-								<label style="margin-left: 30px;">女<input type="radio"
-									name="sexOprions" id="wommen" value="女"></label>
-							</div>
-							<div class="address">
-								<label>所在地：</label> <label id="province"></label>
+						<!-- 用户访问自己 -->
+						 <c:if test="${author==null }">
+							<!--基本信息修改开始-->
+							<div class="userInfo-body">
+								<div class="age">
+									<label>年龄：</label> <input type="text"
+										value="${currentUser.AGE }" />
+								</div>
+								<div class="sex">
+									<label>性别：</label> <label style="margin-left: 50px;">男<input
+										type="radio" name="sexOprions" id="man" value="男" checked></label>
+									<label style="margin-left: 30px;">女<input type="radio"
+										name="sexOprions" id="wommen" value="女"></label>
+								</div>
+								<div class="address">
+									<label>所在地：</label> <label id="province"></label>
 
+								</div>
+								<div class="telphone" title="电话不能修改">
+									<label>电话：</label> <input type="tel" disabled="disabled"
+										value="${currentUser.TEL }" />
+								</div>
+								<div class="Email">
+									<label>邮箱：</label> <input type="email"
+										value="${currentUser.EMAIL }" />
+								</div>
+								<div class="submit-info ">
+									<button type="button" class="btn btn-info update-info-btn">确认修改</button>
+								</div>
 							</div>
-							<div class="telphone" title="电话不能修改">
-								<label>电话：</label> <input type="tel" disabled="disabled"
-									value="${currentUser.TEL }" />
+							<!--基本信息修改结束-->
+						</c:if>
+						<!-- 如果访客访问 -->
+						<c:if test="${author!=null }">
+							<!--基本信息修改开始-->
+							<div class="userInfo-body">
+								<div class="authorAge">
+									<label>年龄：</label> <input type="text" disabled="disabled"
+										value="${author.AGE }" />
+								</div>
+								<div class="authorSex">
+									<label>性别：</label> <label style="margin-left: 120px">${author.SEX }</label>
+								</div>
+								<div class="authorAddress">
+									<label>所在地：</label> <label id="province"></label>
+
+								</div>
+								<div class="authorTelphone" title="电话不能修改">
+									<label>电话：</label> <input type="tel" disabled="disabled"
+										value="${author.TEL }" />
+								</div>
+								<div class="authorEmail">
+									<label>邮箱：</label> <input type="email" disabled="disabled"
+										value="${author.EMAIL }" />
+								</div>
 							</div>
-							<div class="Email">
-								<label>邮箱：</label> <input type="email"
-									value="${currentUser.EMAIL }" />
+							<!--基本信息修改结束-->
+						</c:if>
+						
+						<!-- 只有用户自己访问才能修改密码 -->
+						<c:if test="${author==null }">
+							<!--修改密码开始-->
+							<div class="update-password-body">
+								<div class="old-password">
+									<label>旧密码：</label> <input type="password" maxlength="16"
+										id="old-password-content" />
+								</div>
+								<div class="new-password">
+									<label>新密码：</label> <input type="password" maxlength="16"
+										id="new-password-content" />
+								</div>
+								<div class="new-password-confirm">
+									<label>确认密码：</label> <input type="password" maxlength="16"
+										id="confirm-password-content" />
+								</div>
+								<div class="submit-info ">
+									<button type="button" class="btn btn-info update-password-info">确认修改</button>
+								</div>
 							</div>
-							<div class="submit-info ">
-								<button type="button" class="btn btn-info update-info-btn">确认修改</button>
-							</div>
-						</div>
-						<!--基本信息修改结束-->
-						<!--修改密码开始-->
-						<div class="update-password-body">
-							<div class="old-password">
-								<label>旧密码：</label> <input type="password" maxlength="16"
-									id="old-password-content" />
-							</div>
-							<div class="new-password">
-								<label>新密码：</label> <input type="password" maxlength="16"
-									id="new-password-content" />
-							</div>
-							<div class="new-password-confirm">
-								<label>确认密码：</label> <input type="password" maxlength="16"
-									id="confirm-password-content" />
-							</div>
-							<div class="submit-info ">
-								<button type="button" class="btn btn-info update-password-info">确认修改</button>
-							</div>
-						</div>
-						<!--修改密码结束-->
+							<!--修改密码结束-->
+						</c:if>
 					</div>
 					<div class="col-md-2"></div>
 				</div>
@@ -363,25 +453,33 @@
 			//初始化城市级联
 			$("#province").ProvinceCity()
 			//给性别赋值			
-			if ("${currentUser.SEX}" == "男") {
+			if ("${currentUser.SEX}" == "男" && "${author}"!="") {
 				$("#man").prop("checked", "checked");
 				$("#wommen").removeAttr("checked");
 			} else {
 				$("#wommen").prop("checked", "checked");
 				$("#man").removeAttr("checked");
-			}		
+			}
 			//单纯的给select赋值，会发现城市和县是不显示的，并且省级级联如果还是选择当前的省，也是无效的，
 			//查看H-UI城市级联源码可知，是通过select的change事件来启动级联，因此，给省和市赋值完后
 			//调用下该select的change事件即可正常显示了
 			//给家乡赋值						
-			if ("${currentUser.PROVINCE}"!="") {
-				$("#province").find("select").eq(0).val("${currentUser.PROVINCE}");
+			if ("${currentUser.PROVINCE}" != "" && "${author}"!="") {
+				$("#province").find("select").eq(0).val(
+						"${currentUser.PROVINCE}");
 				$("#province").find("select").eq(0).change();
 				$("#province").find("select").eq(1).val("${currentUser.CITY}");
 				$("#province").find("select").eq(1).change();
-				$("#province").find("select").eq(2).val("${currentUser.COUNTY}");
+				$("#province").find("select").eq(2)
+						.val("${currentUser.COUNTY}");
 			}
 			
+			//如果是访客，则不可选择家乡地址
+			if ("${author}"!="") {
+				$("#province").find("select").attr("disabled","disabled");
+			}
+			
+
 		});
 		//验证密码是否正确
 		function checkOldPassword() {

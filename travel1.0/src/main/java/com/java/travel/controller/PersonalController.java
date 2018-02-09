@@ -104,10 +104,15 @@ public class PersonalController {
 	 * @return
 	 */
 	@RequestMapping(value = "toUserInfo", method = RequestMethod.GET)
-	public ModelAndView toUserInfo() {
+	public ModelAndView toUserInfo(String authorName) {
 		ModelAndView modelAndView = new ModelAndView("userinfo");
 		ExUser currentUser = getCurrentUser();
 		modelAndView.addObject("currentUser", currentUser);
+		if(authorName!=""){
+			ExUser author = exUserService.selectByNickName(authorName);
+			modelAndView.addObject("author", author);
+		}
+		
 		return modelAndView;
 	}
 
@@ -153,13 +158,21 @@ public class PersonalController {
 	 * @return
 	 */
 	@RequestMapping(value = "exprienceList", method = RequestMethod.GET)
-	public ModelAndView exprienceList(String currentType) {
+	public ModelAndView exprienceList(String currentType,String nickName) {
 		ModelAndView modelAndView = new ModelAndView("exprienceList");
 		ExUser currentUser = getCurrentUser();
+		//判断查看当前用户还是查看作者
+		if (nickName!=null) {
+			ExUser author = exUserService.selectByNickName(nickName);
+			modelAndView.addObject("author", author);
+		}else {
+			
+			nickName = currentUser.getNICKNAME();
+		}
 		modelAndView.addObject("currentUser", currentUser);
 
 		PageHelper.startPage(1, 6);
-		List<Exprience> myExpriences = exprienceService.selectExprienceByAuthorName(currentUser.getNICKNAME(), "yes");
+		List<Exprience> myExpriences = exprienceService.selectExprienceByAuthorName(nickName, "yes");
 		PageInfo<Exprience> pageInfo = new PageInfo<Exprience>(myExpriences);
 		
 		if (pageInfo.getSize()==0) {
@@ -179,14 +192,17 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "getMyAfterLoadEx", method = RequestMethod.GET)
 	@ResponseBody
-	public PageInfo<Exprience> getMyAfterLoadEx(Integer exPageNum,String selectType) {
+	public PageInfo<Exprience> getMyAfterLoadEx(Integer exPageNum,String selectType,String authorName) {
 		ExUser currentUser = getCurrentUser();
+		if (authorName=="") {
+			authorName=currentUser.getNICKNAME();
+		}
 		List<Exprience> myExpriences = null;			
 		PageHelper.startPage(exPageNum, 6);	
 		if (selectType.equals("全部")) {			
-			myExpriences = exprienceService.selectExprienceByAuthorName(currentUser.getNICKNAME(), "yes");
+			myExpriences = exprienceService.selectExprienceByAuthorName(authorName, "yes");
 		} else if (selectType.equals("草稿箱")) {
-			myExpriences = exprienceService.selectExprienceByAuthorName(currentUser.getNICKNAME(), "no");
+			myExpriences = exprienceService.selectExprienceByAuthorName(authorName, "no");
 		} else {
 		}
 		
@@ -238,17 +254,20 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "selectMyExByType", method = RequestMethod.GET)
 	@ResponseBody
-	public PageInfo<Exprience> selectMyExByType(String selectType) {
+	public PageInfo<Exprience> selectMyExByType(String selectType,String authorName) {
 		List<Exprience> exprienceList = null;
 		ExUser currentUser = getCurrentUser();
+		if (authorName=="") {
+			authorName = currentUser.getNICKNAME();
+		}
 		PageHelper.startPage(1, 6);				
 		if (selectType.equals("全部")) {
-			exprienceList = exprienceService.selectExprienceByAuthorName(currentUser.getNICKNAME(), "yes");
+			exprienceList = exprienceService.selectExprienceByAuthorName(authorName, "yes");
 		} else if (selectType.equals("草稿箱")) {
-			exprienceList = exprienceService.selectExprienceByAuthorName(currentUser.getNICKNAME(), "no");
+			exprienceList = exprienceService.selectExprienceByAuthorName(authorName, "no");
 		} else {
 			Extype type  = exTypeService.selectByName(selectType);
-			exprienceList = exprienceService.selectExprienceByType(currentUser.getNICKNAME(), type.getEXTYPEID(),"yes");
+			exprienceList = exprienceService.selectExprienceByType(authorName, type.getEXTYPEID(),"yes");
 		}
 		PageInfo<Exprience> pageInfo = new PageInfo<Exprience>(exprienceList);
 

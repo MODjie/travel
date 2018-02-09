@@ -80,9 +80,10 @@
 					parent.layer.msg('内容不能为空哦');
 				} else {					
 					$.ajax({
-						type : "put",
+						type : "post",
 						url : "updataMood",
 						data : {
+							_method : "put",
 							moodText : moodText
 						},
 						dataType : "json",

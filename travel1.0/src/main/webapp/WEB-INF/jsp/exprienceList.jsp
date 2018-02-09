@@ -55,17 +55,18 @@
 <body style="overflow-x: hidden;">
 	<!--我的见闻右侧导航-->
 	<nav class="myex-nav navbar navbar-inverse navbar-fixed-bottom">
-	<!--<div>-->
-	<input type="hidden" value="${currentType }" id="currentType">
+	<!--<div>--> <input type="hidden" value="${currentType }"
+		id="currentType">
 	<ul>
-		<li style="background-color: rgb(8, 8, 8);cursor: pointer;"><a class="select-type">全部</a></li>
-		<li style="cursor: pointer;"><a class="select-type" >见闻</a></li>
-		<li style="cursor: pointer;"><a class="select-type" >游记</a></li>
-		<li style="cursor: pointer;"><a class="select-type" >动态</a></li>
-		<li style="cursor: pointer;"><a class="select-type" >攻略</a></li>
-		<li style="cursor: pointer;"><a class="select-type" >风景</a></li>
-		<li style="cursor: pointer;"><a class="select-type" >美食</a></li>
-		<li style="cursor: pointer;"><a class="select-type" >草稿箱</a></li>			
+		<li style="background-color: rgb(8, 8, 8); cursor: pointer;"><a
+			class="select-type">全部</a></li>
+		<li style="cursor: pointer;"><a class="select-type">见闻</a></li>
+		<li style="cursor: pointer;"><a class="select-type">游记</a></li>
+		<li style="cursor: pointer;"><a class="select-type">动态</a></li>
+		<li style="cursor: pointer;"><a class="select-type">攻略</a></li>
+		<li style="cursor: pointer;"><a class="select-type">风景</a></li>
+		<li style="cursor: pointer;"><a class="select-type">美食</a></li>
+		<li style="cursor: pointer;"><a class="select-type">草稿箱</a></li>
 	</ul>
 	<!--</div>--> </nav>
 
@@ -154,95 +155,162 @@
 
 	<div class="intro-content">
 		<div class="row">
+			<input type="hidden" id="authorName" value="${author.NICKNAME }">
+			<!-- 如果用户自己访问 -->
+			<c:if test="${author==null }">
+				<div class="col-twelve">
 
-			<div class="col-twelve">
+					<a href="#" id="up-img-touch"><img alt="140x140"
+						src="${currentUser.HEADADDRESS }" class="img-circle head"
+						height="200px" width="200px" /></a>
 
-				<a href="#" id="up-img-touch"><img alt="140x140"
-					src="${currentUser.HEADADDRESS }" class="img-circle head"
-					height="200px" width="200px" /></a>
-
-				<div id="testimonials" class="clearfix">
-					<div id="owl-testi" class="owl-carousel owl-theme">
-						<div class="item">
-							<div class="quote">
-								<div class="personal_nickName">
-									<h5 id="nickName">${currentUser.NICKNAME }</h5>
-									<div class="intro-position">
-										<span class="mood">${currentUser.MOOD }</span> <a
-											class="glyphicon glyphicon-edit mood-edit"></a>
+					<div id="testimonials" class="clearfix">
+						<div id="owl-testi" class="owl-carousel owl-theme">
+							<div class="item">
+								<div class="quote">
+									<div class="personal_nickName">
+										<h5 id="nickName">${currentUser.NICKNAME }</h5>
+										<div class="intro-position">
+											<span class="mood">${currentUser.MOOD }</span> <a
+												class="glyphicon glyphicon-edit mood-edit"></a>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="item">
-							<div class="quote">
-								<h5 style="margin-top: 20px;">
-									<span>${currentUser.NORMALLEVEL }</span>级
-								</h5>
-								<div class="progress progress-striped active level">
-									<div class="progress-bar progress-bar-success"
-										role="progressbar" aria-valuenow="60" aria-valuemin="0"
-										aria-valuemax="100" style="width: 40%;"></div>
+							<div class="item">
+								<div class="quote">
+									<h5 style="margin-top: 20px;">
+										<span>${currentUser.NORMALLEVEL }</span>级
+									</h5>
+									<div class="progress progress-striped active level">
+										<div class="progress-bar progress-bar-success"
+											role="progressbar" aria-valuenow="60" aria-valuemin="0"
+											aria-valuemax="100" style="width: 40%;"></div>
+									</div>
+									<input type="hidden" id="level"
+										value="${currentUser.NORMALLEVEL }"> <input
+										type="hidden" id="grouthValue"
+										value="${currentUser.NORMALLEVEL }"> <input
+										type="hidden" id="todayValue"
+										value="${currentUser.NORMALLEVEL }">
 								</div>
-								<input type="hidden" id="level"
-									value="${currentUser.NORMALLEVEL }"> <input
-									type="hidden" id="grouthValue"
-									value="${currentUser.NORMALLEVEL }"> <input
-									type="hidden" id="todayValue"
-									value="${currentUser.NORMALLEVEL }">
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</c:if>
+			<!-- 如果访客访问 -->
+			<c:if test="${author!=null }">
+				<div class="col-twelve">
+
+					<a><img alt="140x140" src="${author.HEADADDRESS }"
+						class="img-circle head" height="200px" width="200px" /></a>
+
+					<div id="testimonials" class="clearfix">
+						<div id="owl-testi" class="owl-carousel owl-theme">
+							<div class="item">
+								<div class="quote">
+									<div class="personal_nickName">
+										<h5 id="nickName">${author.NICKNAME }</h5>
+										<div class="intro-position">
+											<span class="mood">${author.MOOD }</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="item">
+								<div class="quote">
+									<h5 style="margin-top: 20px;">
+										<span>${author.NORMALLEVEL }</span>级
+									</h5>
+									<div class="progress progress-striped active level">
+										<div class="progress-bar progress-bar-success"
+											role="progressbar" aria-valuenow="60" aria-valuemin="0"
+											aria-valuemax="100" style="width: 40%;"></div>
+									</div>
+									<input type="hidden" id="level" value="${author.NORMALLEVEL }">
+									<input type="hidden" id="grouthValue"
+										value="${author.NORMALLEVEL }"> <input type="hidden"
+										id="todayValue" value="${author.NORMALLEVEL }">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:if>
+
 		</div>
 		<!-- /intro-content -->
-
-		<ul class="intro-social">
-			<li><a href="personal" title="我的主页"><i class="fa icon-home"></i></a></li>
-			<li><a href="toUserInfo" title="个人信息"><i
-					class="fa icon-user-md"></i></a></li>
-			<li><a href="#" title="关注"><i class="fa icon-heart"></i></a></li>
-			<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
-			</li>
-			<li><a href="exprienceList?currentType=全部" title="见闻管理"
-				style="color: #cc005f;"><i class="fa icon-book"></i></a></li>
-			<li><a href="#" title="好友圈"><i
-					class="fa Hui-iconfont Hui-iconfont-share-pengyouquan"></i></a></li>
-		</ul>
+		<!-- 如果用户自己访问 -->
+		<c:if test="${author==null }">
+			<ul class="intro-social">
+				<li><a href="personal" title="我的主页" ><i
+						class="fa icon-home"></i></a></li>
+				<li><a href="toUserInfo" title="个人信息"><i
+						class="fa icon-user-md"></i></a></li>
+				<li><a href="#" title="关注"><i class="fa icon-heart"></i></a></li>
+				<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
+				</li>
+				<li><a href="exprienceList?currentType=全部" title="见闻管理" style="color: #cc005f;"><i
+						class="fa icon-book"></i></a></li>
+				<li><a href="exprienceList.html" title="好友圈"><i
+						class="fa Hui-iconfont Hui-iconfont-share-pengyouquan"></i></a></li>
+			</ul>
+		</c:if>
+		<!-- 如果访客访问 -->
+		<c:if test="${author!=null }">
+			<ul class="intro-social">
+				<li><a href="toUserInfo?authorName=${author.NICKNAME }" title="他的个人信息"><i
+						class="fa icon-user-md"></i></a></li>
+				<li><a href="#" title="他的关注"><i class="fa icon-heart"></i></a></li>
+				<li><a href="#" title="他的粉丝"><i class="fa icon-eye-open"></i></a>
+				</li>
+				<li><a
+					href="exprienceList?currentType=全部&nickName=${author.NICKNAME }"
+					title="他的见闻" style="color: #cc005f;"><i class="fa icon-book"></i></a></li>
+			</ul>
+		</c:if>
 		<!-- /intro-social -->
 	</section>
 	<div class="sub-page">
 		<div class="exlist-title">
-			<h1>我的全部</h1>
+			<c:if test="${author==null }">
+				<h1>我的全部</h1>
+			</c:if>
+			<c:if test="${author!=null }">
+				<h1>他的全部</h1>
+			</c:if>
 		</div>
 		<section class="box-content box-1">
 		<div class="container ">
 			<div class="row myExprience">
 				<c:if test="${pageInfo.list!=null }">
 					<c:forEach items="${pageInfo.list }" var="exprience">
-					<div class="col-md-4">
-						<div class="box-item">
-							<img src="${exprience.EXCOVER }" class="img-responsive" />
-							<div class="content">
-								<h3>${exprience.EXTITLE }</h3>
-								<div class="first-p">${exprience.EXCONTENT }</div>
-								<br>								
-								<a href="toPost?exprienceId=${exprience.EXPRIENCEID }">更多...</a>									
-								<br> <br> <span>${exprience.EXPUBLISHTIME }</span>
-								 <a class="glyphicon glyphicon-trash pull-right delete-ex"
-									style=" cursor: pointer;" title="删除"></a>
-								<input type="hidden" value="${exprience.EXPRIENCEID }">
-								<br>
+						<div class="col-md-4">
+							<div class="box-item">
+								<img src="${exprience.EXCOVER }" class="img-responsive" />
+								<div class="content">
+									<h3>${exprience.EXTITLE }</h3>
+									<div class="first-p">${exprience.EXCONTENT }</div>
+									<br> <a
+										href="toPost?exprienceId=${exprience.EXPRIENCEID }">更多...</a>
+									<br> <br> <span>${exprience.EXPUBLISHTIME }</span>
+									<c:if test="${author==null }">
+										<a class="glyphicon glyphicon-trash pull-right delete-ex"
+											style="cursor: pointer;" title="删除"> </a>
+									</c:if>
+									<input type="hidden" value="${exprience.EXPRIENCEID }">
+									<br>
+								</div>
 							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
 				</c:if>
-				
+
 				<c:if test="${pageInfo.list==null }">
-					<div style="height: 500px;margin-bottom: 60px;text-align: center;">
-						<h1 style="padding-top: 200px;color: rgb(49,49,49);">空空如也！您还没发表过此类见闻哦</h1>
+					<div
+						style="height: 500px; margin-bottom: 60px; text-align: center;">
+						<h1 style="padding-top: 200px; color: rgb(49, 49, 49);">空空如也！您还没发表过此类见闻哦</h1>
 					</div>
 				</c:if>
 			</div>
