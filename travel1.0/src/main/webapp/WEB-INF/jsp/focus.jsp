@@ -426,7 +426,7 @@
 				}
 
 			});
-			$(document).on("click", ".focus-body a", function() {
+			$(document).on("click", ".focusA", function() {
 				var isFocus = $(this).text();
 				var focusName = $(this).prev().text();
 				var btn = $(this);
@@ -449,6 +449,7 @@
 						} else if (isFocus == "取消关注") {
 							btn.attr("class", "glyphicon");
 							btn.attr("class", "glyphicon-plus");
+							btn.attr("class", "focusA");
 							btn.text("关注");
 						}
 						if (isFocus != "他关注了你") {
@@ -489,9 +490,11 @@
 							function(index1, focus) {
 								$(".focus-body")
 										.append(
-												"<div class='col-md-3 focus-users' style='height: 300px;'> <img src='"+focus.headaddress+"' width='150px' height='150px' class='img-circle' style='margin-top: 18px;' /> <h5 style='font-size: 18px;'>"
+												"<div class='col-md-3 focus-users' style='height: 300px;'><a href='exprienceList?currentType=全部&nickName="
 														+ focus.myffocus
-														+ "</h5> <a style='color: #cc005f; font-size: 14px;cursor : pointer'>取消关注</a></div>");
+														+ "' style='cursor : pointer;'> <img src='"+focus.headaddress+"' width='150px' height='150px' class='img-circle' style='margin-top: 18px;' /> </a> <h5 style='font-size: 18px;'>"
+														+ focus.myffocus
+														+ "</h5> <a class='focusA' style='color: #cc005f; font-size: 14px;cursor : pointer'>取消关注</a></div>");
 
 								//长度为2，说明是访客查看，比较自己关注的人和作者关注的人
 								if (data.length == 2) {
@@ -521,6 +524,7 @@
 						} else {
 							btn.attr("class", "glyphicon");
 							btn.attr("class", "glyphicon-plus");
+							btn.attr("class", "focusA");
 							btn.text("关注");
 						}
 					}
