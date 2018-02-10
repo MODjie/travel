@@ -8,6 +8,9 @@ import com.java.travel.entity.FocusDetail;
 public interface FocusService {
 	int deleteByPrimaryKey(Integer FOCUSID);
 
+    //根据myfocus和myname删除关注
+    int deleteFocusByName(String myFocus,String myName);
+	
     int insert(Focus record);
 
     int insertSelective(Focus record);

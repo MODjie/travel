@@ -52,4 +52,9 @@ public class FocusServiceImpl implements FocusService {
 		return focusMapper.selectByNicknmae(nickName);
 	}
 
+	public int deleteFocusByName(String myFocus, String myName) {
+		// TODO Auto-generated method stub
+		return focusMapper.deleteFocusByName(myFocus, myName);
+	}
+
 }

@@ -342,6 +342,28 @@ public class PersonalController {
 		list.add(pageInfo.getList());
 		return list;
 	}
+	/**
+	 * 更新当前用户关注的人
+	 * @param isFocus
+	 * @param focusName
+	 * @return
+	 */
+	@RequestMapping(value="updateFocus",method=RequestMethod.PUT)
+	@ResponseBody
+	public int updateFocus(String isFocus,String focusName) {
+		int succesFlag = -1;
+		ExUser currentUser = getCurrentUser();
+		if (isFocus.equals("关注")) {
+			Focus focus = new Focus();
+			focus.setMYFFOCUS(focusName);
+			focus.setMYNAME(currentUser.getNICKNAME());
+			succesFlag = focusService.insert(focus);
+		}else if (isFocus.equals("取消关注")) {
+			succesFlag = focusService.deleteFocusByName(focusName, currentUser.getNICKNAME());
+		}
+		return succesFlag;
+	}
+	
 	
 	/**
 	 * 获取当前用户

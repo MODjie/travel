@@ -231,35 +231,35 @@
 		<!-- /intro-content -->
 
 		<!-- 如果用户自己访问 -->
-			<c:if test="${author==null }">
-				<ul class="intro-social">
-					<li><a href="personal" title="我的主页"><i
-							class="fa icon-home"></i></a></li>
-					<li><a href="toUserInfo" title="个人信息"><i
-							class="fa icon-user-md"></i></a></li>
-					<li><a href="toFocus" title="关注" style="color: #cc005f;"><i class="fa icon-heart"></i></a></li>
-					<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
-					</li>
-					<li><a href="exprienceList?currentType=全部" title="见闻管理"><i
-							class="fa icon-book"></i></a></li>
-					<li><a href="exprienceList.html" title="好友圈"><i
-							class="fa Hui-iconfont Hui-iconfont-share-pengyouquan"></i></a></li>
-				</ul>
-			</c:if>
-			<!-- 如果访客访问 -->
-			<c:if test="${author!=null }">
-				<ul class="intro-social">
-					<li><a href="toUserInfo?authorName=${author.NICKNAME }"
-						title="他的个人信息" ><i
-							class="fa icon-user-md"></i></a></li>
-					<li><a href="toFocus?authorName=${author.NICKNAME }" title="他的关注" style="color: #cc005f;"><i class="fa icon-heart"></i></a></li>
-					<li><a href="#" title="他的粉丝"><i class="fa icon-eye-open"></i></a>
-					</li>
-					<li><a
-						href="exprienceList?currentType=全部&nickName=${author.NICKNAME }"
-						title="他的见闻"><i class="fa icon-book"></i></a></li>
-				</ul>
-			</c:if>
+		<c:if test="${author==null }">
+			<ul class="intro-social">
+				<li><a href="personal" title="我的主页"><i class="fa icon-home"></i></a></li>
+				<li><a href="toUserInfo" title="个人信息"><i
+						class="fa icon-user-md"></i></a></li>
+				<li><a href="toFocus" title="关注" style="color: #cc005f;"><i
+						class="fa icon-heart"></i></a></li>
+				<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
+				</li>
+				<li><a href="exprienceList?currentType=全部" title="见闻管理"><i
+						class="fa icon-book"></i></a></li>
+				<li><a href="exprienceList.html" title="好友圈"><i
+						class="fa Hui-iconfont Hui-iconfont-share-pengyouquan"></i></a></li>
+			</ul>
+		</c:if>
+		<!-- 如果访客访问 -->
+		<c:if test="${author!=null }">
+			<ul class="intro-social">
+				<li><a href="toUserInfo?authorName=${author.NICKNAME }"
+					title="他的个人信息"><i class="fa icon-user-md"></i></a></li>
+				<li><a href="toFocus?authorName=${author.NICKNAME }"
+					title="他的关注" style="color: #cc005f;"><i class="fa icon-heart"></i></a></li>
+				<li><a href="#" title="他的粉丝"><i class="fa icon-eye-open"></i></a>
+				</li>
+				<li><a
+					href="exprienceList?currentType=全部&nickName=${author.NICKNAME }"
+					title="他的见闻"><i class="fa icon-book"></i></a></li>
+			</ul>
+		</c:if>
 		<!-- /intro-social -->
 	</section>
 	<!-- /intro -->
@@ -403,7 +403,7 @@
 				$(".focus-body").prev().prev().text("他的关注");
 			}
 			var pageNum = 1;
-			loadMorefocus(authorName,pageNum);
+			loadMorefocus(authorName, pageNum);
 			// 滚动条距底部的距离
 			var BOTTOM_OFFSET = 0;
 			$(window).scroll(function() {
@@ -422,63 +422,112 @@
 				// 换句话说：（滚动条滚动的距离 + 窗口的高度 = 文档的高度） 这个是基本的公式
 				if ((BOTTOM_OFFSET + scrollTop) >= docHeight - windowHeight) {
 					pageNum = pageNum + 1;
-					loadMorefocus(authorName,pageNum);
+					loadMorefocus(authorName, pageNum);
 				}
 
+			});
+			$(document).on("click", ".focus-body a", function() {
+				var isFocus = $(this).text();
+				var focusName = $(this).prev().text();
+				var btn = $(this);
+				$.ajax({
+					type : "post",
+					url : "updateFocus",
+					data : {
+						_method : "put",
+						isFocus : isFocus,
+						focusName : focusName
+					},
+					dataType : "json",
+					async : false, // 不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
+					success : function(data) {
+						// alert(JSON.stringify(data));
+						if (isFocus == "关注") {
+							btn.text("取消关注");
+							btn.removeClass("glyphicon");
+							btn.removeClass("glyphicon-plus");
+						} else if (isFocus == "取消关注") {
+							btn.attr("class", "glyphicon");
+							btn.attr("class", "glyphicon-plus");
+							btn.text("关注");
+						}
+						if (isFocus != "他关注了你") {
+							layer.msg(isFocus + "成功", {
+								icon : 1
+							});
+						}
+					},
+					error : function() {
+						layer.msg("操作失败,请刷新页面重试");
+					}
+				});
 			});
 		})
 		//显示focus
 		function showFocus(data) {
+			//当前用户
+			var currentUserName = "${currentUser.NICKNAME}";
 			//长度为2，说明是访客查看，遍历访客自己关注的人的昵称存放在数组里
 			var myFocusName = new Array();
 			//存放作者关注的
-			var authorFocusName=new Array();
+			var authorFocusName = new Array();
 			//已删除的个数
 			var deleteNum = 0;
 			/* //存放两人都关注的
 			var allFocus = new Array(); */
 			if (data.length == 2) {
-				$.each(data[0],function(index,myfocus){
-					myFocusName[index]=(myfocus.myffocus);
-				});	
-				$.each(data[1],function(index,myfocus){
-					authorFocusName[index]=(myfocus.myffocus);
+				$.each(data[0], function(index, myfocus) {
+					myFocusName[index] = (myfocus.myffocus);
+				});
+				$.each(data[1], function(index, myfocus) {
+					authorFocusName[index] = (myfocus.myffocus);
 				});
 			}
 			$
 					.each(
-							data[data.length-1],
+							data[data.length - 1],
 							function(index1, focus) {
 								$(".focus-body")
 										.append(
 												"<div class='col-md-3 focus-users' style='height: 300px;'> <img src='"+focus.headaddress+"' width='150px' height='150px' class='img-circle' style='margin-top: 18px;' /> <h5 style='font-size: 18px;'>"
 														+ focus.myffocus
 														+ "</h5> <a style='color: #cc005f; font-size: 14px;cursor : pointer'>取消关注</a></div>");
+
 								//长度为2，说明是访客查看，比较自己关注的人和作者关注的人
 								if (data.length == 2) {
-									$.each(myFocusName,function(index2,nickName){
-										if (nickName==focus.myffocus) {
+									$.each(myFocusName, function(index2,
+											nickName) {
+										if (nickName == focus.myffocus) {
 											//去除authorFocusName中当前用户关注的											
-											authorFocusName.splice(index1-deleteNum,1);
-											deleteNum=deleteNum+1;
+											authorFocusName.splice(index1
+													- deleteNum, 1);
+											deleteNum = deleteNum + 1;
 										}
 									});
-										
+
 								}
 							});
 			//将当前用户没关注的的下标变为+关注（排除两人都关注的，剩下的就是当前用户没关注的）
-			$(".focus-body div h5").each(function(){
+			$(".focus-body div h5").each(function() {
 				var btn = $(this).next();
 				var name1 = $(this).text();
-				
-				$.each(authorFocusName,function(index,name2){
-					if (name1==name2) {						
-						btn.text("关注");
+
+				$.each(authorFocusName, function(index, name2) {
+					if (name1 == name2) {
+						//不能关注自己
+						if (currentUserName == name1) {
+							btn.text("他关注了你");
+							btn.css("cursor", "");
+						} else {
+							btn.attr("class", "glyphicon");
+							btn.attr("class", "glyphicon-plus");
+							btn.text("关注");
+						}
 					}
 				})
 			});
 		}
-		function loadMorefocus(authorName,pageNum) {
+		function loadMorefocus(authorName, pageNum) {
 			$.ajax({
 				type : "get",
 				url : "getFocus",
@@ -490,7 +539,7 @@
 				success : function(data) {
 					// alert(JSON.stringify(data));
 					showFocus(data);
-						
+
 				},
 				error : function() {
 					layer.msg("加载错误，请刷新页面重试");

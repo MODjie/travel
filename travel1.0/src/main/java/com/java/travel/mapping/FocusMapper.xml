@@ -32,6 +32,13 @@
     where MYNAME = #{nickName,jdbcType=VARCHAR}
   </select>
   
+  <!-- 根据myfocus和myname属性删除关注 -->
+  <delete id="deleteFocusByName" >
+    delete from FOCUS
+    where MYFFOCUS = #{arg0} 
+    and MYNAME = #{arg1}
+  </delete>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from FOCUS
     where FOCUSID = #{FOCUSID,jdbcType=DECIMAL}
