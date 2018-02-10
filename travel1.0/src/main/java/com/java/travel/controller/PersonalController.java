@@ -166,8 +166,9 @@ public class PersonalController {
 	public ModelAndView exprienceList(String currentType,String nickName) {
 		ModelAndView modelAndView = new ModelAndView("exprienceList");
 		ExUser currentUser = getCurrentUser();
+		System.out.println(currentUser.getNICKNAME().equals(nickName));
 		//判断查看当前用户还是查看作者
-		if (nickName!=null) {
+		if (nickName!=null && !currentUser.getNICKNAME().equals(nickName)) {
 			ExUser author = exUserService.selectByNickName(nickName);
 			modelAndView.addObject("author", author);
 		}else {
@@ -190,7 +191,7 @@ public class PersonalController {
 	}
 
 	/**
-	 * 动态加载我的全部见闻
+	 * 动态加载我的见闻
 	 * 
 	 * @param pageNum
 	 * @return
@@ -202,13 +203,17 @@ public class PersonalController {
 		if (authorName=="") {
 			authorName=currentUser.getNICKNAME();
 		}
-		List<Exprience> myExpriences = null;			
-		PageHelper.startPage(exPageNum, 6);	
-		if (selectType.equals("全部")) {			
+		List<Exprience> myExpriences = null;					
+		if (selectType.equals("全部")) {	
+			PageHelper.startPage(exPageNum, 6);	
 			myExpriences = exprienceService.selectExprienceByAuthorName(authorName, "yes");
 		} else if (selectType.equals("草稿箱")) {
+			PageHelper.startPage(exPageNum, 6);	
 			myExpriences = exprienceService.selectExprienceByAuthorName(authorName, "no");
 		} else {
+			Extype type  = exTypeService.selectByName(selectType);
+			PageHelper.startPage(exPageNum, 6);	
+			myExpriences = exprienceService.selectExprienceByType(authorName, type.getEXTYPEID(),"yes");
 		}
 		
 		PageInfo<Exprience> pageInfo = new PageInfo<Exprience>(myExpriences);
@@ -265,13 +270,16 @@ public class PersonalController {
 		if (authorName=="") {
 			authorName = currentUser.getNICKNAME();
 		}
-		PageHelper.startPage(1, 6);				
+					
 		if (selectType.equals("全部")) {
+			PageHelper.startPage(1, 6);	
 			exprienceList = exprienceService.selectExprienceByAuthorName(authorName, "yes");
 		} else if (selectType.equals("草稿箱")) {
+			PageHelper.startPage(1, 6);	
 			exprienceList = exprienceService.selectExprienceByAuthorName(authorName, "no");
-		} else {
+		} else {			
 			Extype type  = exTypeService.selectByName(selectType);
+			PageHelper.startPage(1, 6);	
 			exprienceList = exprienceService.selectExprienceByType(authorName, type.getEXTYPEID(),"yes");
 		}
 		PageInfo<Exprience> pageInfo = new PageInfo<Exprience>(exprienceList);
@@ -321,16 +329,17 @@ public class PersonalController {
 			authorName = currentUser.getNICKNAME();
 		}else {
 			//将当前用户关注的人返回，在前端页面页面与作者关注的人比较，判断是否关注
-			List<FocusDetail> currentUserFocus = focusService.selectByNicknmae(currentUser.getNICKNAME());
+			List<FocusDetail> currentUserFocus = focusService.selectByNicknmae(currentUser.getNICKNAME());		
+
 			list.add(currentUserFocus);
 		}
 		PageHelper.startPage(pageNum, 8);
 		List<FocusDetail> authorFocus = focusService.selectByNicknmae(authorName);
-		PageInfo<FocusDetail> pageInfo = new PageInfo<FocusDetail>(authorFocus);
-		list.add(pageInfo.getList());
+		PageInfo<FocusDetail> pageInfo = new PageInfo<FocusDetail>(authorFocus);		
 		if (pageNum > pageInfo.getPageNum()) {
 			pageInfo.setList(null);
 		}		
+		list.add(pageInfo.getList());
 		return list;
 	}
 	

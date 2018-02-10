@@ -66,6 +66,8 @@ $(function() {
 
 	// 分类显示我的见闻
 	$(".select-type").click(function() {
+		// 页数重置
+		exPageNum = 1;	
 		selectType = $(this).text();
 		$(this).parent().css("background", "rgb(8, 8, 8)");
 		$(this).parent().siblings("li").css("background", "rgb(34,34,34)");
@@ -149,6 +151,7 @@ function showMore(data,authorName) {
 														+ exprience.exprienceid
 														+ "'><br> </div> </div> </div>");
 							}
+							//如果是访客，则去除编辑与修改的按钮
 							if (authorName!="") {
 								$(".delete-ex").remove();
 								$(".draft-edit").remove();
@@ -172,9 +175,7 @@ function showFirstP() {
 }
 
 // 分类请求
-function selectTypeRequest(selectType,authorName) {
-	// 页数重置
-	exPageNum = 1;	
+function selectTypeRequest(selectType,authorName) {	
 	// 改变页面的标题
 	if (authorName!="") {
 		$(".exlist-title h1").text("他的" + selectType);
