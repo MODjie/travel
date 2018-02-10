@@ -2,6 +2,7 @@ package com.java.travel.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,9 +25,12 @@ import com.github.pagehelper.PageInfo;
 import com.java.travel.entity.ExUser;
 import com.java.travel.entity.Exprience;
 import com.java.travel.entity.Extype;
+import com.java.travel.entity.Focus;
+import com.java.travel.entity.FocusDetail;
 import com.java.travel.service.ExTypeService;
 import com.java.travel.service.ExUserService;
 import com.java.travel.service.ExprienceService;
+import com.java.travel.service.FocusService;
 import com.java.travel.util.MyFileUploadUtil;
 
 @Controller
@@ -38,7 +42,8 @@ public class PersonalController {
 	private ExprienceService exprienceService;
 	@Resource
 	private ExTypeService exTypeService;
-
+	@Resource
+	private FocusService focusService;
 	/**
 	 * 跳转到个人中心主页
 	 * 
@@ -287,14 +292,46 @@ public class PersonalController {
 	public ModelAndView toFocus(String authorName) {
 		ModelAndView modelAndView = new ModelAndView("focus");
 		ExUser currentUser = getCurrentUser();
-		
+		//访客查询作者的个人中心
 		if (authorName!=null) {
 			ExUser author = exUserService.selectByNickName(authorName);
-			modelAndView.addObject("author", author);
-		}
+			modelAndView.addObject("author", author);				
+
+		}else {
+			authorName = currentUser.getNICKNAME();
+		}		
 		
+		//通过昵称查找关注的人
 		modelAndView.addObject("currentUser",currentUser);		
 		return modelAndView;
+	}
+	
+	/**
+	 * 获得关注的人
+	 * @param authorName 
+	 * @param pageNum
+	 * @return
+	 */
+	@RequestMapping(value="getFocus",method=RequestMethod.GET)
+	@ResponseBody
+	public List<List<FocusDetail>> getFocus(String authorName,Integer pageNum) {
+		List<List<FocusDetail>> list = new ArrayList<List<FocusDetail>>();
+		ExUser currentUser = getCurrentUser();
+		if (authorName=="") {
+			authorName = currentUser.getNICKNAME();
+		}else {
+			//将当前用户关注的人返回，在前端页面页面与作者关注的人比较，判断是否关注
+			List<FocusDetail> currentUserFocus = focusService.selectByNicknmae(currentUser.getNICKNAME());
+			list.add(currentUserFocus);
+		}
+		PageHelper.startPage(pageNum, 8);
+		List<FocusDetail> authorFocus = focusService.selectByNicknmae(authorName);
+		PageInfo<FocusDetail> pageInfo = new PageInfo<FocusDetail>(authorFocus);
+		list.add(pageInfo.getList());
+		if (pageNum > pageInfo.getPageNum()) {
+			pageInfo.setList(null);
+		}		
+		return list;
 	}
 	
 	/**

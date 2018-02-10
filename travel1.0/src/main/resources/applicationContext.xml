@@ -130,6 +130,7 @@
 				/editDraft=authc
 				/weekRankExprience=authc
 				/toFocus=authc
+				/getFocus=authc
 			</value>
 		</property>
 	</bean>

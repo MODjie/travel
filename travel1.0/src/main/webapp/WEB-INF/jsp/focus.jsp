@@ -66,8 +66,8 @@
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="index.html">主页</a></li>
-				<li class="active"><a href="personal.html">个人中心</a></li>
+				<li><a href="showHome">主页</a></li>
+				<li class="active"><a href="personal">个人中心</a></li>
 				<li class="pick-type"><a href="#" class="dropdown-toggle"
 					id="dropdownMenu1" data-toggle="dropdown"> <span>旅游见闻</span>
 				</a>
@@ -96,8 +96,7 @@
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="write_ex.html" title="发布见闻"><i
-						class="icon-edit"></i></a></li>
+				<li><a href="writeEx" title="发布见闻"><i class="icon-edit"></i></a></li>
 				<li><a href="#" title="私信"><i class="icon-envelope"></i><span
 						class="badge badge-danger msg-warm">1</span></a></li>
 				<li><a href="#" title="通知"><i class="icon-bell-alt"></i><span
@@ -232,15 +231,14 @@
 		<!-- /intro-content -->
 
 		<ul class="intro-social">
-			<li><a href="personal.html" title="我的主页"><i
-					class="fa icon-home"></i></a></li>
-			<li><a href="userinfo.html" title="个人信息"><i
+			<li><a href="personal" title="我的主页"><i class="fa icon-home"></i></a></li>
+			<li><a href="toUserInfo" title="个人信息"><i
 					class="fa icon-user-md"></i></a></li>
 			<li><a href="#" title="关注" style="color: #cc005f;"><i
 					class="fa icon-heart"></i></a></li>
 			<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
 			</li>
-			<li><a href="exprienceList.html" title="文章管理"><i
+			<li><a href="exprienceList?currentType=全部" title="文章管理"><i
 					class="fa icon-book"></i></a></li>
 			<li><a href="#" title="好友圈"><i
 					class="fa Hui-iconfont Hui-iconfont-share-pengyouquan"></i></a></li>
@@ -255,14 +253,15 @@
 	<section id="portfolio">
 	<div class="row section-intro">
 		<h1 style="margin-top: -70px; margin-bottom: 70px;">我的关注</h1>
+		<input type="hidden" id="authorName" value="${author.NICKNAME }">
 		<div class="focus-body row">
-			<div class="col-md-3 focus-users" style="height: 300px;">
+			<!--<div class="col-md-3 focus-users" style="height: 300px;">
 				<img src="images/head/head1.jpg" width="150px" height="150px"
 					class="img-circle" style="margin-top: 18px;" />
 				<h5 style="font-size: 18px;">有梦想的码农</h5>
 				<a class="glyphicon glyphicon-plus"
 					style="color: #cc005f; font-size: 18px;">已关注</a>
-			</div>
+			</div>-->
 		</div>
 	</div>
 	<!-- /section-intro-->
@@ -375,6 +374,88 @@
 	<script src="js/uploadHead/cropper.min.js" charset="utf-8"></script>
 	<script src="js/uploadHead/custom_up_img.js" charset="utf-8"></script>
 
+	<script type="text/javascript">
+		$(function() {
+			var authorName = $("#authorName").val();
+			var currentUserFocus = "";
+
+			if (authorName == "") {
+				authorName = null;
+			}
+
+			if (authorName != null) {
+				$(".focus-body").prev().prev().text("他的关注");
+			}
+			var pageNum = 1;
+			$.ajax({
+				type : "get",
+				url : "getFocus",
+				data : {
+					authorName : authorName,
+					pageNum : pageNum
+				},
+				dataType : "json",
+				success : function(data) {
+					// alert(JSON.stringify(data));
+					showFocus(data);	
+				},
+				error : function() {
+					layer.msg("加载错误，请刷新页面重试");
+				}
+			});
+		})
+		//显示focus
+		function showFocus(data) {
+			//长度为2，说明是访客查看，遍历访客自己关注的人的昵称存放在数组里
+			var myFocusName = new Array();
+			//存放作者关注的
+			var authorFocusName=new Array();
+			//已删除的个数
+			var deleteNum = 0;
+			/* //存放两人都关注的
+			var allFocus = new Array(); */
+			if (data.length == 2) {
+				$.each(data[0],function(index,myfocus){
+					myFocusName[index]=(myfocus.myffocus);
+				});	
+				$.each(data[1],function(index,myfocus){
+					authorFocusName[index]=(myfocus.myffocus);
+				});
+			}
+			$
+					.each(
+							data[data.length-1],
+							function(index1, focus) {
+								$(".focus-body")
+										.append(
+												"<div class='col-md-3 focus-users' style='height: 300px;'> <img src='"+focus.headaddress+"' width='150px' height='150px' class='img-circle' style='margin-top: 18px;' /> <h5 style='font-size: 18px;'>"
+														+ focus.myffocus
+														+ "</h5> <a style='color: #cc005f; font-size: 14px;cursor : pointer'>取消关注</a></div>");
+								//长度为2，说明是访客查看，比较自己关注的人和作者关注的人
+								if (data.length == 2) {
+									$.each(myFocusName,function(index2,nickName){
+										if (nickName==focus.myffocus) {
+											//去除authorFocusName中当前用户关注的											
+											authorFocusName.splice(index1-deleteNum,1);
+											deleteNum=deleteNum+1;
+										}
+									});
+										
+								}
+							});
+			//将当前用户没关注的的下标变为+关注（排除两人都关注的，剩下的就是当前用户没关注的）
+			$(".focus-body div h5").each(function(){
+				var btn = $(this).next();
+				var name1 = $(this).text();
+				
+				$.each(authorFocusName,function(index,name2){
+					if (name1==name2) {						
+						btn.text("关注");
+					}
+				})
+			});
+		}
+	</script>
 </body>
 
 </html>

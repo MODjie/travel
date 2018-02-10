@@ -233,7 +233,7 @@
 							class="fa icon-home"></i></a></li>
 					<li><a href="toUserInfo" title="个人信息" style="color: #cc005f;"><i
 							class="fa icon-user-md"></i></a></li>
-					<li><a href="#" title="关注"><i class="fa icon-heart"></i></a></li>
+					<li><a href="toFocus" title="关注"><i class="fa icon-heart"></i></a></li>
 					<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
 					</li>
 					<li><a href="exprienceList?currentType=全部" title="见闻管理"><i
@@ -248,7 +248,7 @@
 					<li><a href="toUserInfo?authorName=${author.NICKNAME }"
 						title="他的个人信息" style="color: #cc005f;"><i
 							class="fa icon-user-md"></i></a></li>
-					<li><a href="#" title="他的关注"><i class="fa icon-heart"></i></a></li>
+					<li><a href="toFocus?authorName=${author.NICKNAME }" title="他的关注"><i class="fa icon-heart"></i></a></li>
 					<li><a href="#" title="他的粉丝"><i class="fa icon-eye-open"></i></a>
 					</li>
 					<li><a

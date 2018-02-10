@@ -6,8 +6,14 @@
     <result column="MYFFOCUS" jdbcType="VARCHAR" property="MYFFOCUS" />
     <result column="MYNAME" jdbcType="VARCHAR" property="MYNAME" />
   </resultMap>
+  <resultMap type="com.java.travel.entity.FocusDetail" id="FocusDetail" extends="BaseResultMap">
+      <result column="HEADADDRESS" jdbcType="VARCHAR" property="HEADADDRESS"/>
+  </resultMap>
   <sql id="Base_Column_List">
     FOCUSID, MYFFOCUS, MYNAME
+  </sql>
+  <sql id="Focusview_Add_List">
+    HEADADDRESS
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -15,6 +21,17 @@
     from FOCUS
     where FOCUSID = #{FOCUSID,jdbcType=DECIMAL}
   </select>
+  
+  <!-- 根据用户昵称查找该用户所关注的人 -->
+  <select id="selectByNicknmae" parameterType="java.lang.String" resultMap="FocusDetail">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Focusview_Add_List" />
+    from FOCUS_VIEW
+    where MYNAME = #{nickName,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from FOCUS
     where FOCUSID = #{FOCUSID,jdbcType=DECIMAL}
