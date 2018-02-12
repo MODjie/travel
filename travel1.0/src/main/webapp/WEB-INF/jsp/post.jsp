@@ -419,8 +419,8 @@
 			//添加关注按钮	
 			if ("${addFocus}"=="yes") {
 				$(".aboutAuthor").append("<a class='glyphicon glyphicon-plus pull-right' style='cursor: pointer;color: white;margin-right: 30px'>关注</a>");
-			}else if ("${addFocus}"=="no") {
-					$(".aboutAuthor").append("<a class='pull-right' style='cursor: pointer;color: white;margin-right: 30px'>取消关注</a>");
+			}else if ("${addFocus}"=="no" && "${author.NICKNAME}" != "${currentUser.NICKNAME}") {
+				$(".aboutAuthor").append("<a class='pull-right' style='cursor: pointer;color: white;margin-right: 30px'>取消关注</a>");
 			}					
 		})
 	</script>

@@ -1,6 +1,52 @@
 $(function() {
 	var selectType = "全部";
 	var authorName = $("#authorName").val();	
+	var addFocus = $("#addFocusValue").val();
+	//添加关注和取消关注
+	if (addFocus=="yes") {
+		$(".focusA").text("关注");
+		$(".focusA").addClass("glyphicon");
+		$(".focusA").addClass("glyphicon-plus");
+	}else if (addFocus=="no") {
+		$(".focusA").text("取消关注");
+		$(".focusA").removeClass("glyphicon");
+		$(".focusA").remove("glyphicon-plus");
+	}
+	
+	$(document).on("click", ".focusA", function() {
+		var isFocus = $(this).text();
+		var focusName = authorName;
+		var btn = $(this);
+		$.ajax({
+			type : "post",
+			url : "updateFocus",
+			data : {
+				_method : "put",
+				isFocus : isFocus,
+				focusName : focusName
+			},
+			dataType : "json",
+			async : false, // 不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
+			success : function(data) {
+				// alert(JSON.stringify(data));
+				if (isFocus == "关注") {
+					btn.text("取消关注");
+					btn.removeClass("glyphicon");
+					btn.removeClass("glyphicon-plus");
+				} else if (isFocus == "取消关注") {
+					btn.addClass("glyphicon");
+					btn.addClass("glyphicon-plus");
+					btn.text("关注");
+				}
+				layer.msg(isFocus + "成功", {
+					icon : 1
+				});
+			},
+			error : function() {
+				layer.msg("操作失败,请刷新页面重试");
+			}
+		});
+	});
 	
 	showFirstP();
 	// 滚动条距底部的距离

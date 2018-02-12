@@ -204,14 +204,16 @@
 			<!-- 如果访客访问 -->
 			<c:if test="${author!=null }">
 				<div class="col-twelve">
-
 					<a><img alt="140x140" src="${author.HEADADDRESS }"
 						class="img-circle head" height="200px" width="200px" /></a>
-
-					<div id="testimonials" class="clearfix">
+					<div style="margin-top: 15px;margin-bottom: 10px">
+						<a class='focusA' style='cursor: pointer;color: white;'>取消关注</a>
+						<input type="hidden" id="addFocusValue" value="${addFocus }">
+					</div>
+					<div id="testimonials" class="clearfix" style="margin-top: 0px;">
 						<div id="owl-testi" class="owl-carousel owl-theme">
 							<div class="item">
-								<div class="quote">
+								<div class="quote">							
 									<div class="personal_nickName">
 										<h5 id="nickName">${author.NICKNAME }</h5>
 										<div class="intro-position">

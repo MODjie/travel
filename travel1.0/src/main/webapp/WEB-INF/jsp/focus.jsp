@@ -190,8 +190,12 @@
 					<div class="col-twelve">
 						<a><img alt="140x140" src="${author.HEADADDRESS }"
 							class="img-circle head" height="200px" width="200px" /></a>
-
-						<div id="testimonials" class="clearfix">
+						<div style="margin-top: 15px;margin-bottom: 10px">
+							<h5 style="display: none;">${author.NICKNAME }</h5>
+							<a class='focusA' style='cursor: pointer;color: white;'>取消关注</a>
+							<input type="hidden" id="addFocusValue" value="${addFocus }">
+						</div>
+						<div id="testimonials" class="clearfix" style="margin-top: 0">
 							<div id="owl-testi" class="owl-carousel owl-theme">
 								<div class="item">
 									<div class="quote">
@@ -393,7 +397,7 @@
 	<script type="text/javascript">
 		$(function() {
 			var authorName = $("#authorName").val();			
-
+			
 			if (authorName == "") {
 				authorName = null;
 			}
@@ -425,6 +429,19 @@
 				}
 
 			});
+			
+			var addFocus = $("#addFocusValue").val();
+			//添加关注和取消关注
+			if (addFocus=="yes") {
+				$(".focusA").text("关注");
+				$(".focusA").addClass("glyphicon");
+				$(".focusA").addClass("glyphicon-plus");
+			}else if (addFocus=="no") {
+				$(".focusA").text("取消关注");
+				$(".focusA").removeClass("glyphicon");
+				$(".focusA").remove("glyphicon-plus");
+			}
+			
 			$(document).on("click", ".focusA", function() {
 				var isFocus = $(this).text();
 				var focusName = $(this).prev().text();

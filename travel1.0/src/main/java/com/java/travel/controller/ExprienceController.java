@@ -161,26 +161,30 @@ public class ExprienceController {
 		}
 		
 		//获取当前用户关注的人
-		List<FocusDetail> myFocusList = focusService.selectByNicknmae(currentUser.getNICKNAME());
-		String addFocus = "yes";
-		//如果作者已经关注过的，则addFocus=no
-		for (FocusDetail focus : myFocusList) {
-			if (focus.getMYFFOCUS().equals(author.getNICKNAME())) {
-				addFocus = "no";				
-				break;
+		if (currentUser!=null) {
+			List<FocusDetail> myFocusList = focusService.selectByNicknmae(currentUser.getNICKNAME());
+			String addFocus = "yes";
+			//如果作者已经关注过的，则addFocus=no
+			for (FocusDetail focus : myFocusList) {
+				if (focus.getMYFFOCUS().equals(author.getNICKNAME())) {
+					addFocus = "no";				
+					break;
+				}
 			}
+			//如果作者是当前用户，则addFocus=no
+			if (author.getNICKNAME().equals(currentUser.getNICKNAME())) {
+				addFocus = "no";
+			}
+			modelAndView.addObject("addFocus", addFocus);
 		}
-		//如果作者是当前用户，则addFocus=no
-		if (author.getNICKNAME().equals(currentUser.getNICKNAME())) {
-			addFocus = "no";
-		}
+		
 		
 		modelAndView.addObject("exprience", exprience);
 		modelAndView.addObject("author", author);
 		modelAndView.addObject("currentUser", currentUser);
 		modelAndView.addObject("pageInfo", pageInfo);
 		modelAndView.addObject("authroRankList", authroRankList);
-		modelAndView.addObject("addFocus", addFocus);
+		
 		
 		return modelAndView;
 	}
