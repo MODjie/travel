@@ -110,6 +110,7 @@ $(function() {
 				contentArea.val("");
 				$(".comment-div").empty();
 				$(".show-reply").remove();
+				$(".no-comment").remove();
 				showComment(data);
 			},
 			error : function() {
