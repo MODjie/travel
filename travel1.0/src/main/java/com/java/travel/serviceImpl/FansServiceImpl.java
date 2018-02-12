@@ -1,10 +1,13 @@
 package com.java.travel.serviceImpl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.java.travel.entity.Fans;
+import com.java.travel.entity.FansDetail;
 import com.java.travel.mapper.FansMapper;
 import com.java.travel.service.FansService;
 
@@ -44,6 +47,13 @@ public class FansServiceImpl implements FansService {
 		return fansMapper.updateByPrimaryKey(record);
 	}
 
-	
+	public List<FansDetail> selectByNicknmae(String nickName) {
+		// TODO Auto-generated method stub
+		return fansMapper.selectByNicknmae(nickName);
+	}
 
+	public int deleteFansByName(String myFans, String myName) {
+		// TODO Auto-generated method stub
+		return fansMapper.deleteFansByName(myFans, myName);
+	}
 }

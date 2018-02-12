@@ -6,8 +6,14 @@
     <result column="MYNAME" jdbcType="VARCHAR" property="MYNAME" />
     <result column="MYFANSNAME" jdbcType="VARCHAR" property="MYFANSNAME" />
   </resultMap>
+  <resultMap type="com.java.travel.entity.FansDetail" id="FansDetail" extends="BaseResultMap">
+      <result column="HEADADDRESS" jdbcType="VARCHAR" property="HEADADDRESS"/>
+  </resultMap>
   <sql id="Base_Column_List">
     FANSID, MYNAME, MYFANSNAME
+  </sql>
+  <sql id="Fans_Detail_Coloumn_List">
+    HEADADDRESS
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -15,9 +21,24 @@
     from FANS
     where FANSID = #{FANSID,jdbcType=DECIMAL}
   </select>
+  <!-- 根据用户昵称查找该用户的粉丝 -->
+  <select id="selectByNicknmae"  resultMap="FansDetail">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Fans_Detail_Coloumn_List"/>
+    from FANS_VIEW
+    where MYNAME = #{nickName,jdbcType=VARCHAR}
+  </select>  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from FANS
     where FANSID = #{FANSID,jdbcType=DECIMAL}
+  </delete>
+  <!-- 根据当myfansname和myname删除粉丝 -->
+  <delete id="deleteFansByName" >
+    delete from FANS
+    where MYFANSNAME = #{arg0}
+    and MYNAME = #{arg1}
   </delete>
   <insert id="insert" parameterType="com.java.travel.entity.Fans">
     insert into FANS (FANSID, MYNAME, MYFANSNAME

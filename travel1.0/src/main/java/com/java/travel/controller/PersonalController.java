@@ -25,11 +25,15 @@ import com.github.pagehelper.PageInfo;
 import com.java.travel.entity.ExUser;
 import com.java.travel.entity.Exprience;
 import com.java.travel.entity.Extype;
+import com.java.travel.entity.Fans;
+import com.java.travel.entity.FansAndFocus;
+import com.java.travel.entity.FansDetail;
 import com.java.travel.entity.Focus;
 import com.java.travel.entity.FocusDetail;
 import com.java.travel.service.ExTypeService;
 import com.java.travel.service.ExUserService;
 import com.java.travel.service.ExprienceService;
+import com.java.travel.service.FansService;
 import com.java.travel.service.FocusService;
 import com.java.travel.util.MyFileUploadUtil;
 
@@ -44,6 +48,8 @@ public class PersonalController {
 	private ExTypeService exTypeService;
 	@Resource
 	private FocusService focusService;
+	@Resource
+	private FansService fansService;
 	/**
 	 * 跳转到个人中心主页
 	 * 
@@ -308,8 +314,7 @@ public class PersonalController {
 		}else {
 			authorName = currentUser.getNICKNAME();
 		}		
-		
-		//通过昵称查找关注的人
+	
 		modelAndView.addObject("currentUser",currentUser);		
 		return modelAndView;
 	}
@@ -358,12 +363,66 @@ public class PersonalController {
 			focus.setMYFFOCUS(focusName);
 			focus.setMYNAME(currentUser.getNICKNAME());
 			succesFlag = focusService.insert(focus);
+			
+			Fans fans = new Fans();
+			fans.setMYNAME(focusName);
+			fans.setMYFANSNAME(currentUser.getNICKNAME());
+			succesFlag = fansService.insert(fans);
 		}else if (isFocus.equals("取消关注")) {
 			succesFlag = focusService.deleteFocusByName(focusName, currentUser.getNICKNAME());
+			succesFlag = fansService.deleteFansByName(currentUser.getNICKNAME(), focusName);
 		}
 		return succesFlag;
 	}
 	
+	/**
+	 * 跳转到粉丝页面
+	 * @param authorName
+	 * @return
+	 */
+	@RequestMapping(value="toFans",method=RequestMethod.GET)
+	public ModelAndView toFans(String authorName) {
+		ModelAndView modelAndView = new ModelAndView("fans");
+		ExUser currentUser = getCurrentUser();
+		//访客查询作者的个人中心
+		if (authorName!=null) {
+			ExUser author = exUserService.selectByNickName(authorName);
+			modelAndView.addObject("author", author);				
+
+		}else {
+			authorName = currentUser.getNICKNAME();
+		}		
+		
+		modelAndView.addObject("currentUser",currentUser);		
+		return modelAndView;
+	}
+	
+	/**
+	 * 获得粉丝
+	 * @param authorName 
+	 * @param pageNum
+	 * @return
+	 */
+	@RequestMapping(value="getFans",method=RequestMethod.GET)
+	@ResponseBody
+	public FansAndFocus getFans(String authorName,Integer pageNum) {
+		FansAndFocus fansAndFocus = new FansAndFocus();
+		ExUser currentUser = getCurrentUser();
+		if (authorName=="") {
+			authorName = currentUser.getNICKNAME();
+		}
+		PageHelper.startPage(pageNum, 8);
+		List<FansDetail> authorFanus = fansService.selectByNicknmae(authorName);
+		PageInfo<FansDetail> pageInfo = new PageInfo<FansDetail>(authorFanus);		
+		if (pageNum > pageInfo.getPageNum()) {
+			pageInfo.setList(null);
+		}		
+		fansAndFocus.setFansList(pageInfo.getList());		
+		//将当前用户的关注返回，在前端页面页面与粉丝比较，判断是否关注
+		List<FocusDetail> currentUserFans = focusService.selectByNicknmae(currentUser.getNICKNAME());		
+		fansAndFocus.setFocusList(currentUserFans);
+		return fansAndFocus;
+	}
 	
 	/**
 	 * 获取当前用户

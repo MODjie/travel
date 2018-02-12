@@ -191,7 +191,7 @@
 			<li><a href="toUserInfo" title="个人信息"><i
 					class="fa icon-user-md"></i></a></li>
 			<li><a href="toFocus" title="关注"><i class="fa icon-heart"></i></a></li>
-			<li><a href="#" title="粉丝"><i class="fa icon-eye-open"></i></a>
+			<li><a href="toFans" title="粉丝"><i class="fa icon-eye-open"></i></a>
 			</li>
 			<li><a href="exprienceList?currentType=全部" title="见闻管理"><i
 					class="fa icon-book"></i></a></li>

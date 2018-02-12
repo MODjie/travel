@@ -11,7 +11,7 @@
 <!--- basic page needs
    ================================================== -->
 <meta charset="utf-8">
-<title>关注</title>
+<title>粉丝</title>
 <meta name="description" content="">
 <meta name="author" content="">
 
@@ -236,9 +236,9 @@
 				<li><a href="personal" title="我的主页"><i class="fa icon-home"></i></a></li>
 				<li><a href="toUserInfo" title="个人信息"><i
 						class="fa icon-user-md"></i></a></li>
-				<li><a href="toFocus" title="关注" style="color: #cc005f;"><i
+				<li><a href="toFocus" title="关注" ><i
 						class="fa icon-heart"></i></a></li>
-				<li><a href="toFans" title="粉丝"><i class="fa icon-eye-open"></i></a>
+				<li><a href="#" title="粉丝" style="color: #cc005f;"><i class="fa icon-eye-open"></i></a>
 				</li>
 				<li><a href="exprienceList?currentType=全部" title="见闻管理"><i
 						class="fa icon-book"></i></a></li>
@@ -252,8 +252,8 @@
 				<li><a href="toUserInfo?authorName=${author.NICKNAME }"
 					title="他的个人信息"><i class="fa icon-user-md"></i></a></li>
 				<li><a href="toFocus?authorName=${author.NICKNAME }"
-					title="他的关注" style="color: #cc005f;"><i class="fa icon-heart"></i></a></li>
-				<li><a href="toFans?authorName=${author.NICKNAME }" title="他的粉丝"><i class="fa icon-eye-open"></i></a>
+					title="他的关注" ><i class="fa icon-heart"></i></a></li>
+				<li><a href="toFans?authorName=${author.NICKNAME }" title="他的粉丝" style="color: #cc005f;"><i class="fa icon-eye-open"></i></a>
 				</li>
 				<li><a
 					href="exprienceList?currentType=全部&nickName=${author.NICKNAME }"
@@ -268,9 +268,9 @@
    ================================================== -->
 	<section id="portfolio">
 	<div class="row section-intro">
-		<h1 style="margin-top: -70px; margin-bottom: 70px;">我的关注</h1>
+		<h1 style="margin-top: -70px; margin-bottom: 70px;">我的粉丝</h1>
 		<input type="hidden" id="authorName" value="${author.NICKNAME }">
-		<div class="focus-body row">
+		<div class="fans-body row">
 			<!--<div class="col-md-3 focus-users" style="height: 300px;">
 				<img src="images/head/head1.jpg" width="150px" height="150px"
 					class="img-circle" style="margin-top: 18px;" />
@@ -392,17 +392,17 @@
 
 	<script type="text/javascript">
 		$(function() {
-			var authorName = $("#authorName").val();			
+			var authorName = $("#authorName").val();
 
 			if (authorName == "") {
 				authorName = null;
 			}
 
 			if (authorName != null) {
-				$(".focus-body").prev().prev().text("他的关注");
+				$(".fans-body").prev().prev().text("他的粉丝");
 			}
 			var pageNum = 1;
-			loadMorefocus(authorName, pageNum);
+			loadMorefans(authorName, pageNum);
 			// 滚动条距底部的距离
 			var BOTTOM_OFFSET = 0;
 			$(window).scroll(function() {
@@ -450,7 +450,7 @@
 							btn.addClass("glyphicon-plus");
 							btn.text("关注");
 						}
-						if (isFocus != "他关注了你") {
+						if (isFocus != "你关注了他") {
 							layer.msg(isFocus + "成功", {
 								icon : 1
 							});
@@ -463,81 +463,66 @@
 			});
 		})
 		//显示focus
-		function showFocus(data) {
+		function showFans(data) {	
 			//当前用户
 			var currentUserName = "${currentUser.NICKNAME}";
-			//长度为2，说明是访客查看，遍历访客自己关注的人的昵称存放在数组里
-			var myFocusName = new Array();
-			//存放作者关注的
-			var authorFocusName = new Array();
+			//存放关注的人的昵称
+			var focusName = new Array();
+			//存放粉丝的昵称
+			var fansName = new Array();
 			//已删除的个数
 			var deleteNum = 0;
-			if (data.length == 2) {
-				$.each(data[0], function(index, myfocus) {
-					myFocusName[index] = (myfocus.myffocus);
-				});
-				$.each(data[1], function(index, myfocus) {
-					authorFocusName[index] = (myfocus.myffocus);
-				});
-			}
+			$.each(data.focusList,function(index,focus){
+				focusName.push(focus.myffocus);
+			});
+			$.each(data.fansList,function(index,fans){
+				fansName.push(fans.myfansname);
+			});
 			$
 					.each(
-							data[data.length - 1],
-							function(index1, focus) {
-								$(".focus-body")
+							data.fansList,
+							function(index1, fans) {
+								$(".fans-body")
 										.append(
 												"<div class='col-md-3 focus-users' style='height: 300px;'><a href='exprienceList?currentType=全部&nickName="
-														+ focus.myffocus
-														+ "' style='cursor : pointer;'> <img src='"+focus.headaddress+"' width='150px' height='150px' class='img-circle' style='margin-top: 18px;' /> </a> <h5 style='font-size: 18px;'>"
-														+ focus.myffocus
-														+ "</h5> <a class='focusA' style='color: #cc005f; font-size: 14px;cursor : pointer'>取消关注</a></div>");
-
-								//长度为2，说明是访客查看，比较自己关注的人和作者关注的人
-								if (data.length == 2) {
-									$.each(myFocusName, function(index2,
-											nickName) {
-										if (nickName == focus.myffocus) {
-											//去除authorFocusName中当前用户关注的											
-											authorFocusName.splice(index1
-													- deleteNum, 1);
-											deleteNum = deleteNum + 1;
-										}
-									});
-
-								}
-							});
-			//将当前用户没关注的的下标变为+关注（排除两人都关注的，剩下的就是当前用户没关注的）
-			$(".focus-body div h5").each(function() {
+														+ fans.myfansname
+														+ "' style='cursor : pointer;'> <img src='"+fans.headaddress+"' width='150px' height='150px' class='img-circle' style='margin-top: 18px;' /> </a> <h5 style='font-size: 18px;'>"
+														+ fans.myfansname
+														+ "</h5> <a class='focusA glyphicon glyphicon-plus' style='color: #cc005f; font-size: 14px;cursor : pointer'>关注</a></div>");								
+								
+							});	
+			//将当前用户没关注的的下标变为+关注（排除粉丝中关注的，剩下的就是当前用户没关注的）
+			$(".fans-body div h5").each(function() {
 				var btn = $(this).next();
 				var name1 = $(this).text();
 
-				$.each(authorFocusName, function(index, name2) {
-					if (name1 == name2) {
-						//不能关注自己
-						if (currentUserName == name1) {
-							btn.text("他关注了你");
-							btn.css("cursor", "");
-						} else {
-							btn.addClass("glyphicon");
-							btn.addClass("glyphicon-plus");
-							btn.text("关注");
-						}
+				$.each(focusName, function(index, name2) {
+					if (name1 == name2) {						
+						btn.text("取消关注");
+						btn.removeClass("glyphicon");
+						btn.removeClass("glyphicon-plus");
 					}
+					//不能关注自己
+					if (currentUserName == name1) {
+						btn.text("你关注了他");
+						btn.css("cursor", "");
+						btn.attr("class","");
+					} 
 				})
 			});
 		}
-		function loadMorefocus(authorName, pageNum) {
+		function loadMorefans(authorName, pageNum) {
 			$.ajax({
 				type : "get",
-				url : "getFocus",
+				url : "getFans",
 				data : {
 					authorName : authorName,
 					pageNum : pageNum
 				},
 				dataType : "json",
 				success : function(data) {
-					// alert(JSON.stringify(data));
-					showFocus(data);
+					//alert(JSON.stringify(data));
+					showFans(data);
 
 				},
 				error : function() {
