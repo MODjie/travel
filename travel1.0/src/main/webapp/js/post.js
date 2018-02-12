@@ -1,4 +1,40 @@
 $(function() {
+	// 关注作者
+	$(document).on("click", ".aboutAuthor a", function() {
+		var isFocus = $(this).text();
+		var focusName = $("#authorName").val();
+		var btn = $(this);
+		alert(focusName +"  "+isFocus);
+		$.ajax({
+			type : "post",
+			url : "updateFocus",
+			data : {
+				_method : "put",
+				isFocus : isFocus,
+				focusName : focusName
+			},
+			dataType : "json",
+			async : false, // 不加这句话，则默认是true，则程序不会等待ajax请求返回就执行了return，所以返回不了ajax的值
+			success : function(data) {
+				// alert(JSON.stringify(data));
+				if (isFocus == "关注") {
+					btn.text("取消关注");
+					btn.removeClass("glyphicon");
+					btn.removeClass("glyphicon-plus");
+				} else if (isFocus == "取消关注") {
+					btn.addClass("glyphicon");
+					btn.addClass("glyphicon-plus");
+					btn.text("关注");
+				}
+				layer.msg(isFocus + "成功", {
+					icon : 1
+				});
+			},
+			error : function() {
+				layer.msg("操作失败,请刷新页面重试");
+			}
+		});
+	});
 	// 回复弹窗
 	$(document).on(
 			"click",
@@ -16,8 +52,8 @@ $(function() {
 					skin : 'layui-layer-lan',
 					shadeClose : true, // 点击关闭遮罩层
 					area : [ '40%', '46%' ],
-					content : 'reply.jsp'// 弹框显示的url								
-				});							
+					content : 'reply.jsp'// 弹框显示的url
+				});
 			});
 
 	// 查看回复div点击事件
@@ -38,9 +74,9 @@ $(function() {
 				currentBtn.css("display", "none");
 				if (data == null) {
 					layer.msg("此评论暂时还没有回复")
-				}else {
+				} else {
 					showReply(data, replyArea, commentId);
-				}			
+				}
 			},
 			error : function() {
 				layer.msg("登录才能查看回复");

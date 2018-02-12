@@ -121,9 +121,9 @@
 				<div class="blog-post-body">
 					<h2>${exprience.EXTITLE }</h2>
 					<div class="post-meta">
-						<a href="#">${exprience.EXAUTHORNAME }</a> </span>/<span><i
+						<a>${exprience.EXAUTHORNAME }</a> </span>/<span><i
 							class="fa fa-clock-o"></i>${exprience.EXPUBLISHTIME }/<span><i
-								class="fa fa-comment-o"></i> <a href="#">${exprience.COMMENTNUM }</a></span>
+								class="fa fa-comment-o"></i> <a>${exprience.COMMENTNUM }</a></span>
 					</div>
 					<div class="blog-post-body">${exprience.EXCONTENT }</div>
 				</div>
@@ -180,10 +180,15 @@
 			<div class="col-md-4 sidebar-gutter">
 				<aside> <!-- sidebar-widget -->
 				<div class="sidebar-widget">
-					<h3 class="sidebar-title">关于作者</h3>
+					<h3 class="sidebar-title aboutAuthor">
+						关于作者						
+					</h3>
+					<input type="hidden" id="authorName" value="${author.NICKNAME }"/>
 					<div class="widget-container widget-about">
-						<a href="exprienceList?currentType=全部&nickName=${author.NICKNAME }"><img src="${author.HEADADDRESS }"
-							alt="140x140" class="img-circle img-responsive center-block"></a>
+						<a
+							href="exprienceList?currentType=全部&nickName=${author.NICKNAME }"><img
+							src="${author.HEADADDRESS }" alt="140x140"
+							class="img-circle img-responsive center-block"></a>
 						<h4>${author.NICKNAME }</h4>
 						<!--<div class="author-title">Designer</div>-->
 						<p>${author.MOOD }</p>
@@ -404,13 +409,19 @@
 			}
 
 		});
-		$(function () {
+		$(function() {
 			//如果增加经验成功就提示
-			if ("${levelUp}"=="add") {
+			if ("${levelUp}" == "add") {
 				layer.msg("+200成长值");
-			}else if ("${levelUp}"=="yes") {
-				layer.msg("恭喜您升到"+"${author.NORMALLEVEL}"+"级");
+			} else if ("${levelUp}" == "yes") {
+				layer.msg("恭喜您升到" + "${author.NORMALLEVEL}" + "级");
 			}
+			//添加关注按钮	
+			if ("${addFocus}"=="yes") {
+				$(".aboutAuthor").append("<a class='glyphicon glyphicon-plus pull-right' style='cursor: pointer;color: white;margin-right: 30px'>关注</a>");
+			}else if ("${addFocus}"=="no") {
+					$(".aboutAuthor").append("<a class='pull-right' style='cursor: pointer;color: white;margin-right: 30px'>取消关注</a>");
+			}					
 		})
 	</script>
 </body>

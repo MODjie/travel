@@ -162,7 +162,7 @@
 								<a href="toPost?exprienceId=${exprience.EXPRIENCEID}">${exprience.EXTITLE}</a>
 							</h2>
 							<div class="post-meta">
-								<a href="#">${exprience.EXAUTHORNAME}</a> </span>/<span><i
+								<a href="exprienceList?currentType=全部&nickName=${exprience.EXAUTHORNAME}">${exprience.EXAUTHORNAME}</a> <i
 									class="fa fa-clock-o"></i>${exprience.EXPUBLISHTIME}/<span><i
 										class="fa fa-comment-o"></i> <a href="#">${exprience.COMMENTNUM}</a></span>
 							</div>

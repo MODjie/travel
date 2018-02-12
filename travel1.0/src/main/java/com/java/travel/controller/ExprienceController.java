@@ -25,11 +25,14 @@ import com.java.travel.entity.ExReply;
 import com.java.travel.entity.ExReplyDetail;
 import com.java.travel.entity.ExUser;
 import com.java.travel.entity.Exprience;
+import com.java.travel.entity.Focus;
+import com.java.travel.entity.FocusDetail;
 import com.java.travel.service.ExCommentService;
 import com.java.travel.service.ExReplyService;
 import com.java.travel.service.ExTypeService;
 import com.java.travel.service.ExUserService;
 import com.java.travel.service.ExprienceService;
+import com.java.travel.service.FocusService;
 import com.java.travel.util.DateUtil;
 import com.java.travel.util.MyFileUploadUtil;
 
@@ -45,6 +48,8 @@ public class ExprienceController {
 	private ExCommentService exCommentService;
 	@Resource
 	private ExReplyService exReplyService;
+	@Resource
+	private FocusService focusService;
 	/**
 	 * 新增文章
 	 * 
@@ -154,12 +159,28 @@ public class ExprienceController {
 		if (commentList.size() == 0) {
 			pageInfo.setList(null);
 		}
-
+		
+		//获取当前用户关注的人
+		List<FocusDetail> myFocusList = focusService.selectByNicknmae(currentUser.getNICKNAME());
+		String addFocus = "yes";
+		//如果作者已经关注过的，则addFocus=no
+		for (FocusDetail focus : myFocusList) {
+			if (focus.getMYFFOCUS().equals(author.getNICKNAME())) {
+				addFocus = "no";				
+				break;
+			}
+		}
+		//如果作者是当前用户，则addFocus=no
+		if (author.getNICKNAME().equals(currentUser.getNICKNAME())) {
+			addFocus = "no";
+		}
+		
 		modelAndView.addObject("exprience", exprience);
 		modelAndView.addObject("author", author);
 		modelAndView.addObject("currentUser", currentUser);
 		modelAndView.addObject("pageInfo", pageInfo);
 		modelAndView.addObject("authroRankList", authroRankList);
+		modelAndView.addObject("addFocus", addFocus);
 		
 		return modelAndView;
 	}

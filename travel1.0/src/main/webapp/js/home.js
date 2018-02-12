@@ -103,11 +103,13 @@ function createListItems(exPageNum, exContents) {
 																	+ exList.exprienceid
 																	+ "'>"
 																	+ exList.extitle
-																	+ "</a> </h2> <div class='post-meta'> <a href='#'>"
+																	+ "</a> </h2> <div class='post-meta'> <a href='exprienceList?currentType=全部&nickName="
+																	+ exList.exauthorname
+																	+ "'>"
 																	+ exList.exauthorname
 																	+ "</a> </span>/<span><i class='fa fa-clock-o'></i>"
 																	+ exList.expublishtime
-																	+ "/<span><i class='fa fa-comment-o'></i> <a href='#'>"
+																	+ "/<span><i class='fa fa-comment-o'></i> <a>"
 																	+ exList.commentnum
 																	+ "</a></span> </div> <div class='homeExContent'>"
 																	+ exList.excontent
